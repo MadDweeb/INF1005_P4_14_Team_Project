@@ -31,19 +31,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KeyForge — Keyboard Switch Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <a href="/" class="site-title">⌨ KeyForge</a>
+    <header class="main-header">
+        <div class="logo">
+            <a href="/" class="site-title">KeyForge</a>
+        </div>
 
-        <!-- TODO: Replace placeholder links once pages are implemented -->
-        <nav aria-label="Main navigation">
+        <nav class="main-nav" aria-label="Main navigation">
             <ul>
-                <li><a href="/">Home</a></li>
                 <li><a href="/products">Switches</a></li>
+                <li><a href="/customizer">Customize</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li>
+                    <a href="/cart">
+                        Cart <span class="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -52,21 +59,50 @@
         <?= $pageContent ?>
     </main>
 
-    <footer>
-        <!-- TODO: Replace placeholder links and contact info with real details -->
-        <nav aria-label="Footer navigation">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/products">Switches</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="newsletter">
+                <h2>STAY IN THE LOOP</h2>
+                <form action="/subscribe" method="POST" class="subscribe-form">
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <button type="submit">SIGN UP</button>
+                </form>
+            </div>
+
+            <div class="social-links">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="X (Twitter)"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+
+        <hr class="footer-divider">
+
+        <div class="footer-giant-logo" aria-hidden="true">
+            KEYFORGE
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+            <ul class="nav-left">
+                <li><a href="/products">SWITCHES</a></li>
+                <li><a href="/customizer">CUSTOMIZE</a></li>
+                <li><a href="/about">ABOUT US</a></li>
+            </ul>
+            <ul class="nav-right">
+                <li><a href="/contact">CONTACT</a></li>
+                <li><a href="/faq">FAQ</a></li>
             </ul>
         </nav>
-        <address>
-            <!-- TODO: Replace with real (fictitious) company contact details -->
-            <p>hello@keyforge.example</p>
-        </address>
-        <p>&copy; <?= date('Y') ?> KeyForge. All rights reserved.</p>
+        <div class="footer-legal">
+            <p>
+                &copy; <?= date('Y') ?> KeyForge. All rights reserved. | 
+                <a href="/privacy">Privacy Policy</a> | 
+                <a href="/terms">Terms & Conditions</a>
+            </p>
+            <address>
+                <p>hello@keyforge.example</p>
+            </address>
+        </div>
     </footer>
 
 </body>

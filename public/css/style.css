@@ -4,52 +4,88 @@
  * Expand each section as the project grows.
  */
 
+ /* ── Variables ──────────────────────────────────────────────────────────────────── */
+:root {
+    --bg-main: #F4F0EA;     
+    --bg-header: #EBE5DA;   
+    --text-main: #1A1A1A;    
+    --accent: #D73A3A;         
+    --footer-bg: #373738;      
+    --footer-text: #F4F0EA;    
+    --divider-color: #D1C9B8;  
+}
+
 /* ── Reset ─────────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    color: #1a1a1a;
-    background: #f8f8f8;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
 }
 
 /* ── Header ─────────────────────────────────────────────────────────────────── */
-header {
+.main-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: #1a1a1a;
-    color: #fff;
+    justify-content: space-between; 
+    align-items: center;            
+    background-color: var(--bg-header);      
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--divider-color);
 }
 
-.site-title {
-    color: #fff;
+.logo a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 900;         
+    color: var(--accent);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* ── Navigation ─────────────────────────────────────────────────────────────── */
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.main-nav ul {
     display: flex;
-    gap: 1.5rem;
+    list-style: none;
+    gap: 30px; 
+    align-items: center;
 }
 
-nav a {
-    color: #ccc;
+/* --- The Navigation Links --- */
+.main-nav a {
     text-decoration: none;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 900;          
+    text-transform: uppercase; 
+    letter-spacing: 1.5px;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
-    color: #fff;
+.main-nav a:hover {
+    color: var(--accent);            
+}
+
+/* ── Basket ───────────────────────────────────────────────────────────────── */
+.basket-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.basket-count {
+    background-color: var(--accent); 
+    color: #ffffff;
+    border-radius: 50%;        
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 /* ── Main content ────────────────────────────────────────────────────────────── */
@@ -57,6 +93,7 @@ main {
     max-width: 960px;
     margin: 2rem auto;
     padding: 0 1.5rem;
+    min-height: 40vh;
 }
 
 /* ── Hero section ────────────────────────────────────────────────────────────── */
@@ -67,11 +104,144 @@ main {
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────────── */
-footer {
+.main-footer {
+    background-color: var(--footer-bg); 
+    color: var(--footer-text);            
+    padding: 60px 40px 20px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.newsletter h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    margin: 0 20px 0 0;
+    text-transform: uppercase;
+}
+
+.subscribe-form {
+    display: flex;
+    height: 45px;
+    align-items: stretch;
+}
+
+.subscribe-form input {
+    height: 100%;
+    padding: 0 15px;
+    border: 1px solid var(--divider-color);
+    background: #ffffff;
+    color: var(--text-main);
+    width: 250px;
+    outline: none;
+    font-family: inherit;
+}
+
+.subscribe-form button {
+    height: 100%;
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    padding: 0 25px;
+    font-weight: 900;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: color 0.5s ease;
+}
+
+.subscribe-form button:hover {
+    background-color: var(--footer-text);
+    color: var(--text-main);
+}
+
+.footer-divider {
+    border: 0;
+    border-top: 2px solid rgba(244, 240, 234, 0.1);
+    margin: 40px 0;
+}
+
+.footer-giant-logo {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 13.5vw; 
+    font-weight: 900;
     text-align: center;
-    padding: 1.5rem;
-    background: #1a1a1a;
-    color: #aaa;
-    margin-top: 3rem;
-    font-size: 0.875rem;
+    line-height: 0.8;
+    margin-bottom: 50px;
+    color: var(--footer-text); 
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.footer-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.footer-nav a {
+    color: var(--footer-text);
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--accent);
+}
+
+.footer-legal {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--footer-text);
+    font-weight: bold;
+}
+
+.footer-legal a {
+    color: var(--footer-text);
+    text-decoration: none;
+    transition: color 0.5s ease;
+}
+
+.footer-legal a:hover {
+    color: var(--accent);
+}
+
+/* --- Social Icons --- */
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--footer-text);
+    color: var(--text-main);
+    border-radius: 50%; 
+    text-decoration: none;
+    font-size: 20px;
+    transition: transform 0.5s, background-color 0.5s;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+    background-color: var(--accent);
+    color: var(--footer-text);
 }
