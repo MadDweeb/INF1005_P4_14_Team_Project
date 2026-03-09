@@ -27,16 +27,28 @@ body {
     color: var(--text-main);
     font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* ── Header ─────────────────────────────────────────────────────────────────── */
 .main-header {
+    position: absolute; 
+    top: 25px;          
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 98%;
+    max-width: 1800px;
+    z-index: 100; 
+
     display: flex;
     justify-content: space-between; 
     align-items: center;            
-    background-color: var(--bg-header);      
+    background-color: var(--bg-header);     
     padding: 20px 40px;
-    border-bottom: 1px solid var(--divider-color);
+    
+    border-bottom: none; 
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .logo a {
@@ -91,16 +103,43 @@ body {
 /* ── Main content ────────────────────────────────────────────────────────────── */
 main {
     max-width: 960px;
-    margin: 2rem auto;
+    margin: 0 auto 2rem auto;
     padding: 0 1.5rem;
     min-height: 40vh;
 }
 
 /* ── Hero section ────────────────────────────────────────────────────────────── */
 .hero {
-    text-align: center;
-    padding: 3rem 1rem;
-    /* TODO: add background image or gradient */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 180px 10vw 80px 10vw;
+
+    background-image: url('/assets/images/home2.jpeg'); 
+    background-size: cover;          
+    background-position: center;     
+    background-repeat: no-repeat;
+    
+    min-height: 95vh;                
+    display: flex;
+    align-items: center;             
+    padding: 0 10vw;                
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem); 
+    font-weight: 900;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    line-height: 0.85;
+    margin-bottom: 40px;
+    text-shadow: 
+        2px 2px 0px rgba(0, 0, 0, 0.8),
+        4px 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────────── */
@@ -264,15 +303,16 @@ main {
 
 .skip-link {
     position: absolute;
-    top: -40px;
+    top: -60px;
     left: 0;
     background: var(--accent);
     color: white;
-    padding: 8px 16px;
-    z-index: 100;
+    padding: 12px 24px;
+    z-index: 9999;
     transition: top 0.2s;
     text-decoration: none;
     font-weight: bold;
+    border-radius: 0 0 8px 0;
 }
 
 .skip-link:focus {
@@ -282,3 +322,52 @@ main {
 main:focus {
     outline: none;
 }
+
+/* ── Ticker Divider ───────────────────────────────────────────────────────────────── */
+.ticker-bar {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; 
+    background-color: var(--accent);
+    color: #ffffff; 
+    height: 50px; 
+    display: flex;
+    align-items: center;
+}
+
+.ticker-wrapper {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: scroll-ticker 30s linear infinite; 
+}
+
+.ticker-list {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.ticker-list span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0 20px;
+}
+
+.ticker-list span::after {
+    content: "•";
+    color: rgba(255, 255, 255, 0.4); 
+    margin-left: 40px; 
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+@keyframes scroll-ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+

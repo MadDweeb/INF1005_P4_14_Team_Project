@@ -14,17 +14,42 @@ ob_start();
 ?>
 <!-- Hero section -->
 <section class="hero" aria-labelledby="heroHeading">
-    <h1 id="heroHeading">Find Your Perfect Switch</h1>
-    <p>
-        Explore our collection of premium mechanical keyboard switches —
-        linear, tactile, and clicky.
-    </p>
-    <!-- TODO: Link to /products once the product catalogue is implemented -->
-    <a href="/products">Shop Switches</a>
+    <div class="hero-content">
+        <h1 id="heroHeading">BUILD YOUR<br>DREAM KEYBOARD</h1>
+    </div>
 </section>
 
+<div class="ticker-bar">
+    <div class="ticker-wrapper" aria-hidden="true">
+        <div class="ticker-list">
+            <span>CURATED SWITCHES</span>
+            <span>FAST LOCAL DELIVERY</span>
+            <span>PREMIUM QUALITY</span>
+            <span>COMMUNITY FOCUS</span>
+            <span>FIND YOUR PERFECT SWITCH</span>
+            <span>CURATED SWITCHES</span>
+            <span>FAST LOCAL DELIVERY</span>
+            <span>PREMIUM QUALITY</span>
+            <span>COMMUNITY FOCUS</span>
+            <span>FIND YOUR PERFECT SWITCH</span>
+        </div>
+        <div class="ticker-list">
+            <span>CURATED SWITCHES</span>
+            <span>FAST LOCAL DELIVERY</span>
+            <span>PREMIUM QUALITY</span>
+            <span>COMMUNITY FOCUS</span>
+            <span>FIND YOUR PERFECT SWITCH</span>
+            <span>CURATED SWITCHES</span>
+            <span>FAST LOCAL DELIVERY</span>
+            <span>PREMIUM QUALITY</span>
+            <span>COMMUNITY FOCUS</span>
+            <span>FIND YOUR PERFECT SWITCH</span>
+        </div>
+    </div>
+</div>
+
 <!-- Featured products placeholder -->
-<section aria-labelledby="featuredHeading">
+<section class="featured-drops" aria-labelledby="featuredHeading">
     <h2 id="featuredHeading">Featured Switches</h2>
 
     <!--
@@ -37,7 +62,7 @@ ob_start();
 </section>
 
 <!-- Value propositions placeholder -->
-<section aria-labelledby="whyHeading">
+<section class="value propositions" aria-labelledby="whyHeading">
     <h2 id="whyHeading">Why KeyForge?</h2>
 
     <!--
