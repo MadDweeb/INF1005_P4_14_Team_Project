@@ -9,7 +9,7 @@
  * TODO: Connect the navigation links once those pages are implemented.
  */
 
-$pageTitle = 'Welcome to KeyForge';
+$pageTitle = 'KeyForge';
 ob_start();
 ?>
 <!-- Hero section -->

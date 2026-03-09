@@ -30,53 +30,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeyForge — Keyboard Switch Store</title>
+    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' | ' : '' ?>Keyboard Switch Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header class="main-header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="main-header" role="banner">
         <div class="logo">
-            <a href="/" class="site-title">KeyForge</a>
+            <a href="/" class="site-title" aria-label="KeyForge Home">KeyForge</a>
         </div>
 
         <nav class="main-nav" aria-label="Main navigation">
             <ul>
-                <li><a href="/products">Switches</a></li>
-                <li><a href="/customizer">Customize</a></li>
-                <li><a href="/about">About</a></li>
-                <li>
-                    <a href="/cart">
-                        Cart <span class="cart-count">0</span>
-                    </a>
-                </li>
+                <li><a href="/products" aria-label="Browse switches">Switches</a></li>
+                <li><a href="/customizer" aria-label="Customize your switches">Customize</a></li>
+                <li><a href="/about" aria-label="Learn about KeyForge">About</a></li>
+                <li><a href="/cart" aria-label="View shopping cart">Cart</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" tabindex="-1" role="main">
         <?= $pageContent ?>
     </main>
 
-    <footer class="main-footer">
+    <footer class="main-footer" role="contentinfo">
         <div class="footer-top">
-            <div class="newsletter">
-                <h2>STAY IN THE LOOP</h2>
-                <form action="/subscribe" method="POST" class="subscribe-form">
-                    <input type="email" name="email" placeholder="Your email" required>
+            <section class="newsletter" aria-labelledby="newsletter-heading">
+                <h2 id="newsletter-heading">STAY IN THE LOOP</h2>
+                <form action="/subscribe" method="POST" class="subscribe-form" aria-labelledby="newsletter-heading">
+                    <label for="email-subscribe" class="sr-only">Email address</label>
+                    <input type="email" name="email" id="email-subscribe" placeholder="Your email" required autocomplete="email">
                     <button type="submit">SIGN UP</button>
                 </form>
-            </div>
+            </section>
 
-            <div class="social-links">
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="X (Twitter)"><i class="fab fa-twitter"></i></a>
-            </div>
+            <ul class="social-links">
+                <li>
+                    <a href="#" aria-label="Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Facebook">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="X (Twitter)">
+                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <hr class="footer-divider">
+        <hr class="footer-divider" aria-hidden="true">
 
         <div class="footer-giant-logo" aria-hidden="true">
             KEYFORGE
@@ -94,11 +104,11 @@
             </ul>
         </nav>
         <div class="footer-legal">
-            <p>
+            <small>
                 &copy; <?= date('Y') ?> KeyForge. All rights reserved. | 
                 <a href="/privacy">Privacy Policy</a> | 
                 <a href="/terms">Terms & Conditions</a>
-            </p>
+            </small>
             <address>
                 <p>hello@keyforge.example</p>
             </address>
