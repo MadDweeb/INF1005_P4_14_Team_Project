@@ -22,5 +22,52 @@
  *   - <main id="main-content"> matching the skip link href
  *   - <header>, <nav>, <main>, <footer> landmark elements
  */
+?>
 
-// TODO: Implement layout here
+<!-- TODO: Implement layout here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyForge — Keyboard Switch Store</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="site-title">⌨ KeyForge</a>
+
+        <!-- TODO: Replace placeholder links once pages are implemented -->
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Switches</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+        <?= $pageContent ?>
+    </main>
+
+    <footer>
+        <!-- TODO: Replace placeholder links and contact info with real details -->
+        <nav aria-label="Footer navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Switches</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <address>
+            <!-- TODO: Replace with real (fictitious) company contact details -->
+            <p>hello@keyforge.example</p>
+        </address>
+        <p>&copy; <?= date('Y') ?> KeyForge. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
