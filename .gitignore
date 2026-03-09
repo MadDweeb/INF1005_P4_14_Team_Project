@@ -1,0 +1,25 @@
+# Environment — NEVER commit real credentials
+.env
+
+# Uploaded files
+public/assets/uploads/
+
+# PHP logs
+*.log
+error_log
+
+# Composer (not used, but safe to add)
+vendor/
+composer.lock
+
+# macOS
+.DS_Store
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Windows
+Thumbs.db

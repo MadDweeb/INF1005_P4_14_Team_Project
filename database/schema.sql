@@ -1,0 +1,37 @@
+-- database/schema.sql
+--
+-- TODO: Define your database schema here.
+-- Run this file to create the required tables:
+--   mysql -u root -p < database/schema.sql
+--
+-- Suggested tables to create:
+--   - users        (user accounts)
+--   - products     (keyboard switch catalogue)
+--   - cart_items   (shopping cart entries)
+--   - orders       (placed orders)
+--   - order_items  (line items per order)
+--
+-- Example skeleton (replace with your own design):
+--
+-- CREATE DATABASE IF NOT EXISTS switchstore CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE switchstore;
+--
+-- CREATE TABLE IF NOT EXISTS users (
+--     user_id    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+--     username   VARCHAR(50)  NOT NULL UNIQUE,
+--     email      VARCHAR(255) NOT NULL UNIQUE,
+--     password   VARCHAR(255) NOT NULL,
+--     role       ENUM('customer','admin') NOT NULL DEFAULT 'customer',
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- ) ENGINE=InnoDB;
+--
+-- CREATE TABLE IF NOT EXISTS products (
+--     product_id   INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+--     name         VARCHAR(150) NOT NULL,
+--     switch_type  ENUM('linear','tactile','clicky') NOT NULL,
+--     price        DECIMAL(8,2) NOT NULL,
+--     stock_quantity INT UNSIGNED NOT NULL DEFAULT 0,
+--     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- ) ENGINE=InnoDB;
+--
+-- TODO: Add cart_items, orders, order_items tables.

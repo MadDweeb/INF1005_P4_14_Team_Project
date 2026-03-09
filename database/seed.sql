@@ -1,0 +1,17 @@
+-- database/seed.sql
+--
+-- TODO: Add sample/seed data here for development and testing.
+-- Run AFTER schema.sql:
+--   mysql -u root -p switchstore < database/seed.sql
+--
+-- Example (replace with your own data):
+--
+-- USE switchstore;
+--
+-- INSERT INTO users (username, email, password, role) VALUES
+--     ('admin', 'admin@example.com', 'REPLACE_WITH_BCRYPT_HASH', 'admin');
+--
+-- INSERT INTO products (name, switch_type, price, stock_quantity) VALUES
+--     ('Cherry MX Red', 'linear', 9.90, 100),
+--     ('Cherry MX Brown', 'tactile', 9.90, 100),
+--     ('Cherry MX Blue', 'clicky', 9.90, 100);
