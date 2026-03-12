@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -41,6 +42,10 @@
         <div class="logo">
             <a href="/" class="site-title" aria-label="KeyForge Home">KeyForge</a>
         </div>
+
+        <button class="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+            <i class="fas fa-bars"></i>
+        </button>
 
         <nav class="main-nav" aria-label="Main navigation">
             <ul>
