@@ -1,23 +1,16 @@
 -- database/seed.sql
---
--- Sample / seed data for development and testing.
--- Run AFTER schema.sql:
---   mysql -u root -p switchstore < database/seed.sql
---
--- IMPORTANT: Replace placeholder password hashes before use.
--- Generate real hashes in PHP:
---   echo password_hash('admin1234', PASSWORD_BCRYPT);
 
 USE switchstore;
 
--- Sample users
--- TODO: Replace PLACEHOLDER_HASH values with real bcrypt hashes.
+-- Sample users with real bcrypt hashes
+-- Login: admin@keyforge.example / admin1234
+-- Login: user@keyforge.example  / user1234
 INSERT INTO users (username, email, password, role) VALUES
-    ('admin',    'admin@keyforge.example', '$2y$12$REPLACE_WITH_REAL_HASH_ADMIN',    'admin'),
-    ('testuser', 'user@keyforge.example',  '$2y$12$REPLACE_WITH_REAL_HASH_CUSTOMER', 'customer')
+    ('admin',    'admin@keyforge.example', '$2y$12$BpS3I3viYhFl/cghr4sexOSDCLJGKWYXesNUiTzA2upCipl1ffonq',    'admin'),
+    ('testuser', 'user@keyforge.example',  '$2y$12$HBcjkNxHHX4UZ68KaLAGs.hmwyYtNjVAC1qwPuf4M1Kd2KHYPp9IW', 'customer')
 ON DUPLICATE KEY UPDATE username = username;
 
--- Sample products 
+-- Sample products
 INSERT INTO products
     (name, manufacturer, switch_type, actuation_force, bottom_out_force,
      travel_distance, pre_travel_distance, sound_profile, compatibility,

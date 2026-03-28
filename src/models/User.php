@@ -51,16 +51,19 @@ class User
      *
      * @param  array $data  Must include: username, email, password (already bcrypt-hashed).
      * @return int          The new user_id, or 0 on failure.
-     *
-     * TODO: In the controller, check that the email is not already registered
-     *       before calling this method (to provide a friendly duplicate error).
      */
     public function create(array $data): int
     {
-        // TODO: INSERT prepared statement.
-        // Reminder: $data['password'] must already be a bcrypt hash.
-        //   $data['password'] = password_hash($rawPassword, PASSWORD_BCRYPT);
-        return 0;
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO {$this->table} (username, email, password)
+             VALUES (:username, :email, :password)"
+        );
+        $stmt->execute([
+            ':username' => $data['username'],
+            ':email'    => $data['email'],
+            ':password' => $data['password'],
+        ]);
+        return (int) $this->pdo->lastInsertId();
     }
 
     /**
@@ -88,13 +91,26 @@ class User
      * @param  int   $id    The user_id to update.
      * @param  array $data  Fields to update (username, email, or a new hashed password).
      * @return bool         True on success.
-     *
-     * TODO: If updating password, re-hash the new value before passing it here.
-     * TODO: If updating email, check uniqueness first.
      */
     public function update(int $id, array $data): bool
     {
-        // TODO: Build a dynamic SET clause.
-        return false;
+        $allowed = ['username', 'email', 'password'];
+        $setClauses = [];
+        $params = [':id' => $id];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowed, true)) {
+                $setClauses[] = "$key = :$key";
+                $params[":$key"] = $value;
+            }
+        }
+
+        if (empty($setClauses)) {
+            return false;
+        }
+
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $setClauses) . " WHERE user_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params);
     }
 }
