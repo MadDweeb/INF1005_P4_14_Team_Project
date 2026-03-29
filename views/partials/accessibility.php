@@ -12,7 +12,7 @@
             Accessibility Options
         </h2>
         <div class="accessibility-widget__header-actions">
-            <label for="accessibilityLang" class="accessibility-lang">
+            <!-- <label for="accessibilityLang" class="accessibility-lang">
                 <i class="fas fa-globe" aria-hidden="true"></i>
                 <select id="accessibilityLang" aria-label="Change language">
                     <option value="en">EN</option>
@@ -20,7 +20,7 @@
                     <option value="ms">BM</option>
                     <option value="ta">&#x0BA4;&#x0BAE;&#x0BBF;&#x0BB4;&#x0BCD;</option>
                 </select>
-            </label>
+            </label> -->
             <button class="accessibility-widget__close" aria-label="Close accessibility options" id="accessibilityWidgetClose">
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
@@ -65,6 +65,10 @@
                 <button class="accessibility-card" data-action="readable-fonts" aria-pressed="false">
                     <i class="fas fa-font" aria-hidden="true"></i>
                     <span>Readable Fonts</span>
+                </button>
+                <button class="accessibility-card" data-action="reduce-motion" aria-pressed="false">
+                    <i class="fas fa-pause-circle" aria-hidden="true"></i>
+                    <span>Reduce Motion</span>
                 </button>
 
             </div>

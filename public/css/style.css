@@ -897,6 +897,21 @@ body.accessibility-highlight-links a {
     outline: 1px solid #b8a000 !important;
 }
 
+/* Reduce Motion - Pauses the ticker and kills all transitions */
+body.accessibility-reduce-motion .ticker-wrapper {
+    animation-play-state: paused !important;
+}
+
+body.accessibility-reduce-motion *,
+body.accessibility-reduce-motion *::before,
+body.accessibility-reduce-motion *::after {
+    /* We use 0.01ms instead of 'none' so JavaScript animationend events don't break */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
 /* -- Ticker Divider ----------------------------------------------------------- */
 .ticker-bar {
     width: 100vw;

@@ -11,6 +11,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // -- Smooth Scrolling (Lenis) -------------------------------------------------
+    let lenis = null;
+    let lenisRafId = null;
+
+    function startLenis() {
+        if (typeof Lenis === 'undefined' || lenis) return; 
+        
+        lenis = new Lenis({ lerp: 0.08, smoothWheel: true, syncTouch: false });
+        
+        function raf(time) {
+            lenis.raf(time);
+            lenisRafId = requestAnimationFrame(raf);
+        }
+        lenisRafId = requestAnimationFrame(raf);
+    }
+
+    function stopLenis() {
+        if (!lenis) return;
+        
+        lenis.destroy();
+        lenis = null;
+        
+        if (lenisRafId) {
+            cancelAnimationFrame(lenisRafId);
+            lenisRafId = null;
+        }
+    }
+
     // -- Mobile Menu Toggle -------------------------------------------------------
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mainNav = document.querySelector('.main-nav');
@@ -51,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         colorFilter: null,
         readingLine: false,
         highlightLinks: false,
+        reduceMotion: false,
     };
 
     const STORAGE_KEY = 'keyforge-accessibility';
@@ -63,7 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadState() {
         try {
             const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-            if (saved) Object.assign(state, saved);
+            if (saved) {
+                Object.assign(state, saved);
+            } else {
+                state.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            }
         } catch (_) { }
     }
 
@@ -86,6 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('accessibility-hide-images', state.hideImages);
         body.classList.toggle('accessibility-readable-fonts', state.readableFonts);
         body.classList.toggle('accessibility-highlight-links', state.highlightLinks);
+        body.classList.toggle('accessibility-reduce-motion', state.reduceMotion);
+
+        if (lenis) {
+            if (state.reduceMotion) {
+                stopLenis();
+            } else {
+                startLenis();
+            }  
+        }
 
         // Reading line visibility
         readingLineEl.hidden = !state.readingLine;
@@ -123,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'invert': state.invert,
             'reading-line': state.readingLine,
             'highlight-links': state.highlightLinks,
+            'reduce-motion': state.reduceMotion,
         };
         Object.entries(map).forEach(([action, active]) => {
             widget.querySelectorAll(`[data-action="${action}"]`).forEach(btn => {
@@ -140,6 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Color filters
         widget.querySelectorAll('[data-action="color-filter"]').forEach(btn => {
             btn.setAttribute('aria-pressed', String(btn.dataset.filter === state.colorFilter));
+        });
+        // Reduce motion
+        widget.querySelectorAll('[data-action="reduce-motion"]').forEach(btn => {
+            btn.setAttribute('aria-pressed', String(state.reduceMotion));
         });
     }
 
@@ -246,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.readingLine = !state.readingLine; break;
             case 'highlight-links':
                 state.highlightLinks = !state.highlightLinks; break;
+            case 'reduce-motion':
+                state.reduceMotion = !state.reduceMotion; break;
         }
 
         update();
@@ -263,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fontLevel: 0, biggerCursor: false, hideImages: false,
             readableFonts: false, invert: false, brightness: null,
             contrast: null, colorFilter: null, readingLine: false,
-            highlightLinks: false,
+            highlightLinks: false, reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         });
         update();
     });
