@@ -1,11 +1,11 @@
-# KeyForge — Keyboard Switch Store (Scaffold)
+# KeyForge - Keyboard Switch Store (Scaffold)
 
 A PHP starter scaffold for a keyboard switch e-commerce website.
 
 ## Project Structure
 
 ```
-public/            # Web root — point your server here
+public/            # Web root - point your server here
   index.php        # Front controller (single entry point)
   css/style.css    # Base stylesheet placeholder
   js/main.js       # Base JavaScript placeholder

@@ -5,10 +5,10 @@
  * Product filter sidebar for the catalogue page (/products).
  *
  * Submits as a GET form so filters are reflected in the URL and shareable.
- * Works without JavaScript — JS can enhance it with instant filtering later.
+ * Works without JavaScript - JS can enhance it with instant filtering later.
  *
  * ACCESSIBILITY NOTES:
- *   - Wrapped in <aside aria-label="Product filters"> — a named landmark.
+ *   - Wrapped in <aside aria-label="Product filters"> - a named landmark.
  *   - Checkbox groups use <fieldset> + <legend> for semantic grouping.
  *   - All inputs have explicit <label> elements.
  *   - Price range inputs use separate labels, not placeholder-only labels.

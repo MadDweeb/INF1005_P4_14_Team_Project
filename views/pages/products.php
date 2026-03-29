@@ -5,9 +5,9 @@
  * TODO: Implement the product catalogue page.
  *
  * Expected variables from ProductController::index():
- *   $products    (array) — paginated list of products
- *   $totalPages  (int)   — total number of pages
- *   $currentPage (int)   — current page number
+ *   $products    (array) - paginated list of products
+ *   $totalPages  (int)   - total number of pages
+ *   $currentPage (int)   - current page number
  *
  * Future logic:
  *   - Display product cards in a responsive grid

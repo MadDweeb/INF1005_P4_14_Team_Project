@@ -18,7 +18,7 @@
  * SECURITY REMINDERS:
  *   - Validate CSRF token on every POST handler.
  *   - Sanitize and validate all inputs before using them.
- *   - Hash passwords with password_hash(PASSWORD_BCRYPT) — never store plaintext.
+ *   - Hash passwords with password_hash(PASSWORD_BCRYPT) - never store plaintext.
  *   - Call session_regenerate_id(true) after a successful login.
  */
 

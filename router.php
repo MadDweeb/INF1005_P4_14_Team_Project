@@ -21,7 +21,7 @@ $requestPath = parse_url($requestUri, PHP_URL_PATH);
 $publicPath = __DIR__ . '/public' . $requestPath;
 
 // If the request maps to a real file (CSS, JS, image, etc.), serve it directly.
-// PHP's built-in server needs this hint — it won't auto-serve static files
+// PHP's built-in server needs this hint - it won't auto-serve static files
 // when a router script is present.
 if ($requestPath !== '/' && file_exists($publicPath) && !is_dir($publicPath)) {
     return false; // Let PHP serve the file natively

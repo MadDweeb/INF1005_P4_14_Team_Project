@@ -5,10 +5,10 @@
  * TODO: Implement the checkout page.
  *
  * Expected variables from OrderController::showCheckout():
- *   $cartItems (array) — cart items with product info
- *   $cartTotal (float) — order total
- *   $user      (array) — current logged-in user
- *   $errors    (array) — validation errors (on POST failure)
+ *   $cartItems (array) - cart items with product info
+ *   $cartTotal (float) - order total
+ *   $user      (array) - current logged-in user
+ *   $errors    (array) - validation errors (on POST failure)
  *
  * Future logic:
  *   - Display an order summary (items + total)

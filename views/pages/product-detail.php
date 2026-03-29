@@ -5,7 +5,7 @@
  * TODO: Implement the single product detail page.
  *
  * Expected variables from ProductController::show():
- *   $product (array) — a single product row from the database
+ *   $product (array) - a single product row from the database
  *
  * Future logic:
  *   - Display product name, manufacturer, switch type, price, stock

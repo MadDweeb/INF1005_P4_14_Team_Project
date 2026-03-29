@@ -5,8 +5,8 @@
  * TODO: Implement the shopping cart page.
  *
  * Expected variables from CartController::index():
- *   $cartItems (array) — cart item rows joined with product info
- *   $cartTotal (float) — pre-calculated order total
+ *   $cartItems (array) - cart item rows joined with product info
+ *   $cartTotal (float) - pre-calculated order total
  *
  * Future logic:
  *   - Display each cart item with product name, quantity, unit price, subtotal

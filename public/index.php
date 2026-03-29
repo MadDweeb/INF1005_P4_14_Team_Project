@@ -2,7 +2,7 @@
 /*
  * public/index.php
  *
- * Front controller — single entry point for all HTTP requests.
+ * Front controller - single entry point for all HTTP requests.
  *
  * For local development, run with the PHP built-in web server:
  *   php -S localhost:8000 -t public router.php

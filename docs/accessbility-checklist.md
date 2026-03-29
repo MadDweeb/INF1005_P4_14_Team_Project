@@ -17,10 +17,10 @@ Use this checklist before submitting or merging any page. All pages must pass
 
 ## Heading Hierarchy
 
-- [ ] Page has exactly **one `<h1>`** — the primary page topic
-- [ ] Headings follow logical order: `h1 → h2 → h3` — no levels skipped
+- [ ] Page has exactly **one `<h1>`** - the primary page topic
+- [ ] Headings follow logical order: `h1 → h2 → h3` - no levels skipped
 - [ ] Heading text clearly describes the section it introduces
-- [ ] Headings are not used purely for visual sizing — use CSS classes instead
+- [ ] Headings are not used purely for visual sizing - use CSS classes instead
 
 ---
 
@@ -29,8 +29,8 @@ Use this checklist before submitting or merging any page. All pages must pass
 - [ ] Every `<img>` has an `alt` attribute (even if empty)
 - [ ] Decorative images: `alt=""` and optionally `role="presentation"`
 - [ ] Meaningful images have descriptive alt text (not "image", "photo", or the filename)
-- [ ] Product images: `alt="{Product Name} — {Manufacturer} {Type} switch"`
-- [ ] Logo: `alt="KeyForge — home"` (or similar descriptive text)
+- [ ] Product images: `alt="{Product Name} - {Manufacturer} {Type} switch"`
+- [ ] Logo: `alt="KeyForge - home"` (or similar descriptive text)
 - [ ] Icon-only elements use `aria-hidden="true"` and are accompanied by visible or visually-hidden text
 
 ---
@@ -38,12 +38,12 @@ Use this checklist before submitting or merging any page. All pages must pass
 ## Forms & Labels
 
 - [ ] Every `<input>`, `<select>`, and `<textarea>` has an associated `<label>` via matching `for`/`id`
-- [ ] Visually hidden labels use `.visually-hidden` (Bootstrap) — **never remove labels entirely**
+- [ ] Visually hidden labels use `.visually-hidden` (Bootstrap) - **never remove labels entirely**
 - [ ] Required fields: include the HTML `required` attribute AND `aria-required="true"`
 - [ ] Required fields are visually indicated (e.g., asterisk `*`) with a legend explaining the symbol
 - [ ] Error messages are linked to their input via `aria-describedby`
 - [ ] Error messages use `role="alert"` or `role="status"` for dynamic announcements
-- [ ] Submit buttons have descriptive text ("Log In", "Create Account" — not just "Submit")
+- [ ] Submit buttons have descriptive text ("Log In", "Create Account" - not just "Submit")
 - [ ] `autocomplete` attributes used where appropriate (`email`, `current-password`, `username`, etc.)
 - [ ] `<fieldset>` and `<legend>` used to group related radio buttons and checkboxes
 
@@ -53,7 +53,7 @@ Use this checklist before submitting or merging any page. All pages must pass
 
 - [ ] All interactive elements are reachable with the **Tab** key
 - [ ] Tab order follows the visual reading order (top-left to bottom-right)
-- [ ] **Focus indicators are never hidden** — `outline: none` must not be used without a custom replacement
+- [ ] **Focus indicators are never hidden** - `outline: none` must not be used without a custom replacement
 - [ ] Custom focus styles meet WCAG 2.1 contrast requirements (3:1 minimum against adjacent colours)
 - [ ] **"Skip to main content"** is the first focusable element on every page
 - [ ] Modal dialogs trap focus when open and return focus to the trigger on close
@@ -77,7 +77,7 @@ Use this checklist before submitting or merging any page. All pages must pass
 - [ ] Dynamic content updates use `aria-live="polite"` regions (e.g., filter result count)
 - [ ] Icon-only buttons have `aria-label` describing the action (e.g., `aria-label="Remove Cherry MX Red from cart"`)
 - [ ] Expanded/collapsed components use `aria-expanded="true/false"` (Bootstrap handles this for accordions, dropdowns)
-- [ ] Do not use `aria-label` to override meaningful visible text — make the visible text correct instead
+- [ ] Do not use `aria-label` to override meaningful visible text - make the visible text correct instead
 
 ---
 
@@ -88,7 +88,7 @@ Use this checklist before submitting or merging any page. All pages must pass
 - [ ] **Carousel**: container has `aria-label`; prev/next controls have `aria-label`; auto-play can be paused
 - [ ] **Alert (dynamic)**: use `role="alert"` for error messages; `role="status"` for success/info
 - [ ] **Dropdown**: parent button has `aria-expanded` (Bootstrap handles this automatically)
-- [ ] **Tabs**: use Bootstrap's tab component correctly — `role="tablist"`, `role="tab"`, `aria-selected`
+- [ ] **Tabs**: use Bootstrap's tab component correctly - `role="tablist"`, `role="tab"`, `aria-selected`
 - [ ] **Pagination**: `<nav aria-label="Pagination navigation">` wraps the `<ul class="pagination">`; active page has `aria-current="page"`
 - [ ] **Tables**: use `<th scope="col">` for column headers and `<th scope="row">` for row headers
 

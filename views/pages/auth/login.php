@@ -5,7 +5,7 @@
  * Login form page.
  *
  * Expected variables from UserController::showLogin():
- *   $errors (array) — validation errors (on POST failure)
+ *   $errors (array) - validation errors (on POST failure)
  *
  * ACCESSIBILITY: All inputs need <label>. Error messages need aria-describedby.
  */

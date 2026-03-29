@@ -5,7 +5,7 @@
  * TODO: Implement the product card component.
  *
  * Expected variable:
- *   $product (array) — a product row from the database
+ *   $product (array) - a product row from the database
  *
  * Future logic:
  *   - Display product image with descriptive alt text

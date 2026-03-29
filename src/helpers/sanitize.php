@@ -10,11 +10,11 @@
  *   - Always use prepared statements for DB queries regardless of sanitization.
  *
  * Functions:
- *   escapeHtml($input)    → string  — safe for echoing into HTML
- *   sanitizeString($input)→ string  — stripped tags, trimmed
- *   sanitizeEmail($input) → string  — cleaned email address
- *   sanitizeInt($input)   → int     — cast to integer
- *   isPositiveInt($input) → bool    — validates a positive integer (e.g., product IDs)
+ *   escapeHtml($input)    → string  - safe for echoing into HTML
+ *   sanitizeString($input)→ string  - stripped tags, trimmed
+ *   sanitizeEmail($input) → string  - cleaned email address
+ *   sanitizeInt($input)   → int     - cast to integer
+ *   isPositiveInt($input) → bool    - validates a positive integer (e.g., product IDs)
  */
 
 /**

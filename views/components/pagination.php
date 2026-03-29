@@ -5,10 +5,10 @@
  * TODO: Implement the pagination component.
  *
  * Expected variables:
- *   $currentPage (int)    — active page number (1-based)
- *   $totalPages  (int)    — total number of pages
- *   $baseUrl     (string) — base URL (e.g. '/products')
- *   $queryParams (array)  — existing GET params to preserve in page links
+ *   $currentPage (int)    - active page number (1-based)
+ *   $totalPages  (int)    - total number of pages
+ *   $baseUrl     (string) - base URL (e.g. '/products')
+ *   $queryParams (array)  - existing GET params to preserve in page links
  *
  * Future logic:
  *   - Render Previous / page number links / Next

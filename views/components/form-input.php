@@ -4,7 +4,7 @@
  *
  * TODO: Implement the reusable form input component.
  *
- * Usage — set $inputConfig then include this file:
+ * Usage - set $inputConfig then include this file:
  *   $inputConfig = [
  *       'id'          => 'email',
  *       'label'       => 'Email Address',

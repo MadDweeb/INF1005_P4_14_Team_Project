@@ -2,22 +2,22 @@
 /**
  * src/models/User.php
  *
- * User model — account creation, login verification, profile management.
+ * User model - account creation, login verification, profile management.
  *
  * SECURITY NOTES:
  *   - Passwords MUST be hashed with password_hash($pass, PASSWORD_BCRYPT) before storing.
- *   - Use password_verify($plain, $hash) to verify — never compare plaintext strings.
+ *   - Use password_verify($plain, $hash) to verify - never compare plaintext strings.
  *   - Avoid SELECT * where possible; never return the password hash to view templates.
- *   - Always use prepared statements — user-supplied email/username are attack vectors.
+ *   - Always use prepared statements - user-supplied email/username are attack vectors.
  *
  * Attributes:
- *   user_id    — Auto-increment primary key
- *   username   — Public display name (unique)
- *   email      — Login identifier (unique)
- *   password   — Bcrypt hash (never store or log plaintext)
- *   role       — 'customer' (default) or 'admin'
- *   created_at — Registration timestamp
- *   updated_at — Last profile update timestamp
+ *   user_id    - Auto-increment primary key
+ *   username   - Public display name (unique)
+ *   email      - Login identifier (unique)
+ *   password   - Bcrypt hash (never store or log plaintext)
+ *   role       - 'customer' (default) or 'admin'
+ *   created_at - Registration timestamp
+ *   updated_at - Last profile update timestamp
  */
 
 class User

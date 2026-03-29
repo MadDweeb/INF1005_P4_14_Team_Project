@@ -5,23 +5,18 @@
  * Handles shopping cart operations.
  *
  * Routed from public/index.php:
- *   GET  /cart         → index()   — show cart contents
- *   POST /cart/add     → add()     — add an item
- *   POST /cart/update  → update()  — update item quantity
- *   POST /cart/remove  → remove()  — remove an item
- *
- * NOTE: $pdo may be null if the database is not yet configured.
- *       All methods render empty/placeholder states when DB is unavailable.
+ *   GET  /cart         → index()   - show cart contents
+ *   POST /cart/add     → add()     - add an item
+ *   POST /cart/update  → update()  - update item quantity
+ *   POST /cart/remove  → remove()  - remove an item
  *
  * All POST actions require a valid CSRF token.
  * All cart operations require the user to be logged in.
- *
- * TODO: If you want a guest cart (session-based), implement session cart logic
- *       here and merge it into the DB cart on login.
  */
 
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/CartItem.php';
+require_once __DIR__ . '/../models/Product.php';
 require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/csrf.php';
 require_once __DIR__ . '/../helpers/sanitize.php';
@@ -29,71 +24,144 @@ require_once __DIR__ . '/../helpers/sanitize.php';
 class CartController
 {
     private ?CartItem $cartModel;
+    private ?Product  $productModel;
 
     public function __construct(?PDO $pdo)
     {
-        $this->cartModel = $pdo ? new CartItem($pdo) : null;
+        $this->cartModel    = $pdo ? new CartItem($pdo) : null;
+        $this->productModel = $pdo ? new Product($pdo)  : null;
     }
 
     /**
      * Show the cart page (GET /cart).
-     * Loads all cart items for the current user with product details.
+     * Loads all cart items for the current user with product details joined.
      */
     public function index(): void
     {
-        /*
-         * TODO:
-         * - requireLogin()
-         * - $user = currentUser()
-         * - $cartItems = $this->cartModel ? $this->cartModel->getByUser($user['id']) : []
-         * - Calculate $cartTotal from $cartItems (price * quantity)
-         * - require_once views/pages/cart.php
-         */
+        requireLogin();
+
+        $user      = currentUser();
+        $cartItems = $this->cartModel
+            ? $this->cartModel->getByUser($user['id'])
+            : [];
+
+        // Calculate the running total from the joined price * quantity columns.
+        $cartTotal = array_reduce($cartItems, function (float $carry, array $item): float {
+            return $carry + ($item['price'] * $item['quantity']);
+        }, 0.0);
+
+        $currentPage = 'cart';
+        require_once __DIR__ . '/../../views/pages/cart.php';
     }
 
     /**
      * Add an item to the cart (POST /cart/add).
      *
-     * TODO: 1. verifyCsrf()
-     * TODO: 2. Sanitize product_id and quantity from $_POST.
-     * TODO: 3. Validate: product exists, quantity > 0, stock available.
-     * TODO: 4. $this->cartModel->addOrUpdate($userId, $productId, $quantity)
-     * TODO: 5. Redirect to /cart or back to the product page with a success message.
+     * Expects $_POST:
+     *   product_id - ID of the product to add
+     *   quantity   - number of units (defaults to 1)
+     *   redirect   - optional URL to send the user back to (e.g. the product page)
      */
     public function add(): void
     {
-        /*
-         * TODO: Implement add-to-cart logic (see docblock above).
-         */
+        requireLogin();
+        verifyCsrf();
+
+        $productId = sanitizeInt($_POST['product_id'] ?? 0);
+        $quantity  = sanitizeInt($_POST['quantity']   ?? 1);
+
+        // Basic validation - reject nonsensical values immediately.
+        if (!isPositiveInt($productId) || $quantity < 1) {
+            $_SESSION['flash_error'] = 'Invalid product or quantity.';
+            header('Location: /products');
+            exit;
+        }
+
+        // Verify the product actually exists and has sufficient stock.
+        $product = $this->productModel
+            ? $this->productModel->getById($productId)
+            : false;
+
+        if (!$product) {
+            $_SESSION['flash_error'] = 'Product not found.';
+            header('Location: /products');
+            exit;
+        }
+
+        if ($product['stock_quantity'] < $quantity) {
+            $_SESSION['flash_error'] = 'Not enough stock available.';
+            // Send the user back to where they came from (product page or cart).
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        $user = currentUser();
+        $this->cartModel->addOrUpdate($user['id'], $productId, $quantity);
+
+        $_SESSION['flash_success'] = 'Item added to cart.';
+
+        // Redirect back to wherever the add-to-cart form was submitted from.
+        $redirect = sanitizeString($_POST['redirect'] ?? '/cart');
+        header('Location: ' . $redirect);
+        exit;
     }
 
     /**
      * Update an item's quantity (POST /cart/update).
      *
-     * TODO: 1. verifyCsrf()
-     * TODO: 2. Sanitize cart_item_id and quantity from $_POST.
-     * TODO: 3. $this->cartModel->updateQuantity($userId, $cartItemId, $quantity)
-     * TODO: 4. Redirect back to /cart.
+     * Expects $_POST:
+     *   cart_item_id - the cart row to update
+     *   quantity     - new quantity (0 removes the item)
      */
     public function update(): void
     {
-        /*
-         * TODO: Implement update logic (see docblock above).
-         */
+        requireLogin();
+        verifyCsrf();
+
+        $cartItemId = sanitizeInt($_POST['cart_item_id'] ?? 0);
+        $quantity   = sanitizeInt($_POST['quantity']     ?? 0);
+
+        if (!isPositiveInt($cartItemId)) {
+            $_SESSION['flash_error'] = 'Invalid cart item.';
+            header('Location: /cart');
+            exit;
+        }
+
+        $user = currentUser();
+
+        // updateQuantity() handles quantity <= 0 by calling remove() internally.
+        $this->cartModel->updateQuantity($user['id'], $cartItemId, $quantity);
+
+        header('Location: /cart');
+        exit;
     }
 
     /**
      * Remove an item from the cart (POST /cart/remove).
      *
-     * TODO: 1. verifyCsrf()
-     * TODO: 2. Sanitize cart_item_id from $_POST.
-     * TODO: 3. $this->cartModel->remove($userId, $cartItemId)
-     * TODO: 4. Redirect back to /cart.
+     * Expects $_POST:
+     *   cart_item_id - the cart row to delete
      */
     public function remove(): void
     {
-        /*
-         * TODO: Implement remove logic (see docblock above).
-         */
+        requireLogin();
+        verifyCsrf();
+
+        $cartItemId = sanitizeInt($_POST['cart_item_id'] ?? 0);
+
+        if (!isPositiveInt($cartItemId)) {
+            $_SESSION['flash_error'] = 'Invalid cart item.';
+            header('Location: /cart');
+            exit;
+        }
+
+        $user = currentUser();
+
+        // user_id is passed so the model's WHERE clause prevents cross-user deletion.
+        $this->cartModel->remove($user['id'], $cartItemId);
+
+        header('Location: /cart');
+        exit;
     }
 }

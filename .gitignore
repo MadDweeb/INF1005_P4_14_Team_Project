@@ -1,4 +1,4 @@
-# Environment — NEVER commit real credentials
+# Environment - NEVER commit real credentials
 .env
 
 # Uploaded files
