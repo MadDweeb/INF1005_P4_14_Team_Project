@@ -150,38 +150,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -- Widget open/close --------------------------------------------------------
+    //
+    // We use .is-open / .is-closing classes instead of the `hidden` attribute.
+    // Reason: the base CSS has `display: none` by default, and only .is-open
+    // adds `display: flex` + the pop-in animation. This prevents the animation
+    // firing on page load and the widget appearing in the wrong position.
+
     function openWidget() {
-        widget.hidden = false;
+        widget.classList.remove('is-closing');
+        widget.classList.add('is-open');
         [fabBtn, skipTrigger].forEach(b => b && b.setAttribute('aria-expanded', 'true'));
         closeBtn && closeBtn.focus();
     }
 
     function closeWidget(returnTo) {
+        // Swap classes: remove is-open, add is-closing to play the pop-out animation
+        widget.classList.remove('is-open');
         widget.classList.add('is-closing');
 
+        // Once the pop-out animation finishes, fully hide the widget
         widget.addEventListener('animationend', () => {
-            widget.hidden = true;
-            widget.classList.remove('is-closing'); 
-        }, { once: true }); 
+            widget.classList.remove('is-closing');
+        }, { once: true });
 
         [fabBtn, skipTrigger].forEach(b => b && b.setAttribute('aria-expanded', 'false'));
         (returnTo || fabBtn) && (returnTo || fabBtn).focus();
     }
 
+    // FAB and skip-link trigger both open/close the widget
     [fabBtn, skipTrigger].forEach(btn => {
-        if (btn) {
-            btn.addEventListener('click', () => {
-                if (widget.hidden) {
-                    openWidget();
-                } else {
-                    closeWidget(btn); 
-                }
-            });
-        }
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            // Check .is-open class (not widget.hidden) as our source of truth
+            widget.classList.contains('is-open') ? closeWidget(btn) : openWidget();
+        });
     });
 
     closeBtn && closeBtn.addEventListener('click', () => closeWidget(fabBtn));
 
+    // ESC key — close if open
     widget.addEventListener('keydown', e => {
         if (e.key === 'Escape') { closeWidget(fabBtn); return; }
         if (e.key !== 'Tab') return;

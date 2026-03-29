@@ -358,7 +358,20 @@ main:focus {
 }
 
 /* -- Accessibility Widget ----------------------------------------------------- */
+/* -- Accessibility Widget ----------------------------------------------------- */
+
+/*
+ * IMPORTANT: display and animation must NOT be on the base class.
+ * If they are, the browser fires the pop-in animation on every page load
+ * (even while [hidden]), and the transform-origin:bottom-right scale causes
+ * the widget to appear in the top-left corner during that rogue animation.
+ *
+ * Rule: base class = visual appearance only (position, size, colour, shadow).
+ *       Visibility is controlled exclusively by the .is-open and .is-closing
+ *       classes, which JS adds/removes. The [hidden] attribute is not used.
+ */
 .accessibility-widget {
+    display: none; /* hidden by default — JS adds .is-open to show */
     position: fixed;
     bottom: 84px;
     right: 24px;
@@ -370,28 +383,31 @@ main:focus {
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.22);
     z-index: 10000;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
     transform-origin: bottom right;
-    animation: accessibility-pop-in 0.18s ease;
 }
 
-.accessibility-widget[hidden] {
-    display: none;
+/* Visible + open animation: only when JS adds .is-open */
+.accessibility-widget.is-open {
+    display: flex;
+    flex-direction: column;
+    animation: accessibility-pop-in 0.18s ease forwards;
+}
+
+/* Close animation: JS adds .is-closing, removes .is-open after animationend */
+.accessibility-widget.is-closing {
+    display: flex;
+    flex-direction: column;
+    animation: accessibility-pop-out 0.15s ease forwards;
 }
 
 @keyframes accessibility-pop-in {
     from { opacity: 0; transform: scale(0.88) translateY(8px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
 }
 
 @keyframes accessibility-pop-out {
-    from { opacity: 1; transform: scale(1) translateY(0); }
-    to { opacity: 0; transform: scale(0.88) translateY(8px); }
-}
-
-.accessibility-widget.is-closing {
-    animation: accessibility-pop-out 0.15s ease forwards; 
+    from { opacity: 1; transform: scale(1)    translateY(0); }
+    to   { opacity: 0; transform: scale(0.88) translateY(8px); }
 }
 
 /* Header */

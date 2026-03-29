@@ -1,5 +1,9 @@
 <!-- Accessibility Widget -->
-<div id="accessibilityWidget" class="accessibility-widget" role="dialog" aria-labelledby="accessibilityWidgetTitle" aria-modal="true" hidden>
+<div id="accessibilityWidget"
+     class="accessibility-widget"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="accessibilityWidgetTitle">
 
     <!-- Header -->
     <div class="accessibility-widget__header">

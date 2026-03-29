@@ -14,14 +14,14 @@
 ?>
 
 <header class="main-header" role="banner">
-    <div class="logo">
+    <p class="logo">
         <a href="/" class="site-title" aria-label="KeyForge Home">KeyForge</a>
-    </div>
-
+    </p>
+ 
     <button class="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
         <i class="fas fa-bars"></i>
     </button>
-
+ 
     <nav class="main-nav" aria-label="Main navigation">
         <ul>
             <li><a href="/products" aria-label="Browse switches">Switches</a></li>
