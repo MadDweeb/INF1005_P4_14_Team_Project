@@ -62,7 +62,7 @@ ob_start();
 </section>
 
 <!-- Value propositions placeholder -->
-<section class="value propositions" aria-labelledby="whyHeading">
+<section class="value-propositions" aria-labelledby="whyHeading">
     <h2 id="whyHeading">Why KeyForge?</h2>
 
     <!--

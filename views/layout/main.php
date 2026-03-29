@@ -30,7 +30,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' | ' : '' ?>Keyboard Switch Store</title>
+    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') . ' | ' : '' ?>Keyboard Switch Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
@@ -38,7 +38,7 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <header class="main-header" role="banner">
+    <header class="main-header">
         <div class="logo">
             <a href="/" class="site-title" aria-label="KeyForge Home">KeyForge</a>
         </div>
@@ -49,23 +49,24 @@
 
         <nav class="main-nav" aria-label="Main navigation">
             <ul>
-                <li><a href="/products" aria-label="Browse switches">Switches</a></li>
-                <li><a href="/customizer" aria-label="Customize your switches">Customize</a></li>
-                <li><a href="/about" aria-label="Learn about KeyForge">About</a></li>
-                <li><a href="/cart" aria-label="View shopping cart">Cart</a></li>
+                <li><a href="/products">Switches</a></li>
+                <li><a href="/customizer">Customize</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/cart">Cart</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="main-content" tabindex="-1" role="main">
+    <main id="main-content" tabindex="-1">
         <?= $pageContent ?>
     </main>
 
-    <footer class="main-footer" role="contentinfo">
+    <footer class="main-footer">
         <div class="footer-top">
             <section class="newsletter" aria-labelledby="newsletter-heading">
                 <h2 id="newsletter-heading">STAY IN THE LOOP</h2>
                 <form action="/subscribe" method="POST" class="subscribe-form" aria-labelledby="newsletter-heading">
+                    <?= csrfInput() ?>
                     <label for="email-subscribe" class="sr-only">Email address</label>
                     <input type="email" name="email" id="email-subscribe" placeholder="Your email" required autocomplete="email">
                     <button type="submit">SIGN UP</button>
@@ -115,7 +116,7 @@
                 <a href="/terms">Terms & Conditions</a>
             </small>
             <address>
-                <p>hello@keyforge.example</p>
+                <a href="mailto:hello@keyforge.example">hello@keyforge.example</a>
             </address>
         </div>
     </footer>
