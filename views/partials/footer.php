@@ -2,21 +2,27 @@
 /*
  * views/partials/footer.php
  *
- * Site-wide footer partial - included by views/layout/main.php.
+ * TODO: Implement the site-wide footer partial.
+ *
+ * Suggested content:
+ *   - Quick navigation links
+ *   - Company contact details using <address>
+ *   - Copyright notice
  *
  * ACCESSIBILITY:
- *   - <footer> is a native landmark; role="contentinfo" is redundant and omitted.
- *   - Footer nav uses aria-label to distinguish it from the main nav landmark.
- *   - <address> contains only flow content directly - no <p> wrapper.
+ *   - Use <footer> as a landmark element
+ *   - Use <nav aria-label="Footer navigation"> for footer links
+ *   - Use <address> for contact information
  */
+
+// TODO: Implement footer here
 ?>
 
-<footer id="main-footer" class="main-footer">
+<footer id="main-footer" class="main-footer" role="contentinfo">
     <div class="footer-top">
         <section class="newsletter" aria-labelledby="newsletter-heading">
             <h2 id="newsletter-heading">STAY IN THE LOOP</h2>
             <form action="/subscribe" method="POST" class="subscribe-form" aria-labelledby="newsletter-heading">
-                <?= csrfInput() ?>
                 <label for="email-subscribe" class="sr-only">Email address</label>
                 <input type="email" name="email" id="email-subscribe" placeholder="Your email" required
                     autocomplete="email">
@@ -60,16 +66,14 @@
             <li><a href="/faq">FAQ</a></li>
         </ul>
     </nav>
-
     <div class="footer-legal">
         <small>
             &copy; <?= date('Y') ?> KeyForge. All rights reserved. |
             <a href="/privacy">Privacy Policy</a> |
-            <a href="/terms">Terms &amp; Conditions</a>
+            <a href="/terms">Terms & Conditions</a>
         </small>
-        <!-- <address> must not wrap block-level elements like <p>. -->
         <address>
-            <a href="mailto:hello@keyforge.example">hello@keyforge.example</a>
+            <p>hello@keyforge.example</p>
         </address>
     </div>
 </footer>

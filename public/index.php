@@ -115,7 +115,16 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/contact' && $method === 'GET') {
     $currentPage = 'contact';
     require __DIR__ . '/../views/pages/contact.php';
-
+} elseif ($uri === '/customizer' && $method === 'GET') {
+    require_once __DIR__ . '/../src/models/Product.php';
+    $products = [];
+    if ($pdo !== null) {
+        $productModel = new Product($pdo);
+        $result = $productModel->getAll([], 1, 100); // Get all products for customizer
+        $products = $result['products'];
+    }
+    $currentPage = 'customizer';
+    require __DIR__ . '/../views/pages/customizer.php';
 // ── 404 fallback ──────────────────────────────────────────────────────────────
 
 } else {

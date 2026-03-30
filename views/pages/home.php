@@ -4,19 +4,16 @@
  *
  * Scaffold homepage for the KeyForge keyboard switch store.
  *
- * TODO: Replace inline styles with public/css/main.css once the layout is designed.
+ * TODO: Replace inline styles with public/css/style.css once the layout is designed.
  * TODO: Load $featuredProducts from the Product model and render them dynamically.
  * TODO: Connect the navigation links once those pages are implemented.
  */
 
 $pageTitle = 'KeyForge';
-$extraCss = ['/css/home.css'];
-$extraJs = ['/js/home.js'];
 ob_start();
 ?>
 <!-- Hero section -->
 <section class="hero" data-theme="dark" aria-labelledby="heroHeading">
-    <img src="/assets/images/home2.webp" alt="" fetchpriority="high" width="100%" height="100%" class="hero-image">
     <div class="hero-content">
         <h1 id="heroHeading">BUILD YOUR<br>DREAM KEYBOARD</h1>
     </div>
@@ -57,18 +54,18 @@ ob_start();
     </div>
 
     <div class="vp-spin-ring vp-outer-icons" aria-hidden="true">
-        <img src="/assets/images/switch1.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch2.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch3.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch4.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch5.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch6.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch1.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch2.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch3.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch4.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch5.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch6.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
+        <img src="/assets/images/switch1.png" alt="">
+        <img src="/assets/images/switch2.png" alt="">
+        <img src="/assets/images/switch3.png" alt="">
+        <img src="/assets/images/switch4.png" alt="">
+        <img src="/assets/images/switch5.png" alt="">
+        <img src="/assets/images/switch6.png" alt="">
+        <img src="/assets/images/switch1.png" alt="">
+        <img src="/assets/images/switch2.png" alt="">
+        <img src="/assets/images/switch3.png" alt="">
+        <img src="/assets/images/switch4.png" alt="">
+        <img src="/assets/images/switch5.png" alt="">
+        <img src="/assets/images/switch6.png" alt="">
     </div>
     <div class="vp-spin-ring text-ring" aria-hidden="true">
         <svg viewBox="0 0 800 800" class="circular-text-svg">
@@ -105,21 +102,12 @@ ob_start();
                     ?>
                     <div class="carousel-item" data-index="<?= $index ?>">
                         <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link" tabindex="-1">
-                            <?php if (!empty($p['product_image'])): ?>
-                                <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
-                                    alt="<?= htmlspecialchars($p['name']) ?>" class="product-image-placeholder"
-                                    style="object-fit: cover; padding: 0;">
-                            <?php else: ?>
-                                <div class="product-image-placeholder" aria-label="<?= htmlspecialchars($p['name']) ?>">
-                                    <span class="placeholder-text"><?= htmlspecialchars($p['name']) ?></span>
-                                </div>
-                            <?php endif; ?>
+                            <div class="product-image-placeholder" aria-label="<?= htmlspecialchars($p['name']) ?>">
+                                <span class="placeholder-text"><?= htmlspecialchars($p['name']) ?></span>
+                            </div>
                         </a>
                         <div class="carousel-item-content">
                             <h3><?= mb_strtoupper((string) $p['name']) ?></h3>
-                            <p style="font-weight: bold; color: var(--accent); margin-bottom: 10px;">
-                                $<?= number_format((float) $p['price'], 2) ?>
-                            </p>
                             <p><?= htmlspecialchars($p['description']) ?></p>
                             <a href="/products/<?= $p['product_id'] ?>" class="btn-shop">SHOP NOW ➞</a>
                         </div>
@@ -144,8 +132,7 @@ ob_start();
     <div class="catalog-grid">
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog1.webp" alt="Linear Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog1.png" alt="Linear Switches">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -155,8 +142,7 @@ ob_start();
         </a>
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog2.webp" alt="Tactile Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog2.png" alt="Tactile Switches">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -166,8 +152,7 @@ ob_start();
         </a>
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog3.webp" alt="Clicky Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog3.png" alt="Clicky Switches">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">

@@ -4,7 +4,7 @@
  *
  * 404 - Page Not Found.
  *
- * TODO: Replace inline styles with public/css/main.css once the layout is designed.
+ * TODO: Style this page to match the site layout once the main layout is built.
  */
 ?>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found | KeyForge</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <main>

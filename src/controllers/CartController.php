@@ -91,8 +91,7 @@ class CartController
         if ($product['stock_quantity'] < $quantity) {
             $_SESSION['flash_error'] = 'Not enough stock available.';
             // Send the user back to where they came from (product page or cart).
-            $raw      = sanitizeString($_POST['redirect'] ?? '');
-            $redirect = isSafeRedirect($raw) ? $raw : '/products/' . $productId;
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
             header('Location: ' . $redirect);
             exit;
         }
@@ -103,8 +102,7 @@ class CartController
         $_SESSION['flash_success'] = 'Item added to cart.';
 
         // Redirect back to wherever the add-to-cart form was submitted from.
-        $raw      = sanitizeString($_POST['redirect'] ?? '');
-        $redirect = isSafeRedirect($raw) ? $raw : '/cart';
+        $redirect = sanitizeString($_POST['redirect'] ?? '/cart');
         header('Location: ' . $redirect);
         exit;
     }
