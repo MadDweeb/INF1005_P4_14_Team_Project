@@ -14,7 +14,7 @@ require_once __DIR__ . '/../src/helpers/auth.php';
 require_once __DIR__ . '/../src/helpers/csrf.php';
 require_once __DIR__ . '/../src/helpers/sanitize.php';
 
-$uri    = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') ?: '/';
+$uri = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') ?: '/';
 $method = $_SERVER['REQUEST_METHOD'];
 
 // ── Router ────────────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ if ($uri === '/' && $method === 'GET') {
     }
     require __DIR__ . '/../views/pages/home.php';
 
-// ── Auth routes ───────────────────────────────────────────────────────────────
+    // ── Auth routes ───────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/login' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/UserController.php';
@@ -50,7 +50,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/UserController.php';
     (new UserController($pdo))->logout();
 
-// ── Product routes ────────────────────────────────────────────────────────────
+    // ── Product routes ────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/products' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
@@ -60,7 +60,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
     (new ProductController($pdo))->show((int) $matches[1]);
 
-// ── Cart routes ───────────────────────────────────────────────────────────────
+    // ── Cart routes ───────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/cart' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
@@ -78,7 +78,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->remove();
 
-// ── Checkout & Order routes ───────────────────────────────────────────────────
+    // ── Checkout & Order routes ───────────────────────────────────────────────────
 
 } elseif ($uri === '/checkout' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
@@ -88,7 +88,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->processCheckout();
 
-// ── Admin routes ──────────────────────────────────────────────────────────────
+    // ── Admin routes ──────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/admin/products' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
@@ -106,7 +106,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
     (new ProductController($pdo))->adminDelete();
 
-// ── Static pages ──────────────────────────────────────────────────────────────
+    // ── Static pages ──────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/about' && $method === 'GET') {
     $currentPage = 'about';
@@ -115,8 +115,17 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/contact' && $method === 'GET') {
     $currentPage = 'contact';
     require __DIR__ . '/../views/pages/contact.php';
-
-// ── 404 fallback ──────────────────────────────────────────────────────────────
+} elseif ($uri === '/customizer' && $method === 'GET') {
+    require_once __DIR__ . '/../src/models/Product.php';
+    $products = [];
+    if ($pdo !== null) {
+        $productModel = new Product($pdo);
+        $result = $productModel->getAll([], 1, 100); // Get all products for customizer
+        $products = $result['products'];
+    }
+    $currentPage = 'customizer';
+    require __DIR__ . '/../views/pages/customizer.php';
+    // ── 404 fallback ──────────────────────────────────────────────────────────────
 
 } else {
     http_response_code(404);

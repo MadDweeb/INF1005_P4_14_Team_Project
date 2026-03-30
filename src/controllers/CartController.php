@@ -24,12 +24,12 @@ require_once __DIR__ . '/../helpers/sanitize.php';
 class CartController
 {
     private ?CartItem $cartModel;
-    private ?Product  $productModel;
+    private ?Product $productModel;
 
     public function __construct(?PDO $pdo)
     {
-        $this->cartModel    = $pdo ? new CartItem($pdo) : null;
-        $this->productModel = $pdo ? new Product($pdo)  : null;
+        $this->cartModel = $pdo ? new CartItem($pdo) : null;
+        $this->productModel = $pdo ? new Product($pdo) : null;
     }
 
     /**
@@ -40,7 +40,7 @@ class CartController
     {
         requireLogin();
 
-        $user      = currentUser();
+        $user = currentUser();
         $cartItems = $this->cartModel
             ? $this->cartModel->getByUser($user['id'])
             : [];
@@ -68,7 +68,7 @@ class CartController
         verifyCsrf();
 
         $productId = sanitizeInt($_POST['product_id'] ?? 0);
-        $quantity  = sanitizeInt($_POST['quantity']   ?? 1);
+        $quantity = sanitizeInt($_POST['quantity'] ?? 1);
 
         // Basic validation - reject nonsensical values immediately.
         if (!isPositiveInt($productId) || $quantity < 1) {
@@ -91,8 +91,7 @@ class CartController
         if ($product['stock_quantity'] < $quantity) {
             $_SESSION['flash_error'] = 'Not enough stock available.';
             // Send the user back to where they came from (product page or cart).
-            $raw      = sanitizeString($_POST['redirect'] ?? '');
-            $redirect = isSafeRedirect($raw) ? $raw : '/products/' . $productId;
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
             header('Location: ' . $redirect);
             exit;
         }
@@ -103,8 +102,7 @@ class CartController
         $_SESSION['flash_success'] = 'Item added to cart.';
 
         // Redirect back to wherever the add-to-cart form was submitted from.
-        $raw      = sanitizeString($_POST['redirect'] ?? '');
-        $redirect = isSafeRedirect($raw) ? $raw : '/cart';
+        $redirect = sanitizeString($_POST['redirect'] ?? '/cart');
         header('Location: ' . $redirect);
         exit;
     }
@@ -122,7 +120,7 @@ class CartController
         verifyCsrf();
 
         $cartItemId = sanitizeInt($_POST['cart_item_id'] ?? 0);
-        $quantity   = sanitizeInt($_POST['quantity']     ?? 0);
+        $quantity = sanitizeInt($_POST['quantity'] ?? 0);
 
         if (!isPositiveInt($cartItemId)) {
             $_SESSION['flash_error'] = 'Invalid cart item.';
