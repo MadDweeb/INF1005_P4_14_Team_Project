@@ -18,7 +18,7 @@ ob_start();
     <h1 id="login-heading">Log In</h1>
 
     <?php if (!empty($errors['general'])): ?>
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" id="login-error">
             <?= escapeHtml($errors['general']) ?>
         </div>
     <?php endif; ?>
@@ -29,20 +29,22 @@ ob_start();
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email"
-                   id="email"
-                   name="email"
-                   value="<?= escapeHtml($email ?? '') ?>"
-                   required
-                   autocomplete="email">
+                id="email"
+                name="email"
+                value="<?= escapeHtml($email ?? '') ?>"
+                required
+                autocomplete="email"
+                <?= !empty($errors['general']) ? 'aria-describedby="login-error" aria-invalid="true"' : '' ?>>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password"
-                   id="password"
-                   name="password"
-                   required
-                   autocomplete="current-password">
+                id="password"
+                name="password"
+                required
+                autocomplete="current-password"
+                <?= !empty($errors['general']) ? 'aria-describedby="login-error" aria-invalid="true"' : '' ?>>
         </div>
 
         <button type="submit" class="btn btn-primary">Log In</button>

@@ -18,8 +18,8 @@
  */
 
 $activeTypes  = (array)($_GET['type']      ?? []);
-$priceMin     = sanitizeInt($_GET['price_min'] ?? 0);
-$priceMax     = sanitizeInt($_GET['price_max'] ?? 500);
+$priceMin = max(0, (float)($_GET['price_min'] ?? 0));
+$priceMax = min(9999, (float)($_GET['price_max'] ?? 500));
 $activeSearch = htmlspecialchars($_GET['q'] ?? '', ENT_QUOTES, 'UTF-8');
 ?>
 <aside aria-label="Product filters">
@@ -75,20 +75,20 @@ $activeSearch = htmlspecialchars($_GET['q'] ?? '', ENT_QUOTES, 'UTF-8');
                 <div class="col-6">
                     <label for="price_min" class="form-label small">Min</label>
                     <input type="number"
-                           class="form-control form-control-sm"
-                           id="price_min"
-                           name="price_min"
-                           value="<?= $priceMin ?>"
-                           min="0" step="1">
+                        class="form-control form-control-sm"
+                        id="price_min"
+                        name="price_min"
+                        value="<?= $priceMin ?>"
+                        min="0" max="9999" step="0.01">
                 </div>
                 <div class="col-6">
                     <label for="price_max" class="form-label small">Max</label>
                     <input type="number"
-                           class="form-control form-control-sm"
-                           id="price_max"
-                           name="price_max"
-                           value="<?= $priceMax ?>"
-                           min="0" step="1">
+                        class="form-control form-control-sm"
+                        id="price_max"
+                        name="price_max"
+                        value="<?= $priceMax ?>"
+                        min="0" max="9999" step="0.01">
                 </div>
             </div>
         </fieldset>

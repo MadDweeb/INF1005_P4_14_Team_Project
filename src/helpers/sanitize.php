@@ -81,3 +81,9 @@ function isPositiveInt(mixed $input): bool
         'options' => ['min_range' => 1],
     ]) !== false;
 }
+
+function isSafeRedirect(string $url): bool
+{
+    // Must be a relative path: starts with / but not //
+    return str_starts_with($url, '/') && !str_starts_with($url, '//');
+}
