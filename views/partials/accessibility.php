@@ -28,7 +28,7 @@
     </div>
 
     <!-- Scrollable body -->
-    <div class="accessibility-widget__body">
+    <div class="accessibility-widget__body" data-lenis-prevent="true">
 
         <!-- Content -->
         <section class="accessibility-section" aria-labelledby="accessibilitySecContent">

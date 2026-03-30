@@ -14,17 +14,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const items = Array.from(carouselTrack.querySelectorAll('.carousel-item'));
         const btnPrev = document.querySelector('.carousel-nav.left');
         const btnNext = document.querySelector('.carousel-nav.right');
-        
+
         if (items.length > 0) {
             let activeIndex = Math.floor(items.length / 2);
-            
+
             function updateCarousel() {
                 items.forEach((item, index) => {
                     item.className = 'carousel-item'; // reset classes
                     item.setAttribute('aria-hidden', 'true');
-                    
+
                     let diff = index - activeIndex;
-                    
+
                     // Support wrap-around offset calculation
                     if (diff > Math.floor(items.length / 2)) {
                         diff -= items.length;
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             items.forEach((item, index) => {
                 item.addEventListener('click', (e) => {
                     if (!item.classList.contains('active')) {
-                        e.preventDefault(); 
+                        e.preventDefault();
                         activeIndex = index;
                         updateCarousel();
                     }
@@ -76,50 +76,63 @@ document.addEventListener('DOMContentLoaded', function () {
     // -- Value Propositions Scroll Animation ------------------------------------
     const textRing = document.querySelector('.vp-spin-ring.text-ring');
     const imageRing = document.querySelector('.vp-spin-ring.vp-outer-icons');
-    const bodyElement = document.body;
-    const featuredDrops = document.querySelector('.featured-drops');
 
     if (textRing && imageRing) {
         function updateRotation() {
-            // Respect the global accessibility reduce motion class if present
+            // If reduce motion is on, skip animation
             if (document.body.classList.contains('accessibility-reduce-motion')) return;
 
             const scrollY = window.scrollY;
-            const rotationText = scrollY * 0.15; 
-            const rotationOuter = scrollY * -0.10; 
+            const rotationText = scrollY * 0.15;
+            const rotationOuter = scrollY * -0.10;
 
             textRing.style.transform = `rotate(${rotationText}deg)`;
             imageRing.style.transform = `rotate(${rotationOuter}deg)`;
-            
-            // Global Background Fade Intersection Trigger
-            if (featuredDrops) {
-                const rect = featuredDrops.getBoundingClientRect();
-                // If top of featured slider is ~65% or higher up viewport...
-                if (rect.top <= window.innerHeight * 0.65) {
-                    bodyElement.classList.add('bg-transition-active');
-                } else {
-                    bodyElement.classList.remove('bg-transition-active');
-                }
-            }
         }
-        
+
         window.addEventListener('scroll', updateRotation, { passive: true });
-        // Call immediately to set initial position
         updateRotation();
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+    // -- Scalable Global Theme Intersection Observer ----------------------------
+    const themeSections = document.querySelectorAll('[data-theme]');
+    if (themeSections.length > 0) {
+        const observerOptions = {
+            root: null,
+            rootMargin: "-50% 0px -50% 0px", // Triggers precisely at the vertical center of the viewport
+            threshold: 0
+        };
+
+        const themeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const theme = entry.target.getAttribute('data-theme');
+
+                    // Natively strip all existing theme- classes via Regex safely
+                    document.body.className = document.body.className.replace(/\btheme-\S+/g, '').trim();
+
+                    // Append the incoming theme
+                    if (theme) {
+                        document.body.classList.add(`theme-${theme}`);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        themeSections.forEach(section => {
+            themeObserver.observe(section);
+        });
+    }
 
     // -- Smooth Scrolling (Lenis) -------------------------------------------------
     let lenis = null;
     let lenisRafId = null;
 
     function startLenis() {
-        if (typeof Lenis === 'undefined' || lenis) return; 
-        
+        if (typeof Lenis === 'undefined' || lenis) return;
+
         lenis = new Lenis({ lerp: 0.08, smoothWheel: true, syncTouch: false });
-        
+
         function raf(time) {
             lenis.raf(time);
             lenisRafId = requestAnimationFrame(raf);
@@ -129,10 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopLenis() {
         if (!lenis) return;
-        
+
         lenis.destroy();
         lenis = null;
-        
+
         if (lenisRafId) {
             cancelAnimationFrame(lenisRafId);
             lenisRafId = null;

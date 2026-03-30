@@ -13,7 +13,7 @@ $pageTitle = 'KeyForge';
 ob_start();
 ?>
 <!-- Hero section -->
-<section class="hero" aria-labelledby="heroHeading">
+<section class="hero" data-theme="dark" aria-labelledby="heroHeading">
     <div class="hero-content">
         <h1 id="heroHeading">BUILD YOUR<br>DREAM KEYBOARD</h1>
     </div>
@@ -48,7 +48,7 @@ ob_start();
     </div>
 </div>
 
-<section class="value-propositions" aria-labelledby="whyHeading">
+<section class="value-propositions" data-theme="dark" aria-labelledby="whyHeading">
     <div class="vp-center-text">
         <h2 id="whyHeading">CURATED<br>SELECTION<br>OF<br>SWITCHES</h2>
     </div>
@@ -82,7 +82,7 @@ ob_start();
     </div>
 </section>
 
-<section class="featured-drops" aria-labelledby="featuredHeading">
+<section class="featured-drops" data-theme="maroon" aria-labelledby="featuredHeading">
     <h2 id="featuredHeading">Featured Switches</h2>
 
     <div class="carousel-container">
@@ -124,6 +124,45 @@ ob_start();
         <button class="carousel-nav right" aria-label="Next product" type="button">❯</button>
     </div>
 </section>
+
+<section class="product-catalog" data-theme="beige" aria-labelledby="catalogHeading">
+    <div class="catalog-header">
+        <h2 id="catalogHeading">Typing, Reimagined</h2>
+    </div>
+    <div class="catalog-grid">
+        <a href="/products" class="catalog-card">
+            <div class="catalog-image-wrapper">
+                <img src="/assets/images/catalog1.png" alt="Linear Switches">
+            </div>
+            <div class="catalog-overlay"></div>
+            <div class="catalog-content">
+                <h3>Linear Switches</h3>
+                <span class="catalog-arrow">→</span>
+            </div>
+        </a>
+        <a href="/products" class="catalog-card">
+            <div class="catalog-image-wrapper">
+                <img src="/assets/images/catalog2.png" alt="Tactile Switches">
+            </div>
+            <div class="catalog-overlay"></div>
+            <div class="catalog-content">
+                <h3>Tactile Switches</h3>
+                <span class="catalog-arrow">→</span>
+            </div>
+        </a>
+        <a href="/products" class="catalog-card">
+            <div class="catalog-image-wrapper">
+                <img src="/assets/images/catalog3.png" alt="Clicky Switches">
+            </div>
+            <div class="catalog-overlay"></div>
+            <div class="catalog-content">
+                <h3>Clicky Switches</h3>
+                <span class="catalog-arrow">→</span>
+            </div>
+        </a>
+    </div>
+</section>
+
 
 <?php
 $pageContent = ob_get_clean();

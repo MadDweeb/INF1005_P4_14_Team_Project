@@ -10,6 +10,7 @@
     --bg-header: #EBE5DA;
     --text-main: #1A1A1A;
     --accent: #D73A3A;
+    --bg-sub: #221111;
     --footer-bg: #373738;
     --footer-text: #F4F0EA;
     --divider-color: #D1C9B8;
@@ -38,9 +39,19 @@ body {
     transition: background-color 0.8s ease, color 0.8s ease;
 }
 
-body.bg-transition-active {
+body.theme-dark {
+    background-color: var(--text-main);
+    color: var(--bg-main);
+}
+
+body.theme-beige {
     background-color: var(--bg-main);
     color: var(--text-main);
+}
+
+body.theme-maroon {
+    background-color: var(--bg-sub);
+    color: var(--bg-main);
 }
 
 /* -- Header ------------------------------------------------------------------- */
@@ -379,15 +390,17 @@ main:focus {
     transform-origin: bottom right;
 }
 
-.accessibility-widget.is-open {
+.accessibility-widget.is-open,
+.accessibility-widget.is-closing {
     display: flex;
     flex-direction: column;
+}
+
+.accessibility-widget.is-open {
     animation: accessibility-pop-in 0.18s ease forwards;
 }
 
 .accessibility-widget.is-closing {
-    display: flex;
-    flex-direction: column;
     animation: accessibility-pop-out 0.15s ease forwards;
 }
 
@@ -912,8 +925,6 @@ body.accessibility-reduce-motion *::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
 }
 
 /* -- Value Propositions (Spinning Animation & Color Transition) --------- */
@@ -1232,6 +1243,7 @@ body.accessibility-reduce-motion *::after {
     margin-bottom: 20px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1310,7 +1322,7 @@ body.accessibility-reduce-motion *::after {
     border: none;
     font-size: 3rem;
     font-weight: 900;
-    color: var(--text-main);
+    color: var(--bg-header);
     cursor: pointer;
     z-index: 20;
     padding: 20px;
@@ -1320,7 +1332,7 @@ body.accessibility-reduce-motion *::after {
 
 .carousel-nav:hover {
     opacity: 1;
-    color: var(--accent);
+    color: var(--bg-header);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -1346,6 +1358,139 @@ body.accessibility-reduce-motion *::after {
 
     .carousel-nav.right {
         right: 0;
+    }
+}
+
+/* -- Product Catalog  ------------------------------------- */
+.product-catalog {
+    padding: 100px 5vw;
+    background-color: transparent;
+}
+
+.catalog-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.catalog-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 600px);
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.catalog-card {
+    position: relative;
+    display: block;
+    height: 750px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: #1a1a1a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.catalog-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.catalog-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.catalog-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 20%, transparent 100%);
+    transition: background 0.4s ease;
+    z-index: 1;
+}
+
+.catalog-content {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.catalog-content h3 {
+    margin: 0;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.catalog-arrow {
+    color: var(--accent);
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: 'Inter', sans-serif;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Interactivity (Hover Overrides) */
+.catalog-card:hover .catalog-image-wrapper img {
+    transform: scale(1.08);
+}
+
+.catalog-card:hover .catalog-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.2) 20%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+.catalog-card:hover .catalog-content h3 {
+    transform: translateX(10px);
+}
+
+.catalog-card:hover .catalog-arrow {
+    opacity: 1;
+    transform: translateX(8px);
+}
+
+@media (max-width: 1024px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .catalog-card {
+        height: 450px;
+    }
+
+    .catalog-header h2 {
+        font-size: 2.5rem;
     }
 }
 
