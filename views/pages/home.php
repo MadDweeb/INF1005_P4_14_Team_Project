@@ -106,10 +106,9 @@ ob_start();
                     <div class="carousel-item" data-index="<?= $index ?>">
                         <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link" tabindex="-1">
                             <?php if (!empty($p['product_image'])): ?>
-                                <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>" 
-                                     alt="<?= htmlspecialchars($p['name']) ?>" 
-                                     class="product-image-placeholder" 
-                                     style="object-fit: cover; padding: 0;">
+                                <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
+                                    alt="<?= htmlspecialchars($p['name']) ?>" class="product-image-placeholder"
+                                    style="object-fit: cover; padding: 0;">
                             <?php else: ?>
                                 <div class="product-image-placeholder" aria-label="<?= htmlspecialchars($p['name']) ?>">
                                     <span class="placeholder-text"><?= htmlspecialchars($p['name']) ?></span>
@@ -119,7 +118,7 @@ ob_start();
                         <div class="carousel-item-content">
                             <h3><?= mb_strtoupper((string) $p['name']) ?></h3>
                             <p style="font-weight: bold; color: var(--accent); margin-bottom: 10px;">
-                                $<?= number_format((float)$p['price'], 2) ?>
+                                $<?= number_format((float) $p['price'], 2) ?>
                             </p>
                             <p><?= htmlspecialchars($p['description']) ?></p>
                             <a href="/products/<?= $p['product_id'] ?>" class="btn-shop">SHOP NOW ➞</a>

@@ -42,11 +42,7 @@
 </head>
 
 <body>
-    <?php
-    // Skip links must be the very first focusable elements in <body>.
-    // They are defined in the partial and included here - before the header.
-    include __DIR__ . '/../partials/skip-links.php';
-    ?>
+    <?php include __DIR__ . '/../partials/skip-links.php'; ?>
 
     <?php include __DIR__ . '/../partials/header.php'; ?>
 
