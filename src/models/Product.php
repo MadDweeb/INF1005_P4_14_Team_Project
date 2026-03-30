@@ -158,6 +158,22 @@ class Product
         return $result['products'];
     }
 
+    /**
+     * Retrieve featured products for the homepage carousel.
+     *
+     * @param  int   $limit Number of products to retrieve.
+     * @return array        Array of product rows.
+     */
+    public function getFeatured(int $limit = 5): array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT :limit"
+        );
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     // ─── WRITE ─────────────────────────────────────────────────────────────────
 
     /**

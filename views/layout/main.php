@@ -27,15 +27,19 @@
 <!-- TODO: Implement layout here -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') . ' | ' : '' ?>Keyboard Switch Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Open+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="/js/main.js" defer></script>
 </head>
+
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="main-header">
@@ -56,6 +60,10 @@
             </ul>
         </nav>
     </header>
+    <!-- skip links -->
+    <?php include __DIR__ . '/../partials/skip-links.php'; ?>
+    <!-- header -->
+    <?php include __DIR__ . '/../partials/header.php'; ?>
 
     <main id="main-content" tabindex="-1">
         <?= $pageContent ?>
@@ -121,5 +129,9 @@
         </div>
     </footer>
 
+    <!-- footer -->
+    <?php include __DIR__ . '/../partials/footer.php'; ?>
+    <!-- Accessibility Widget -->
+    <?php include __DIR__ . '/../partials/accessibility.php'; ?>
 </body>
 </html>
