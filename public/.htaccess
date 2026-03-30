@@ -10,12 +10,15 @@ Options -MultiViews
 
 RewriteEngine On
 
+
 # Allow direct access to real files (CSS, JS, images) and directories
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+
 # Route everything else through the front controller
-RewriteRule ^ index.php [QSA,L]
+
+RewriteRule ^(.*)$ index.php [L]
 
 # ─── Security Headers ─────────────────────────────────────────────────────────
 # TODO: Uncomment and configure these headers before deploying to the cloud server.
@@ -30,3 +33,6 @@ RewriteRule ^ index.php [QSA,L]
 #   style-src  'self' https://cdn.jsdelivr.net; \
 #   font-src   'self' https://cdn.jsdelivr.net; \
 #   img-src    'self' data:"
+
+
+
