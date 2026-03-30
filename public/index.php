@@ -20,6 +20,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 // ── Router ────────────────────────────────────────────────────────────────────
 
 if ($uri === '/' && $method === 'GET') {
+    require_once __DIR__ . '/../src/models/Product.php';
+    $featuredProducts = [];
+    if ($pdo !== null) {
+        $productModel = new Product($pdo);
+        $featuredProducts = $productModel->getFeatured(5);
+    }
     require __DIR__ . '/../views/pages/home.php';
 
 // ── Auth routes ───────────────────────────────────────────────────────────────

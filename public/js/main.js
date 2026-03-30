@@ -7,6 +7,106 @@ document.addEventListener('DOMContentLoaded', function () {
     // TODO: Implement cart interactions (add-to-cart buttons, quantity updates).
     // TODO: Implement product filtering / search on the catalogue page.
     // TODO: Implement client-side form validation (login, register, checkout).
+
+    // -- Featured Carousel Logic ----------------------------------------------------
+    const carouselTrack = document.getElementById('featuredCarouselTrack');
+    if (carouselTrack) {
+        const items = Array.from(carouselTrack.querySelectorAll('.carousel-item'));
+        const btnPrev = document.querySelector('.carousel-nav.left');
+        const btnNext = document.querySelector('.carousel-nav.right');
+        
+        if (items.length > 0) {
+            let activeIndex = Math.floor(items.length / 2);
+            
+            function updateCarousel() {
+                items.forEach((item, index) => {
+                    item.className = 'carousel-item'; // reset classes
+                    item.setAttribute('aria-hidden', 'true');
+                    
+                    let diff = index - activeIndex;
+                    
+                    // Support wrap-around offset calculation
+                    if (diff > Math.floor(items.length / 2)) {
+                        diff -= items.length;
+                    } else if (diff < -Math.floor(items.length / 2)) {
+                        diff += items.length;
+                    }
+
+                    if (diff === 0) {
+                        item.classList.add('active');
+                        item.setAttribute('aria-hidden', 'false');
+                    } else if (diff === -1) {
+                        item.classList.add('prev-1');
+                    } else if (diff === 1) {
+                        item.classList.add('next-1');
+                    } else if (diff === -2) {
+                        item.classList.add('prev-2');
+                    } else if (diff === 2) {
+                        item.classList.add('next-2');
+                    }
+                });
+            }
+
+            btnPrev?.addEventListener('click', () => {
+                activeIndex = (activeIndex - 1 + items.length) % items.length;
+                updateCarousel();
+            });
+
+            btnNext?.addEventListener('click', () => {
+                activeIndex = (activeIndex + 1) % items.length;
+                updateCarousel();
+            });
+
+            // Clicking side items makes them active without immediately navigating away
+            items.forEach((item, index) => {
+                item.addEventListener('click', (e) => {
+                    if (!item.classList.contains('active')) {
+                        e.preventDefault(); 
+                        activeIndex = index;
+                        updateCarousel();
+                    }
+                });
+            });
+
+            // Init
+            updateCarousel();
+        }
+    }
+
+    // -- Value Propositions Scroll Animation ------------------------------------
+    const textRing = document.querySelector('.vp-spin-ring.text-ring');
+    const imageRing = document.querySelector('.vp-spin-ring.vp-outer-icons');
+    const bodyElement = document.body;
+    const featuredDrops = document.querySelector('.featured-drops');
+
+    if (textRing && imageRing) {
+        function updateRotation() {
+            // Respect the global accessibility reduce motion class if present
+            if (document.body.classList.contains('accessibility-reduce-motion')) return;
+
+            const scrollY = window.scrollY;
+            const rotationText = scrollY * 0.15; 
+            const rotationOuter = scrollY * -0.10; 
+
+            textRing.style.transform = `rotate(${rotationText}deg)`;
+            imageRing.style.transform = `rotate(${rotationOuter}deg)`;
+            
+            // Global Background Fade Intersection Trigger
+            if (featuredDrops) {
+                const rect = featuredDrops.getBoundingClientRect();
+                // If top of featured slider is ~65% or higher up viewport...
+                if (rect.top <= window.innerHeight * 0.65) {
+                    bodyElement.classList.add('bg-transition-active');
+                } else {
+                    bodyElement.classList.remove('bg-transition-active');
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', updateRotation, { passive: true });
+        // Call immediately to set initial position
+        updateRotation();
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -121,12 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('accessibility-highlight-links', state.highlightLinks);
         body.classList.toggle('accessibility-reduce-motion', state.reduceMotion);
 
-        if (lenis) {
-            if (state.reduceMotion) {
-                stopLenis();
-            } else {
-                startLenis();
-            }  
+        if (state.reduceMotion) {
+            stopLenis();
+        } else {
+            startLenis();
         }
 
         // Reading line visibility
