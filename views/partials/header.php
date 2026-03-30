@@ -14,10 +14,10 @@
  */
 
 $navLinks = [
-    '/products'   => ['label' => 'Switches',  'key' => 'products'],
+    '/products' => ['label' => 'Switches', 'key' => 'products'],
     '/customizer' => ['label' => 'Customize', 'key' => 'customizer'],
-    '/about'      => ['label' => 'About',     'key' => 'about'],
-    '/cart'       => ['label' => 'Cart',      'key' => 'cart'],
+    '/about' => ['label' => 'About', 'key' => 'about'],
+    '/cart' => ['label' => 'Cart', 'key' => 'cart'],
 ];
 ?>
 
@@ -26,8 +26,7 @@ $navLinks = [
         <a href="/" class="site-title" aria-label="KeyForge Home">KeyForge</a>
     </p>
 
-    <button class="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false"
-        aria-controls="main-nav">
+    <button class="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-nav">
         <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
 
@@ -35,12 +34,12 @@ $navLinks = [
         <ul>
             <?php foreach ($navLinks as $href => $link):
                 $isCurrent = (($currentPage ?? '') === $link['key']);
-            ?>
-            <li>
-                <a href="<?= $href ?>"<?= $isCurrent ? ' aria-current="page"' : '' ?>>
-                    <?= $link['label'] ?>
-                </a>
-            </li>
+                ?>
+                <li>
+                    <a href="<?= $href ?>" <?= $isCurrent ? ' aria-current="page"' : '' ?>>
+                        <?= $link['label'] ?>
+                    </a>
+                </li>
             <?php endforeach; ?>
 
             <?php if (isLoggedIn()): ?>
@@ -53,6 +52,7 @@ $navLinks = [
                 </li>
             <?php else: ?>
                 <li><a href="/login">Login</a></li>
+                <li><a href="/register" aria-label="Register">Register</a></li>
             <?php endif; ?>
         </ul>
     </nav>

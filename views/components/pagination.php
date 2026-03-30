@@ -5,13 +5,10 @@
  * TODO: Implement the pagination component.
  *
  * Expected variables:
- *   $activePage  (int)    - active page number (1-based) - set by ProductController::index()
+ *   $currentPage (int)    - active page number (1-based)
  *   $totalPages  (int)    - total number of pages
  *   $baseUrl     (string) - base URL (e.g. '/products')
  *   $queryParams (array)  - existing GET params to preserve in page links
- *
- * Note: use $activePage (int) for the page number, NOT $currentPage which is
- *       the nav-highlight string ('products', 'cart', etc.) set by controllers.
  *
  * Future logic:
  *   - Render Previous / page number links / Next

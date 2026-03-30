@@ -22,13 +22,13 @@ require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/sanitize.php';
 
 class ProductController
-{   
+{
     private ?Product $productModel;
 
     // Allowed image MIME types for product photo uploads.
     private const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-    private const MAX_IMAGE_BYTES     = 2 * 1024 * 1024; // 2 MB
-    private const IMAGE_UPLOAD_DIR    = __DIR__ . '/../../public/assets/images/';
+    private const MAX_IMAGE_BYTES = 2 * 1024 * 1024; // 2 MB
+    private const IMAGE_UPLOAD_DIR = __DIR__ . '/../../public/assets/images/';
 
     public function __construct(?PDO $pdo)
     {
@@ -53,26 +53,22 @@ class ProductController
 
         // Collect and lightly sanitize filter parameters from the query string.
         $filters = [
-            'q'         => sanitizeString($_GET['q']         ?? ''),
-            'type'      => $_GET['type']      ?? [],   // array from type[] checkboxes
-            'price_min' => isset($_GET['price_min']) && $_GET['price_min'] !== '' ? (float)$_GET['price_min'] : '',
-            'price_max' => isset($_GET['price_max']) && $_GET['price_max'] !== '' ? (float)$_GET['price_max'] : '',
+            'q' => sanitizeString($_GET['q'] ?? ''),
+            'type' => $_GET['type'] ?? [],   // array from type[] checkboxes
+            'price_min' => $_GET['price_min'] ?? '',
+            'price_max' => $_GET['price_max'] ?? '',
         ];
-        // $activePage (int) is the pagination page number.
-        // Keep it separate from $currentPage (string) which is used for nav highlighting.
-        $activePage = max(1, sanitizeInt($_GET['page'] ?? 1));
+        $page = max(1, sanitizeInt($_GET['page'] ?? 1));
 
         // Fetch from model (returns ['products' => [...], 'total_count' => int])
-        $result       = $this->productModel
-            ? $this->productModel->getAll($filters, $activePage, $perPage)
+        $result = $this->productModel
+            ? $this->productModel->getAll($filters, $page, $perPage)
             : ['products' => [], 'total_count' => 0];
 
-        $products     = $result['products'];
+        $products = $result['products'];
         $productCount = $result['total_count'];
-        $totalPages   = $productCount > 0 ? (int) ceil($productCount / $perPage) : 1;
-        // $currentPage  → nav highlight string (used by header partial)
-        // $activePage   → pagination int (used by pagination component)
-        $currentPage  = 'products';
+        $totalPages = $productCount > 0 ? (int) ceil($productCount / $perPage) : 1;
+        $currentPage = 'products';
 
         require_once __DIR__ . '/../../views/pages/products.php';
     }
@@ -116,11 +112,11 @@ class ProductController
         requireAdmin();
 
         // Fetch all products with no filters and a generous per-page limit.
-        $result      = $this->productModel
+        $result = $this->productModel
             ? $this->productModel->getAll([], 1, 200)
             : ['products' => [], 'total_count' => 0];
 
-        $products    = $result['products'];
+        $products = $result['products'];
         $currentPage = 'admin';
 
         require_once __DIR__ . '/../../views/admin/products.php';
@@ -152,10 +148,10 @@ class ProductController
 
         if (!empty($errors)) {
             // Re-render the admin products view with validation errors.
-            $result   = $this->productModel
+            $result = $this->productModel
                 ? $this->productModel->getAll([], 1, 200)
                 : ['products' => [], 'total_count' => 0];
-            $products    = $result['products'];
+            $products = $result['products'];
             $currentPage = 'admin';
             require_once __DIR__ . '/../../views/admin/products.php';
             return;
@@ -186,7 +182,7 @@ class ProductController
         }
 
         $errors = $this->validateProductPost(isUpdate: true);
-        $data   = [];
+        $data = [];
 
         if (empty($errors)) {
             $data = $this->collectProductPost();
@@ -201,10 +197,10 @@ class ProductController
         }
 
         if (!empty($errors)) {
-            $result      = $this->productModel
+            $result = $this->productModel
                 ? $this->productModel->getAll([], 1, 200)
                 : ['products' => [], 'total_count' => 0];
-            $products    = $result['products'];
+            $products = $result['products'];
             $currentPage = 'admin';
             require_once __DIR__ . '/../../views/admin/products.php';
             return;
@@ -262,11 +258,11 @@ class ProductController
     {
         $errors = [];
 
-        $name         = sanitizeString($_POST['name']         ?? '');
+        $name = sanitizeString($_POST['name'] ?? '');
         $manufacturer = sanitizeString($_POST['manufacturer'] ?? '');
-        $switchType   = sanitizeString($_POST['switch_type']  ?? '');
-        $price        = $_POST['price']          ?? '';
-        $stock        = $_POST['stock_quantity'] ?? '';
+        $switchType = sanitizeString($_POST['switch_type'] ?? '');
+        $price = $_POST['price'] ?? '';
+        $stock = $_POST['stock_quantity'] ?? '';
 
         if (!$isUpdate || $name !== '') {
             if (strlen($name) < 2 || strlen($name) > 150) {
@@ -284,12 +280,12 @@ class ProductController
             }
         }
         if (!$isUpdate || $price !== '') {
-            if (!is_numeric($price) || (float)$price < 0) {
+            if (!is_numeric($price) || (float) $price < 0) {
                 $errors['price'] = 'Price must be a non-negative number.';
             }
         }
         if (!$isUpdate || $stock !== '') {
-            if (!ctype_digit((string)$stock)) {
+            if (!ctype_digit((string) $stock)) {
                 $errors['stock_quantity'] = 'Stock must be a whole number.';
             }
         }
@@ -356,7 +352,7 @@ class ProductController
         }
 
         // Validate MIME type using finfo (safer than relying on the browser-supplied type).
-        $finfo    = new \finfo(FILEINFO_MIME_TYPE);
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($file['tmp_name']);
         if (!in_array($mimeType, self::ALLOWED_IMAGE_TYPES, true)) {
             $errors['product_image'] = 'Only JPEG, PNG, and WebP images are allowed.';
@@ -364,11 +360,9 @@ class ProductController
         }
 
         // Build a unique filename to avoid overwriting existing images.
-        // Allow-listing of image extensions to prevent spoofing.
-        $mimeToExt = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
-        $extension = $mimeToExt[$mimeType];
-        $filename  = uniqid('product_', more_entropy: true) . '.' . $extension;
-        $dest      = self::IMAGE_UPLOAD_DIR . $filename;
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $filename = uniqid('product_', more_entropy: true) . '.' . strtolower($extension);
+        $dest = self::IMAGE_UPLOAD_DIR . $filename;
 
         if (!move_uploaded_file($file['tmp_name'], $dest)) {
             $errors['product_image'] = 'Could not save the image. Check server permissions.';
