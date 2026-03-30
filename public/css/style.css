@@ -82,7 +82,6 @@ body.bg-transition-active {
     align-items: center;
 }
 
-/* --- The Navigation Links --- */
 .main-nav a {
     text-decoration: none;
     color: var(--text-main);
@@ -364,21 +363,8 @@ main:focus {
 }
 
 /* -- Accessibility Widget ----------------------------------------------------- */
-/* -- Accessibility Widget ----------------------------------------------------- */
-
-/*
- * IMPORTANT: display and animation must NOT be on the base class.
- * If they are, the browser fires the pop-in animation on every page load
- * (even while [hidden]), and the transform-origin:bottom-right scale causes
- * the widget to appear in the top-left corner during that rogue animation.
- *
- * Rule: base class = visual appearance only (position, size, colour, shadow).
- *       Visibility is controlled exclusively by the .is-open and .is-closing
- *       classes, which JS adds/removes. The [hidden] attribute is not used.
- */
 .accessibility-widget {
     display: none;
-    /* hidden by default — JS adds .is-open to show */
     position: fixed;
     bottom: 84px;
     right: 24px;
@@ -393,14 +379,12 @@ main:focus {
     transform-origin: bottom right;
 }
 
-/* Visible + open animation: only when JS adds .is-open */
 .accessibility-widget.is-open {
     display: flex;
     flex-direction: column;
     animation: accessibility-pop-in 0.18s ease forwards;
 }
 
-/* Close animation: JS adds .is-closing, removes .is-open after animationend */
 .accessibility-widget.is-closing {
     display: flex;
     flex-direction: column;
@@ -748,7 +732,6 @@ div.accessibility-card {
     outline-offset: 2px;
 }
 
-/* Floating action button (always-visible for mouse users) */
 .accessibility-fab {
     position: fixed;
     bottom: 24px;
@@ -793,7 +776,7 @@ div.accessibility-card {
     transition: top 0.05s linear;
 }
 
-/* -- Body modifier classes (toggled by JS) ------------------------------------ */
+/* -- Body modifier classes ------------------------------------ */
 
 /* Font size increase (scales text content without zooming layout) */
 html.accessibility-font-1 {
@@ -881,7 +864,6 @@ html.accessibility-font-3 {
     letter-spacing: 0.3px;
 }
 
-/* Bigger cursor -- uses FontAwesome arrow-pointer path at 48x48 */
 body.accessibility-bigger-cursor,
 body.accessibility-bigger-cursor * {
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath d='M0 0 L0 18 L5 14 L9 22 L12 20.5 L8 12.5 L16 12.5 Z' fill='%23000000' stroke='%23ffffff' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 0 0, auto !important
@@ -926,7 +908,6 @@ body.accessibility-reduce-motion .ticker-wrapper {
 body.accessibility-reduce-motion *,
 body.accessibility-reduce-motion *::before,
 body.accessibility-reduce-motion *::after {
-    /* We use 0.01ms instead of 'none' so JavaScript animationend events don't break */
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -995,7 +976,6 @@ body.accessibility-reduce-motion *::after {
     letter-spacing: 5.5px;
 }
 
-/* Rebuilding Outer Image Ring */
 .vp-outer-icons {
     width: 1000px;
     height: 1000px;
@@ -1013,11 +993,9 @@ body.accessibility-reduce-motion *::after {
     margin-top: -55px;
     margin-left: -55px;
     object-fit: contain;
-    /* Optional edge drop shadow creates depth */
     filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
 }
 
-/* Arrange 12 items in a perfect planetary orbit radius of roughly 500px */
 .vp-outer-icons img:nth-child(1) {
     transform: rotate(0deg) translateY(-500px);
 }
