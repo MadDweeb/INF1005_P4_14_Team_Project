@@ -19,30 +19,30 @@ VALUES
     ('MX Red', 'Cherry', 'linear', 45.0, 60.0, 4.0, 2.0, 'quiet',
      'MX-compatible PCBs',
      'The classic smooth linear switch. Ideal for gaming and fast typing with no tactile bump.',
-     9.90, 150, 'switch1.webp'),
+     9.90, 150, 'mx_red.jpg'),
 
     ('MX Brown', 'Cherry', 'tactile', 55.0, 60.0, 4.0, 2.0, 'quiet',
      'MX-compatible PCBs',
      'Gentle tactile bump with no audible click. A versatile all-rounder for typing and gaming.',
-     9.90, 120, 'switch2.webp'),
+     9.90, 120, 'mx_brown.jpg'),
 
     ('MX Blue', 'Cherry', 'clicky', 60.0, 60.0, 4.0, 2.2, 'loud',
      'MX-compatible PCBs',
      'Satisfying audible click and tactile bump. The iconic typist switch.',
-     9.90, 100, 'switch3.webp'),
+     9.90, 100, 'mx_blue.jpg'),
 
     ('Speed Silver', 'Cherry', 'linear', 45.0, 60.0, 3.4, 1.2, 'quiet',
      'MX-compatible PCBs',
      'Ultra-short pre-travel for fast actuation. Built for competitive gaming.',
-     12.90, 80, 'switch4.webp'),
+     12.90, 80, 'speed_silver.jpg'),
 
     ('Gateron Yellow', 'Gateron', 'linear', 35.0, 50.0, 4.0, 2.0, 'silent',
      'MX-compatible PCBs',
      'Buttery smooth linear with a light spring. Popular for silent builds.',
-     6.50, 200, 'switch5.webp'),
+     6.50, 200, 'gateron_yellow.jpg'),
 
     ('Topre 45g', 'Topre', 'tactile', 45.0, NULL, 4.0, NULL, 'medium',
      'Topre boards only',
      'Electro-capacitive rubber dome with a unique thocky tactile feel.',
-     35.00, 40, 'switch6.webp')
+     35.00, 40, 'topre_45g.jpg')
 ON DUPLICATE KEY UPDATE name = name;

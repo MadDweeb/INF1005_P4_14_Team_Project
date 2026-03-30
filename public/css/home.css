@@ -249,7 +249,7 @@
 /* -- Featured Products Carousel ----------------------------------------------- */
 .featured-drops {
     padding: 100px 0 150px 0;
-    min-height: 150vh;
+    min-height: 100vh;
     text-align: center;
     background-color: transparent;
     background-image: radial-gradient(var(--divider-color) 1px, transparent 1px);
@@ -268,14 +268,14 @@
     font-size: 4rem;
     font-weight: 900;
     text-transform: uppercase;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     letter-spacing: 2px;
 }
 
 .carousel-container {
     position: relative;
-    width: 100%;
-    max-width: 1200px;
+    width: 70%;
+    max-width: 1600px;
     margin: 0 auto;
     height: 520px;
     display: flex;
@@ -348,13 +348,13 @@
     font-weight: 900;
     font-size: 1.6rem;
     margin-bottom: 8px;
-    color: var(--text-main);
+    color: var(--accent);
     line-height: 1.2;
 }
 
 .carousel-item-content p {
     font-size: 0.95rem;
-    color: #444;
+    color: rgba(244, 240, 234, 0.7);
     margin-bottom: 20px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -399,7 +399,7 @@
 .carousel-item.prev-1 {
     z-index: 5;
     opacity: 0.65;
-    transform: scale(0.85) translateX(-110%);
+    transform: scale(0.85) translateX(-140%);
     cursor: pointer;
     pointer-events: auto;
 }
@@ -407,7 +407,7 @@
 .carousel-item.next-1 {
     z-index: 5;
     opacity: 0.65;
-    transform: scale(0.85) translateX(110%);
+    transform: scale(0.85) translateX(140%);
     cursor: pointer;
     pointer-events: auto;
 }
@@ -415,7 +415,7 @@
 .carousel-item.prev-2 {
     z-index: 3;
     opacity: 0.25;
-    transform: scale(0.65) translateX(-210%);
+    transform: scale(0.65) translateX(-270%);
     cursor: pointer;
     pointer-events: auto;
 }
@@ -423,7 +423,7 @@
 .carousel-item.next-2 {
     z-index: 3;
     opacity: 0.25;
-    transform: scale(0.65) translateX(210%);
+    transform: scale(0.65) translateX(270%);
     cursor: pointer;
     pointer-events: auto;
 }
