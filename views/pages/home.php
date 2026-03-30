@@ -126,8 +126,9 @@ ob_start();
 </section>
 
 <!-- Value propositions placeholder -->
-<section class="value-propositions" aria-labelledby="whyHeading">
-    <h2 id="whyHeading">Why KeyForge?</h2>
+<!-- id renamed to whyHeading2 to avoid duplicate IDs with the section above -->
+<section class="value-propositions" aria-labelledby="whyHeading2">
+    <h2 id="whyHeading2">Why KeyForge?</h2>
 
     <!--
         TODO: Add value proposition content here, for example:
@@ -136,6 +137,8 @@ ob_start();
         - Expert advice
     -->
     <p>Content coming soon.</p>
+</section><!-- closing tag was missing - caused invalid nesting with product-catalog below -->
+
 <section class="product-catalog" data-theme="beige" aria-labelledby="catalogHeading">
     <div class="catalog-header">
         <h2 id="catalogHeading">Typing, Reimagined</h2>

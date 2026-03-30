@@ -58,16 +58,20 @@ class ProductController
             'price_min' => isset($_GET['price_min']) && $_GET['price_min'] !== '' ? (float)$_GET['price_min'] : '',
             'price_max' => isset($_GET['price_max']) && $_GET['price_max'] !== '' ? (float)$_GET['price_max'] : '',
         ];
-        $page = max(1, sanitizeInt($_GET['page'] ?? 1));
+        // $activePage (int) is the pagination page number.
+        // Keep it separate from $currentPage (string) which is used for nav highlighting.
+        $activePage = max(1, sanitizeInt($_GET['page'] ?? 1));
 
         // Fetch from model (returns ['products' => [...], 'total_count' => int])
         $result       = $this->productModel
-            ? $this->productModel->getAll($filters, $page, $perPage)
+            ? $this->productModel->getAll($filters, $activePage, $perPage)
             : ['products' => [], 'total_count' => 0];
 
         $products     = $result['products'];
         $productCount = $result['total_count'];
         $totalPages   = $productCount > 0 ? (int) ceil($productCount / $perPage) : 1;
+        // $currentPage  → nav highlight string (used by header partial)
+        // $activePage   → pagination int (used by pagination component)
         $currentPage  = 'products';
 
         require_once __DIR__ . '/../../views/pages/products.php';

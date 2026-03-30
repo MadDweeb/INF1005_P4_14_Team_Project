@@ -2,29 +2,24 @@
 /*
  * views/pages/about.php
  *
- * TODO: Implement the About Us page.
+ * About Us page - uses shared layout via output buffer pattern.
  *
- * Suggested content:
- *   - Company mission and values
- *   - Origin story
- *   - Team member profiles (name, role, photo with descriptive alt text)
+ * TODO: Replace placeholder text with real company content.
  *
- * ACCESSIBILITY: Use a single <h1>, sections with <h2>, and <address> for contact info.
+ * ACCESSIBILITY: Single <h1>, sections with <h2>, <address> for contact info.
  */
+
+$pageTitle = 'About Us';
+ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | KeyForge</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <main>
-        <h1>About KeyForge</h1>
-        <!-- TODO: Add company mission, story, and team member details here -->
-        <p>About page coming soon.</p>
-    </main>
-</body>
-</html>
+
+<section class="about-section" aria-labelledby="about-heading">
+    <h1 id="about-heading">About KeyForge</h1>
+
+    <!-- TODO: Add company mission, story, and team member details here -->
+    <p>About page coming soon.</p>
+</section>
+
+<?php
+$pageContent = ob_get_clean();
+require_once __DIR__ . '/../layout/main.php';

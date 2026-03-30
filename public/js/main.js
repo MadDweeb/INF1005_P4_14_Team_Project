@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     closeBtn && closeBtn.addEventListener('click', () => closeWidget(fabBtn));
 
-    // ESC key — close if open
+    // ESC key - close if open
     widget.addEventListener('keydown', e => {
         if (e.key === 'Escape') { closeWidget(fabBtn); return; }
         if (e.key !== 'Tab') return;
