@@ -35,9 +35,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Open+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <?php if (!empty($extraCss)): ?>
+        <?php foreach ((array)$extraCss as $cssFile): ?>
+            <link rel="stylesheet" href="<?= htmlspecialchars($cssFile) ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script src="/js/main.js" defer></script>
+    <?php if (!empty($extraJs)): ?>
+        <?php foreach ((array)$extraJs as $jsFile): ?>
+            <script src="<?= htmlspecialchars($jsFile) ?>" defer></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </head>
 
 <body>

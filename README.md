@@ -7,8 +7,8 @@ A PHP starter scaffold for a keyboard switch e-commerce website.
 ```
 public/            # Web root - point your server here
   index.php        # Front controller (single entry point)
-  css/style.css    # Base stylesheet placeholder
-  js/main.js       # Base JavaScript placeholder
+  css/main.css     # Base stylesheet
+  js/main.js       # Base JavaScript
   assets/          # Images and other static assets
   .htaccess        # Apache rewrite rules (do not edit)
 config/
