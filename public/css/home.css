@@ -661,3 +661,97 @@
         transform: translateX(-50%);
     }
 }
+
+/* -- Home Customizing (Scroll Assembly) ------------------------------------- */
+.home-custom-wrapper {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.home-custom-sticky {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh 5vw;
+}
+
+/* Highly responsive container using viewport units */
+.home-assembly-container {
+    position: relative;
+    width: min(320px, 80vw);
+    height: 65vh; /* Expanded to contain the new spaced layout */
+    margin-bottom: 2vh;
+}
+
+.home-assembly-part {
+    position: absolute;
+    width: 100%;
+    height: 15vh; /* Base height for each image */
+    object-fit: contain;
+    will-change: transform, opacity;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+/* Precise VH-based offsets. Since image height is 15vh, spacing by 17vh guarantees 2vh padding between them. */
+.h-part-top-housing { z-index: 4; transform: translateX(-100vw); top: 0; }
+.h-part-stem { z-index: 3; transform: translateX(100vw); top: 17vh; }
+.h-part-spring { z-index: 2; transform: translateX(-100vw); top: 34vh; }
+.h-part-bottom { z-index: 1; transform: translateX(100vw); top: 51vh; }
+
+/* Responsive Text Area */
+.home-custom-content {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(2vh);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    width: 100%;
+    max-width: 800px;
+}
+
+.home-custom-content.h-show-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-custom-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.8rem, 4.5vh, 3.5rem); /* Scaled by viewport height primarily */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5vh;
+    line-height: 1;
+}
+
+.home-custom-subheading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.8rem, 2vh, 1.4rem);
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 3vh;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-height: 700px) {
+    .home-assembly-container { height: 62vh; }
+    .home-assembly-part { height: 13vh; }
+    .h-part-stem { top: 15vh; }
+    .h-part-spring { top: 30vh; }
+    .h-part-bottom { top: 45vh; }
+}

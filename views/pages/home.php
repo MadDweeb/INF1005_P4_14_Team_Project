@@ -57,18 +57,18 @@ ob_start();
     </div>
 
     <div class="vp-spin-ring vp-outer-icons" aria-hidden="true">
-        <img src="/assets/images/switch1.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch2.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch3.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch4.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch5.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch6.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch1.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch2.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch3.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch4.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch5.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
-        <img src="/assets/images/switch6.webp" alt="" loading="lazy" decoding="async" width="100%" height="100%">
+        <img src="/assets/images/switch1.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch2.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch3.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch4.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch5.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch6.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch1.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch2.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch3.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch4.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch5.webp" alt="" width="100%" height="100%">
+        <img src="/assets/images/switch6.webp" alt="" width="100%" height="100%">
     </div>
     <div class="vp-spin-ring text-ring" aria-hidden="true">
         <svg viewBox="0 0 800 800" class="circular-text-svg">
@@ -144,8 +144,7 @@ ob_start();
     <div class="catalog-grid">
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog1.webp" alt="Linear Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog1.webp" alt="Linear Switches" width="100%" height="100%">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -155,8 +154,7 @@ ob_start();
         </a>
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog2.webp" alt="Tactile Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog2.webp" alt="Tactile Switches" width="100%" height="100%">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -166,8 +164,7 @@ ob_start();
         </a>
         <a href="/products" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog3.webp" alt="Clicky Switches" loading="lazy" decoding="async"
-                    width="100%" height="100%">
+                <img src="/assets/images/catalog3.webp" alt="Clicky Switches" width="100%" height="100%">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -175,6 +172,23 @@ ob_start();
                 <span class="catalog-arrow">→</span>
             </div>
         </a>
+    </div>
+</section>
+
+<section class="home-custom-wrapper" data-theme="dark" aria-labelledby="homeCustomHeading">
+    <div class="home-custom-sticky">
+        <div class="home-assembly-container" aria-hidden="true">
+            <img src="/assets/images/top_housing.webp" alt="" fetchpriority="high" class="home-assembly-part h-part-top-housing">
+            <img src="/assets/images/stem.webp" alt="" fetchpriority="high" class="home-assembly-part h-part-stem">
+            <img src="/assets/images/spring.webp" alt="" fetchpriority="high" class="home-assembly-part h-part-spring">
+            <img src="/assets/images/bottom_housing.webp" alt="" fetchpriority="high" class="home-assembly-part h-part-bottom">
+        </div>
+        
+        <div class="home-custom-content">
+            <h2 id="homeCustomHeading">Custom Switches?</h2>
+            <h3 class="home-custom-subheading">Find your preferred Switch</h3>
+            <a href="/customizer" class="btn-shop">CUSTOMIZE NOW ➞</a>
+        </div>
     </div>
 </section>
 

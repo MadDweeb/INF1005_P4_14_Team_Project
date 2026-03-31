@@ -115,4 +115,72 @@ document.addEventListener('DOMContentLoaded', function () {
             themeObserver.observe(section);
         });
     }
+
+    // -- Home Customizing Scroll Assembly --------------------------------------------
+    const homeCustomWrapper = document.querySelector('.home-custom-wrapper');
+    const homeCustomContent = document.querySelector('.home-custom-content');
+    
+    if (homeCustomWrapper) {
+        const parts = [
+            { el: document.querySelector('.h-part-top-housing'), startX: -50 }, // vw
+            { el: document.querySelector('.h-part-stem'), startX: 50 },
+            { el: document.querySelector('.h-part-spring'), startX: -50 },
+            { el: document.querySelector('.h-part-bottom'), startX: 50 }
+        ];
+        
+        function updateAssembly() {
+            if (document.body.classList.contains('accessibility-reduce-motion')) {
+                parts.forEach(p => {
+                    if (p.el) {
+                        p.el.style.transform = `translateX(0)`;
+                        p.el.style.opacity = 1;
+                    }
+                });
+                if(homeCustomContent) homeCustomContent.classList.add('h-show-content');
+                return;
+            }
+
+            const rect = homeCustomWrapper.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // For a 100vh section, we want to animate as it moves into full view.
+            // Start: bottom 20% of viewport
+            // End: Top of viewport
+            const startPoint = windowHeight * 0.8;
+            const endPoint = 0;
+            const scrollRange = startPoint - endPoint;
+            
+            let progress = (startPoint - rect.top) / scrollRange;
+            
+            progress = Math.max(0, Math.min(1, progress));
+            
+            const ease = progress; 
+
+            parts.forEach((p, index) => {
+                if (!p.el) return;
+                
+                // Keep the translation consistent
+                const currentOffset = p.startX * (1 - ease); 
+                
+                // Fade in
+                const opacity = Math.min(1, progress * 4);
+
+                p.el.style.transform = `translateX(${currentOffset}vw)`;
+                p.el.style.opacity = opacity;
+            });
+            
+            // Show content
+            if (homeCustomContent) {
+                if (progress > 0.9) {
+                    homeCustomContent.classList.add('h-show-content');
+                } else {
+                    homeCustomContent.classList.remove('h-show-content');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', updateAssembly, { passive: true });
+        window.addEventListener('resize', updateAssembly);
+        updateAssembly();
+    }
 });
