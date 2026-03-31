@@ -125,7 +125,6 @@ body.theme-maroon {
 
 /* -- Main content ------------------------------------------------------------- */
 main {
-    max-width: 960px;
     margin: 0 auto 2rem auto;
     padding: 0 1.5rem;
     min-height: 40vh;

@@ -2,17 +2,39 @@
 /*
  * views/partials/navbar.php
  *
- * TODO: Implement the primary navigation bar.
- *
- * Suggested content:
- *   - Links to: Home, Switches (/products), About, Contact
- *   - Highlight the active link using $currentPage variable
- *   - Optional: search form pointing to /products?q=...
- *
- * ACCESSIBILITY:
- *   - Use <nav aria-label="Main navigation">
- *   - Active link needs aria-current="page"
- *   - Search input needs a <label> (can be visually hidden)
+ * Main navigation partial.
  */
 
-// TODO: Implement navbar here
+$navLinks = [
+    '/products' => ['label' => 'Switches', 'key' => 'products'],
+    '/customizer' => ['label' => 'Customize', 'key' => 'customizer'],
+    '/about' => ['label' => 'About', 'key' => 'about'],
+    '/cart' => ['label' => 'Cart', 'key' => 'cart'],
+];
+?>
+<nav class="main-nav" id="main-nav" aria-label="Main navigation">
+    <ul>
+        <?php foreach ($navLinks as $href => $link):
+            $isCurrent = (($currentPage ?? '') === $link['key']);
+            ?>
+            <li>
+                <a href="<?= $href ?>" <?= $isCurrent ? ' aria-current="page"' : '' ?>>
+                    <?= $link['label'] ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+
+        <?php if (isLoggedIn()): ?>
+            <li><a href="/profile">Account</a></li>
+            <li>
+                <form method="POST" action="/logout" style="display:inline">
+                    <?= csrfInput() ?>
+                    <button type="submit" class="btn-link">Logout</button>
+                </form>
+            </li>
+        <?php else: ?>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register" aria-label="Register">Register</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>

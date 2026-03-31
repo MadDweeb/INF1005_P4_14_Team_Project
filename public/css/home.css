@@ -480,6 +480,12 @@
 .product-catalog {
     padding: 100px 5vw;
     background-color: transparent;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 .catalog-header {
@@ -497,7 +503,8 @@
 
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(3, 600px);
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1860px; /* 3 cards of ~600px width + 30px gaps */
     justify-content: center;
     gap: 30px;
     width: 100%;
@@ -507,7 +514,7 @@
 .catalog-card {
     position: relative;
     display: block;
-    height: 750px;
+    height: 600px; /* More square looking boxes on desktop */
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
@@ -589,23 +596,33 @@
     transform: translateX(8px);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1440px) {
     .catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        max-width: 800px;
+        gap: 20px;
+    }
+
+    .catalog-card {
+        height: 600px; /* Balanced height for 1-column layout */
+    }
+
+    .catalog-header h2 {
+        font-size: 3rem;
     }
 }
 
 @media (max-width: 768px) {
-    .catalog-grid {
-        grid-template-columns: 1fr;
-    }
-
     .catalog-card {
-        height: 450px;
+        height: 480px; /* More compact for mobile devices */
     }
 
     .catalog-header h2 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    .catalog-content h3 {
+        font-size: 1.8rem;
     }
 }
 
