@@ -1,0 +1,103 @@
+/* contact.css */
+.contact-page {
+    padding: 140px 5vw 80px;
+    min-height: 100vh;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.contact-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.contact-header p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.contact-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 50px;
+    border-radius: 12px;
+}
+
+.contact-form .form-group {
+    margin-bottom: 25px;
+}
+
+.contact-form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: inherit;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-btn:hover {
+    background: #c32a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(215, 58, 58, 0.4);
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 120px 5vw 60px;
+    }
+    
+    .contact-form {
+        padding: 30px 20px;
+    }
+}
