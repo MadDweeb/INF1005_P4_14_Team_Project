@@ -11,8 +11,6 @@ if (carouselTrack) {
         function updateCarousel() {
             items.forEach((item, index) => {
                 item.className = 'carousel-item'; // reset classes
-                item.setAttribute('aria-hidden', 'true');
-
                 let diff = index - activeIndex;
 
                 // Support wrap-around offset calculation
@@ -25,14 +23,22 @@ if (carouselTrack) {
                 if (diff === 0) {
                     item.classList.add('active');
                     item.setAttribute('aria-hidden', 'false');
-                } else if (diff === -1) {
-                    item.classList.add('prev-1');
-                } else if (diff === 1) {
-                    item.classList.add('next-1');
-                } else if (diff === -2) {
-                    item.classList.add('prev-2');
-                } else if (diff === 2) {
-                    item.classList.add('next-2');
+                    // Enable links for the active item
+                    item.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '0'));
+                } else {
+                    item.setAttribute('aria-hidden', 'true');
+                    // Disable links for non-active items to prevent 'ghost focus'
+                    item.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
+
+                    if (diff === -1) {
+                        item.classList.add('prev-1');
+                    } else if (diff === 1) {
+                        item.classList.add('next-1');
+                    } else if (diff === -2) {
+                        item.classList.add('prev-2');
+                    } else if (diff === 2) {
+                        item.classList.add('next-2');
+                    }
                 }
             });
         }

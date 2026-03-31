@@ -12,6 +12,18 @@
 $pageTitle = 'KeyForge';
 $extraCss = ['/css/home.css'];
 $extraJs = ['/js/home.js'];
+
+// FOR LOCAL TESTING: Provide mock products if the database is empty
+if (empty($featuredProducts)) {
+    $featuredProducts = [
+        ['product_id' => 1, 'name' => 'Linear Teal', 'price' => 12.50, 'description' => 'Smooth and silent linear switches for office work.', 'product_image' => 'gateron_yellow.jpg'],
+        ['product_id' => 2, 'name' => 'Tactile Blue', 'price' => 14.00, 'description' => 'Satisfying bump with every keystroke.', 'product_image' => 'mx_blue.jpg'],
+        ['product_id' => 3, 'name' => 'Clicky White', 'price' => 13.50, 'description' => 'Classic loud clicky switches for typing enthusiasts.', 'product_image' => 'mx_brown.jpg'],
+        ['product_id' => 4, 'name' => 'Speed Silver', 'price' => 15.00, 'description' => 'Ultra-fast actuation for competitive gaming.', 'product_image' => 'mx_red.jpg'],
+        ['product_id' => 5, 'name' => 'Silent Black', 'price' => 16.50, 'description' => 'Heavy linear switch with internal dampening.', 'product_image' => 'topre_45g.jpg'],
+    ];
+}
+
 ob_start();
 ?>
 <!-- Hero section -->
@@ -89,7 +101,9 @@ ob_start();
     <h2 id="featuredHeading">Featured Switches</h2>
 
     <div class="carousel-container">
-        <button class="carousel-nav left" aria-label="Previous product" type="button">❮</button>
+        <button class="carousel-nav left" aria-label="Previous product" type="button">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
         <div class="carousel-track" id="featuredCarouselTrack">
             <?php
             $displayProducts = $featuredProducts ?? [];
@@ -104,7 +118,7 @@ ob_start();
                 foreach ($displayProducts as $index => $p):
                     ?>
                     <div class="carousel-item" data-index="<?= $index ?>">
-                        <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link" tabindex="-1">
+                        <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link">
                             <?php if (!empty($p['product_image'])): ?>
                                 <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
                                     alt="<?= htmlspecialchars($p['name']) ?>" class="product-image-placeholder"
@@ -116,12 +130,13 @@ ob_start();
                             <?php endif; ?>
                         </a>
                         <div class="carousel-item-content">
-                            <h3><?= mb_strtoupper((string) $p['name']) ?></h3>
+                            <h3><?= strtoupper((string) $p['name']) ?></h3>
                             <p style="font-weight: bold; color: var(--accent); margin-bottom: 10px;">
                                 $<?= number_format((float) $p['price'], 2) ?>
                             </p>
                             <p><?= htmlspecialchars($p['description']) ?></p>
-                            <a href="/products/<?= $p['product_id'] ?>" class="btn-shop">SHOP NOW ➞</a>
+                            <a href="/products/<?= $p['product_id'] ?>" class="btn-shop">SHOP NOW <i class="fas fa-arrow-right"
+                                    aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <?php
@@ -133,11 +148,13 @@ ob_start();
                 </div>
             <?php endif; ?>
         </div>
-        <button class="carousel-nav right" aria-label="Next product" type="button">❯</button>
+        <button class="carousel-nav right" aria-label="Next product" type="button">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
     </div>
 </section>
 
-<section class="product-catalog" data-theme="beige" aria-labelledby="catalogHeading">
+<section class="product-catalog" data-theme="blue" aria-labelledby="catalogHeading">
     <div class="catalog-header">
         <h2 id="catalogHeading">Typing, Reimagined</h2>
     </div>
@@ -149,7 +166,7 @@ ob_start();
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
                 <h3>Linear Switches</h3>
-                <span class="catalog-arrow">→</span>
+                <i class="fas fa-arrow-right catalog-arrow" aria-hidden="true"></i>
             </div>
         </a>
         <a href="/products" class="catalog-card">
@@ -160,7 +177,7 @@ ob_start();
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
                 <h3>Tactile Switches</h3>
-                <span class="catalog-arrow">→</span>
+                <i class="fas fa-arrow-right catalog-arrow" aria-hidden="true"></i>
             </div>
         </a>
         <a href="/products" class="catalog-card">
@@ -170,7 +187,7 @@ ob_start();
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
                 <h3>Clicky Switches</h3>
-                <span class="catalog-arrow">→</span>
+                <i class="fas fa-arrow-right catalog-arrow" aria-hidden="true"></i>
             </div>
         </a>
     </div>
@@ -190,7 +207,8 @@ ob_start();
         <div class="home-custom-content">
             <h2 id="homeCustomHeading">Custom Switches?</h2>
             <h3 class="home-custom-subheading">Find your preferred Switch</h3>
-            <a href="/customizer" class="btn-shop">CUSTOMIZE NOW ➞</a>
+            <a href="/customizer" class="btn-shop">CUSTOMIZE NOW <i class="fas fa-arrow-right"
+                    aria-hidden="true"></i></a>
         </div>
     </div>
 </section>

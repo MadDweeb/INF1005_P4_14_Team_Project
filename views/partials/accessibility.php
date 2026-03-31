@@ -39,15 +39,15 @@
                 <div class="accessibility-card accessibility-card--full" role="group" aria-label="Bigger Text">
                     <p class="accessibility-card__group-label"><i class="fas fa-text-height" aria-hidden="true" style="margin-right:6px;color:var(--accent)"></i>Bigger Text</p>
                     <div class="accessibility-font-slider" role="radiogroup" aria-label="Text size level">
-                        <button class="accessibility-font-slider__option" data-action="font-level" data-level="1" role="radio" aria-checked="false">
+                        <button class="accessibility-font-slider__option active" data-action="font-level" data-level="1" role="radio" aria-checked="true" tabindex="0">
                             <span class="accessibility-font-slider__icon">A</span>
                             <span class="accessibility-font-slider__label">Level 1</span>
                         </button>
-                        <button class="accessibility-font-slider__option" data-action="font-level" data-level="2" role="radio" aria-checked="false">
+                        <button class="accessibility-font-slider__option" data-action="font-level" data-level="2" role="radio" aria-checked="false" tabindex="-1">
                             <span class="accessibility-font-slider__icon" style="font-size:20px">A</span>
                             <span class="accessibility-font-slider__label">Level 2</span>
                         </button>
-                        <button class="accessibility-font-slider__option" data-action="font-level" data-level="3" role="radio" aria-checked="false">
+                        <button class="accessibility-font-slider__option" data-action="font-level" data-level="3" role="radio" aria-checked="false" tabindex="-1">
                             <span class="accessibility-font-slider__icon" style="font-size:24px">A</span>
                             <span class="accessibility-font-slider__label">Level 3</span>
                         </button>

@@ -9,11 +9,13 @@
     --bg-main: #F4F0EA;
     --bg-header: #EBE5DA;
     --text-main: #1A1A1A;
-    --accent: #D73A3A;
-    --bg-sub: #221111;
+    --accent: #c01818;
+    --bg-sub: #1f1414;
+    --bg-sub2: #161727;
     --footer-bg: #373738;
     --footer-text: #F4F0EA;
     --divider-color: #D1C9B8;
+    --focus-ring: var(--accent);
 }
 
 /* -- Reset -------------------------------------------------------------------- */
@@ -42,16 +44,25 @@ body {
 body.theme-dark {
     background-color: var(--text-main);
     color: var(--bg-main);
+    --focus-ring: #ffffff;
 }
 
 body.theme-beige {
     background-color: var(--bg-main);
     color: var(--text-main);
+    --focus-ring: var(--accent);
 }
 
 body.theme-maroon {
     background-color: var(--bg-sub);
     color: var(--bg-main);
+    --focus-ring: #ffffff;
+}
+
+body.theme-blue {
+    background-color: var(--bg-sub2);
+    color: var(--bg-main);
+    --focus-ring: #ffffff;
 }
 
 /* -- Header ------------------------------------------------------------------- */
@@ -103,8 +114,10 @@ body.theme-maroon {
     transition: color 0.2s ease;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.main-nav a:focus-visible {
     color: var(--accent);
+    outline: none;
 }
 
 /* -- Basket ------------------------------------------------------------------- */
@@ -254,6 +267,12 @@ main {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+/* Global Focus Ring (WCAG 2.4.7 / 1.4.11 / 2.4.11) */
+*:focus-visible {
+    outline: 3px solid var(--focus-ring) !important;
+    outline-offset: 4px !important;
 }
 
 .social-links a {

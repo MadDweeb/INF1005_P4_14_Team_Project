@@ -151,9 +151,18 @@ document.addEventListener('DOMContentLoaded', function () {
         widget.querySelectorAll('[data-action="font-level"]').forEach(btn => {
             const level = parseInt(btn.dataset.level, 10);
             const isActive = state.fontLevel === level;
+            // If nothing is selected (system default), the first one should be tabindex 0
+            const isTabTarget = (state.fontLevel === 0 && level === 1) || isActive;
+
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-checked', String(isActive));
+            btn.setAttribute('tabindex', isTabTarget ? '0' : '-1');
         });
+        // If state.fontLevel is 0, we should ensure the first radio is focusable
+        if (state.fontLevel === 0) {
+            const first = widget.querySelector('[data-action="font-level"][data-level="1"]');
+            if (first) first.setAttribute('tabindex', '0');
+        }
         // Toggle cards
         const map = {
             'bigger-cursor': state.biggerCursor,
@@ -235,10 +244,34 @@ document.addEventListener('DOMContentLoaded', function () {
     // ESC key - close if open
     widget.addEventListener('keydown', e => {
         if (e.key === 'Escape') { closeWidget(fabBtn); return; }
+
+        // Arrow Key Navigation for Radiogroup
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+            const target = e.target.closest('[role="radio"]');
+            if (target) {
+                const group = target.closest('[role="radiogroup"]');
+                const radios = Array.from(group.querySelectorAll('[role="radio"]'));
+                const index = radios.indexOf(target);
+                let nextIdx;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    nextIdx = (index + 1) % radios.length;
+                } else {
+                    nextIdx = (index - 1 + radios.length) % radios.length;
+                }
+
+                e.preventDefault();
+                radios[nextIdx].focus();
+                radios[nextIdx].click(); // Select on focus (standard for many radio groups)
+                return;
+            }
+        }
+
         if (e.key !== 'Tab') return;
         const focusable = Array.from(
             widget.querySelectorAll('button:not([disabled]), select, [tabindex]:not([tabindex="-1"])')
-        );
+        ).filter(el => el.offsetParent !== null); // Ensure visible
+
         const first = focusable[0], last = focusable[focusable.length - 1];
         if (e.shiftKey && document.activeElement === first) {
             e.preventDefault(); last.focus();
