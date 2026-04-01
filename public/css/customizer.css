@@ -273,12 +273,26 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .option-name {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
     font-weight: 900;
+    flex: 1;
+}
+
+.option-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--accent);
+    background: rgba(215, 58, 58, 0.1);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--accent);
 }
 
 .selected-badge {
@@ -343,6 +357,49 @@
     margin-bottom: 30px;
 }
 
+/* Price Display */
+.build-price {
+    background: rgba(215, 58, 58, 0.1);
+    border: 2px solid var(--accent);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.build-price h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.price-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.price-label {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.price-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--accent);
+}
+
+.price-note {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-style: italic;
+}
+
 .build-characteristics {
     background: rgba(255, 255, 255, 0.03);
     padding: 30px;
@@ -389,7 +446,7 @@
 }
 
 .reset-build-btn,
-.save-build-btn {
+.add-to-cart-btn {
     padding: 18px;
     border: none;
     border-radius: 8px;
@@ -416,8 +473,27 @@
     border-color: var(--accent);
 }
 
-.save-build-btn {
+.add-to-cart-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+}
+
+.add-to-cart-btn.enabled {
     background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+.add-to-cart-btn.enabled:hover {
+    background: #b82e2e;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(215, 58, 58, 0.4);
+}
+
+.add-to-cart-btn:disabled {
+    cursor: not-allowed;
     color: white;
 }
 

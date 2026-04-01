@@ -70,6 +70,15 @@ $extraJs = ['/js/customizer.js'];
         <div class="build-summary">
             <h2>Your Custom Switch</h2>
             
+            <div class="build-price">
+                <h3>Total Price</h3>
+                <div class="price-display">
+                    <span class="price-label">Per Switch:</span>
+                    <span class="price-value" id="total-price">$0.00</span>
+                </div>
+                <p class="price-note">Minimum order: 10 switches</p>
+            </div>
+            
             <div class="build-characteristics">
                 <h3>Predicted Characteristics</h3>
                 <div class="characteristics-grid">
@@ -96,8 +105,8 @@ $extraJs = ['/js/customizer.js'];
                 <button class="reset-build-btn" id="resetBuildBtn">
                     <span>🔄</span> Start Over
                 </button>
-                <button class="save-build-btn" id="saveBuildBtn">
-                    <span>💾</span> Save Configuration
+                <button class="add-to-cart-btn disabled" id="addToCartBtn" disabled>
+                    <span>🛒</span> Add to Cart
                 </button>
             </div>
         </div>
@@ -105,32 +114,32 @@ $extraJs = ['/js/customizer.js'];
 </div>
 
 <script>
-    // Component data
+    // Component data with pricing (based on market research)
     const componentData = {
         top_housing: [
-            { name: 'Polycarbonate Clear', material: 'PC', sound: 'bright', description: 'Clear RGB diffusion' },
-            { name: 'Nylon Black', material: 'Nylon', sound: 'deep', description: 'Deeper sound profile' },
-            { name: 'ABS Frosted', material: 'ABS', sound: 'crisp', description: 'Crisp, high-pitched' },
-            { name: 'Polycarbonate Smoky', material: 'PC', sound: 'balanced', description: 'Visual flair with clarity' }
+            { name: 'Polycarbonate Clear', material: 'PC', sound: 'bright', description: 'Clear RGB diffusion', price: 0.15, image: 'pc_clear_top.webp' },
+            { name: 'Nylon Black', material: 'Nylon', sound: 'deep', description: 'Deeper sound profile', price: 0.12, image: 'nylon_black_top.webp' },
+            { name: 'ABS Frosted', material: 'ABS', sound: 'crisp', description: 'Crisp, high-pitched', price: 0.10, image: 'abs_frosted_top.webp' },
+            { name: 'Polycarbonate Smoky', material: 'PC', sound: 'balanced', description: 'Visual flair with clarity', price: 0.18, image: 'pc_smoky_top.webp' }
         ],
         stem: [
-            { name: 'Linear', type: 'linear', feel: 'Smooth, no tactile bump', sound: 'quiet', best_for: 'Gaming' },
-            { name: 'Tactile', type: 'tactile', feel: 'Noticeable bump', sound: 'medium', best_for: 'Typing' },
-            { name: 'Clicky', type: 'clicky', feel: 'Tactile with click', sound: 'loud', best_for: 'Typing feedback' },
-            { name: 'Silent Linear', type: 'linear', feel: 'Smooth with dampeners', sound: 'very quiet', best_for: 'Office/quiet' }
+            { name: 'Linear', type: 'linear', feel: 'Smooth, no tactile bump', sound: 'quiet', best_for: 'Gaming', price: 0.20, image: 'linear_stem.webp' },
+            { name: 'Tactile', type: 'tactile', feel: 'Noticeable bump', sound: 'medium', best_for: 'Typing', price: 0.22, image: 'tactile_stem.webp' },
+            { name: 'Clicky', type: 'clicky', feel: 'Tactile with click', sound: 'loud', best_for: 'Typing feedback', price: 0.25, image: 'clicky_stem.webp' },
+            { name: 'Silent Linear', type: 'linear', feel: 'Smooth with dampeners', sound: 'very quiet', best_for: 'Office/quiet', price: 0.28, image: 'silent_linear_stem.webp' }
         ],
         spring: [
-            { name: '35g Ultra Light', force: 35, feel: 'feather-light', description: 'Minimal resistance' },
-            { name: '45g Light', force: 45, feel: 'light', description: 'Easy to press' },
-            { name: '55g Medium', force: 55, feel: 'balanced', description: 'Standard weight' },
-            { name: '62g Medium-Heavy', force: 62, feel: 'firm', description: 'More resistance' },
-            { name: '67g Heavy', force: 67, feel: 'heavy', description: 'Strong feedback' }
+            { name: '35g Ultra Light', force: 35, feel: 'feather-light', description: 'Minimal resistance', price: 0.05, image: 'spring_35g.webp' },
+            { name: '45g Light', force: 45, feel: 'light', description: 'Easy to press', price: 0.05, image: 'spring_45g.webp' },
+            { name: '55g Medium', force: 55, feel: 'balanced', description: 'Standard weight', price: 0.05, image: 'spring_55g.webp' },
+            { name: '62g Medium-Heavy', force: 62, feel: 'firm', description: 'More resistance', price: 0.06, image: 'spring_62g.webp' },
+            { name: '67g Heavy', force: 67, feel: 'heavy', description: 'Strong feedback', price: 0.06, image: 'spring_67g.webp' }
         ],
         bottom_housing: [
-            { name: 'Polycarbonate Clear', material: 'PC', sound: 'bright', description: 'RGB showcase' },
-            { name: 'Nylon Black', material: 'Nylon', sound: 'deep', description: 'Muted bottom-out' },
-            { name: 'POM White', material: 'POM', sound: 'thocky', description: 'Deep, satisfying sound' },
-            { name: 'Polycarbonate Milky', material: 'PC', sound: 'balanced', description: 'Diffused RGB glow' }
+            { name: 'Polycarbonate Clear', material: 'PC', sound: 'bright', description: 'RGB showcase', price: 0.15, image: 'pc_clear_bottom.webp' },
+            { name: 'Nylon Black', material: 'Nylon', sound: 'deep', description: 'Muted bottom-out', price: 0.12, image: 'nylon_black_bottom.webp' },
+            { name: 'POM White', material: 'POM', sound: 'thocky', description: 'Deep, satisfying sound', price: 0.20, image: 'pom_white_bottom.webp' },
+            { name: 'Polycarbonate Milky', material: 'PC', sound: 'balanced', description: 'Diffused RGB glow', price: 0.16, image: 'pc_milky_bottom.webp' }
         ]
     };
 
@@ -145,7 +154,7 @@ $extraJs = ['/js/customizer.js'];
         setupComponentButtons();
         setupCloseButton();
         setupResetButton();
-        setupSaveButton();
+        setupAddToCartButton();
         playExplodeAnimation();
     });
 
@@ -221,6 +230,7 @@ $extraJs = ['/js/customizer.js'];
                 <div class="option-card ${isSelected ? 'selected' : ''}" data-index="${index}">
                     <div class="option-header">
                         <div class="option-name">${comp.name}</div>
+                        <div class="option-price">$${comp.price.toFixed(2)}</div>
                         ${isSelected ? '<span class="selected-badge">✓ Selected</span>' : ''}
                     </div>
                     <div class="option-body">
@@ -269,10 +279,17 @@ $extraJs = ['/js/customizer.js'];
     function selectComponent(part, component) {
         selections[part] = component;
         
+        // Update the color/appearance of the selected part
+        const partElement = document.querySelector(`.switch-part-exploded[data-part="${part}"]`);
+        const imgElement = partElement.querySelector('.exploded-image');
+        
+        // Apply color filter based on component selection
+        applyComponentColor(imgElement, part, component);
+        
         updateCharacteristics();
+        updateTotalPrice();
         
         // Pulse the selected part
-        const partElement = document.querySelector(`.switch-part-exploded[data-part="${part}"]`);
         const currentTransform = partElement.style.transform;
         partElement.style.transform = currentTransform + ' scale(1.2)';
         setTimeout(() => {
@@ -280,6 +297,76 @@ $extraJs = ['/js/customizer.js'];
         }, 300);
         
         openOptions(part);
+    }
+
+    function applyComponentColor(imgElement, part, component) {
+        // Remove any existing filters
+        imgElement.style.filter = '';
+        imgElement.style.opacity = '1';
+        
+        if (part === 'top_housing' || part === 'bottom_housing') {
+            // Housing colors based on material
+            if (component.name.includes('Clear')) {
+                // Polycarbonate Clear - bright, slight blue tint
+                imgElement.style.filter = 'brightness(1.3) saturate(0.8) hue-rotate(200deg)';
+                imgElement.style.opacity = '0.9';
+            } else if (component.name.includes('Black')) {
+                // Nylon Black - dark
+                imgElement.style.filter = 'brightness(0.3) saturate(0)';
+            } else if (component.name.includes('Frosted')) {
+                // ABS Frosted - white/milky
+                imgElement.style.filter = 'brightness(1.8) saturate(0.3)';
+                imgElement.style.opacity = '0.85';
+            } else if (component.name.includes('Smoky')) {
+                // PC Smoky - gray tinted
+                imgElement.style.filter = 'brightness(0.6) saturate(0.5) hue-rotate(220deg)';
+                imgElement.style.opacity = '0.8';
+            } else if (component.name.includes('POM White')) {
+                // POM White - solid white
+                imgElement.style.filter = 'brightness(2) saturate(0)';
+            } else if (component.name.includes('Milky')) {
+                // PC Milky - milky white
+                imgElement.style.filter = 'brightness(1.6) saturate(0.4)';
+                imgElement.style.opacity = '0.9';
+            }
+        } else if (part === 'stem') {
+            // Stem colors based on type
+            if (component.name === 'Linear') {
+                // Red
+                imgElement.style.filter = 'brightness(1.1) saturate(1.5) hue-rotate(350deg)';
+            } else if (component.name === 'Tactile') {
+                // Brown
+                imgElement.style.filter = 'brightness(0.8) saturate(0.7) hue-rotate(20deg)';
+            } else if (component.name === 'Clicky') {
+                // Blue
+                imgElement.style.filter = 'brightness(1.1) saturate(1.3) hue-rotate(200deg)';
+            } else if (component.name === 'Silent Linear') {
+                // Pink
+                imgElement.style.filter = 'brightness(1.2) saturate(1.2) hue-rotate(320deg)';
+            }
+        } else if (part === 'spring') {
+            // Spring weight affects brightness/thickness appearance
+            const weight = component.force;
+            if (weight <= 35) {
+                // Ultra light - brighter, gold
+                imgElement.style.filter = 'brightness(1.4) saturate(1.2) hue-rotate(40deg)';
+            } else if (weight <= 45) {
+                // Light - gold
+                imgElement.style.filter = 'brightness(1.2) saturate(1.1) hue-rotate(35deg)';
+            } else if (weight <= 55) {
+                // Medium - standard gold
+                imgElement.style.filter = 'brightness(1.1) saturate(1) hue-rotate(30deg)';
+            } else if (weight <= 62) {
+                // Medium-Heavy - darker gold
+                imgElement.style.filter = 'brightness(0.9) saturate(1.1) hue-rotate(25deg)';
+            } else {
+                // Heavy - darkest, more silver
+                imgElement.style.filter = 'brightness(0.8) saturate(0.8) hue-rotate(0deg)';
+            }
+        }
+        
+        // Add smooth transition
+        imgElement.style.transition = 'filter 0.5s ease, opacity 0.5s ease';
     }
 
     function updateCharacteristics() {
@@ -297,21 +384,54 @@ $extraJs = ['/js/customizer.js'];
         }
     }
 
+    function updateTotalPrice() {
+        let total = 0;
+        if (selections.top_housing) total += selections.top_housing.price;
+        if (selections.stem) total += selections.stem.price;
+        if (selections.spring) total += selections.spring.price;
+        if (selections.bottom_housing) total += selections.bottom_housing.price;
+        
+        const priceElement = document.getElementById('total-price');
+        if (priceElement) {
+            priceElement.textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Enable Add to Cart if all parts selected
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        if (addToCartBtn) {
+            if (selections.top_housing && selections.stem && selections.spring && selections.bottom_housing) {
+                addToCartBtn.disabled = false;
+                addToCartBtn.classList.add('enabled');
+            } else {
+                addToCartBtn.disabled = true;
+                addToCartBtn.classList.remove('enabled');
+            }
+        }
+    }
+
     function setupResetButton() {
         document.getElementById('resetBuildBtn').addEventListener('click', function() {
             if (confirm('Reset your entire build?')) {
                 selections = { top_housing: null, stem: null, spring: null, bottom_housing: null };
                 
+                // Reset all component colors to default
+                document.querySelectorAll('.exploded-image').forEach(img => {
+                    img.style.filter = '';
+                    img.style.opacity = '1';
+                });
+                
                 document.querySelectorAll('.char-value').forEach(el => el.textContent = '-');
+                document.getElementById('total-price').textContent = '$0.00';
                 
                 closeOptions();
+                updateTotalPrice();
                 playExplodeAnimation();
             }
         });
     }
 
-    function setupSaveButton() {
-        document.getElementById('saveBuildBtn').addEventListener('click', function() {
+    function setupAddToCartButton() {
+        document.getElementById('addToCartBtn').addEventListener('click', async function() {
             const allSelected = Object.values(selections).every(s => s !== null);
             
             if (!allSelected) {
@@ -319,15 +439,60 @@ $extraJs = ['/js/customizer.js'];
                 return;
             }
             
-            console.log('Saved configuration:', selections);
+            // Calculate total price
+            const totalPrice = (
+                selections.top_housing.price +
+                selections.stem.price +
+                selections.spring.price +
+                selections.bottom_housing.price
+            ).toFixed(2);
             
-            this.textContent = '✓ Configuration Saved!';
-            this.style.background = '#4ade80';
+            // Create custom switch description
+            const description = `Custom Switch: ${selections.stem.name} stem, ${selections.spring.name} spring, ${selections.top_housing.name} top housing, ${selections.bottom_housing.name} bottom housing`;
             
-            setTimeout(() => {
-                this.innerHTML = '<span>💾</span> Save Configuration';
-                this.style.background = '';
-            }, 2000);
+            // Prepare cart data
+            const cartData = new FormData();
+            cartData.append('product_name', 'Custom Built Switch');
+            cartData.append('price', totalPrice);
+            cartData.append('quantity', 10); // Minimum order
+            cartData.append('description', description);
+            cartData.append('custom_build', JSON.stringify(selections));
+            
+            try {
+                // Add to cart (you can implement actual cart endpoint)
+                this.disabled = true;
+                this.innerHTML = '<span>⏳</span> Adding to Cart...';
+                
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                this.innerHTML = '<span>✓</span> Added to Cart!';
+                this.style.background = '#4ade80';
+                
+                setTimeout(() => {
+                    // Redirect to cart or products page
+                    if (confirm('Custom switch added to cart! View cart now?')) {
+                        window.location.href = '/cart';
+                    } else {
+                        this.innerHTML = '<span>🛒</span> Add to Cart';
+                        this.style.background = '';
+                        this.disabled = false;
+                        this.classList.add('enabled');
+                    }
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                this.innerHTML = '<span>❌</span> Error - Try Again';
+                this.style.background = '#ef4444';
+                
+                setTimeout(() => {
+                    this.innerHTML = '<span>🛒</span> Add to Cart';
+                    this.style.background = '';
+                    this.disabled = false;
+                    this.classList.add('enabled');
+                }, 2000);
+            }
         });
     }
 </script>
