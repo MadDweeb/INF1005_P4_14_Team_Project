@@ -121,6 +121,10 @@ if ($uri === '/' && $method === 'GET') {
     $currentPage = 'contact';
     require __DIR__ . '/../views/pages/contact.php';
 
+} elseif ($uri === '/contact' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/ContactController.php';
+    (new ContactController($pdo))->submit();
+
 } elseif ($uri === '/customizer' && $method === 'GET') {
     require_once __DIR__ . '/../src/models/Product.php';
     $products = [];

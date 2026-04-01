@@ -59,19 +59,33 @@ class ContactController
             return;
         }
 
-        $contactEmail = 'hello@keyforge.example';
+        $contactEmail = trim((string) ($_ENV['CONTACT_TO_EMAIL'] ?? 'hello@keyforge.example'));
+        if (!filter_var($contactEmail, FILTER_VALIDATE_EMAIL)) {
+            $contactEmail = 'hello@keyforge.example';
+        }
         $messageText   = $this->buildPlainTextMessage($oldInput);
         $messageHtml   = $this->buildHtmlMessage($oldInput);
 
         $mailgunApiKey = trim((string) ($_ENV['MAILGUN_API_KEY'] ?? ''));
         $mailgunDomain = trim((string) ($_ENV['MAILGUN_DOMAIN'] ?? ''));
+        $mailgunApiBase = trim((string) ($_ENV['MAILGUN_API_BASE'] ?? ''));
+        $mailgunRegion = strtolower(trim((string) ($_ENV['MAILGUN_REGION'] ?? '')));
 
         $sent = false;
         $transport = 'php-mail';
+        $mailgunStatus = 0;
+        $mailgunBody = '';
 
         if ($mailgunApiKey !== '' && $mailgunDomain !== '') {
             $transport = 'mailgun';
-            $sent = $this->sendViaMailgun(
+            if ($contactEmail === 'hello@keyforge.example') {
+                error_log('Contact form is misconfigured: CONTACT_TO_EMAIL is missing or invalid.');
+                $_SESSION['flash_error'] = 'Your message could not be sent right now. Please try again later.';
+                $this->renderContactPage([], $oldInput);
+                return;
+            }
+
+            $response = $this->sendViaMailgun(
                 $mailgunDomain,
                 $mailgunApiKey,
                 $contactEmail,
@@ -79,8 +93,13 @@ class ContactController
                 $oldInput['email'],
                 $oldInput['subject'],
                 $messageText,
-                $messageHtml
+                $messageHtml,
+                $mailgunApiBase,
+                $mailgunRegion
             );
+            $mailgunStatus = $response['status'];
+            $mailgunBody = $response['body'];
+            $sent = in_array($mailgunStatus, [200, 201, 202], true);
         } else {
             $sent = $this->sendViaPhpMail(
                 $contactEmail,
@@ -92,7 +111,12 @@ class ContactController
         }
 
         if (!$sent) {
-            error_log('Contact form submission failed using ' . $transport . '.');
+            if ($transport === 'mailgun') {
+                error_log('Contact form submission failed using mailgun. HTTP status=' . $mailgunStatus . '.');
+            } else {
+                error_log('Contact form submission failed using php-mail.');
+            }
+
             $_SESSION['flash_error'] = 'Your message could not be sent right now. Please try again later.';
             $this->renderContactPage([], $oldInput);
             return;
@@ -126,9 +150,16 @@ class ContactController
         string $senderEmail,
         string $subject,
         string $textBody,
-        string $htmlBody
-    ): bool {
-        $endpoint = 'https://api.mailgun.net/v3/' . rawurlencode($domain) . '/messages';
+        string $htmlBody,
+        string $apiBase = '',
+        string $region = ''
+    ): array {
+        $base = rtrim($apiBase, '/');
+        if ($base === '') {
+            $base = $region === 'eu' ? 'https://api.eu.mailgun.net' : 'https://api.mailgun.net';
+        }
+
+        $endpoint = $base . '/v3/' . rawurlencode($domain) . '/messages';
         $safeSenderName  = $this->sanitizeHeaderValue($senderName);
         $safeSenderEmail = $this->sanitizeHeaderValue($senderEmail);
 
@@ -141,8 +172,7 @@ class ContactController
             'h:Reply-To' => $safeSenderName . ' <' . $safeSenderEmail . '>',
         ];
 
-        $response = $this->postFormEncoded($endpoint, $payload, 'api', $apiKey);
-        return in_array($response['status'], [200, 201, 202], true);
+        return $this->postFormEncoded($endpoint, $payload, 'api', $apiKey);
     }
 
     // Send the message through PHP's mail() function.
@@ -172,6 +202,13 @@ class ContactController
     {
         $body = http_build_query($fields, '', '&');
 
+        if (!function_exists('curl_init') && !filter_var((string) ini_get('allow_url_fopen'), FILTER_VALIDATE_BOOL)) {
+            return [
+                'status' => 0,
+                'body' => 'No HTTP transport available: enable php-curl or allow_url_fopen.',
+            ];
+        }
+
         if (function_exists('curl_init')) {
             $ch = curl_init($url);
             if ($ch === false) {
@@ -193,6 +230,11 @@ class ContactController
 
             $responseBody = curl_exec($ch);
             $statusCode    = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+
+            if ($responseBody === false) {
+                $responseBody = 'cURL error: ' . curl_error($ch);
+            }
+
             curl_close($ch);
 
             return [
@@ -211,6 +253,7 @@ class ContactController
                 ]),
                 'content' => $body,
                 'timeout' => 20,
+                'ignore_errors' => true,
             ],
         ]);
 
@@ -229,6 +272,15 @@ class ContactController
             fclose($stream);
         } else {
             $responseBody = '';
+
+            $lastError = error_get_last();
+            if (!empty($lastError['message'])) {
+                $responseBody = 'stream error: ' . $lastError['message'];
+
+                if (preg_match('/HTTP\/\S+\s+(\d{3})\b/', $lastError['message'], $matches)) {
+                    $statusCode = (int) $matches[1];
+                }
+            }
         }
 
         if (!empty($responseHeaders)) {
