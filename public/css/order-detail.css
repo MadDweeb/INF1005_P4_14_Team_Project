@@ -1,0 +1,252 @@
+/*
+ * public/css/order-detail.css
+ * Styles for customer order detail page
+ */
+
+.order-detail-page {
+    padding: 140px 5vw 80px;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-breadcrumb {
+    font-size: 0.92rem;
+    margin-bottom: 22px;
+}
+
+.order-breadcrumb a {
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.75;
+}
+
+.order-breadcrumb a:hover {
+    color: var(--accent);
+    opacity: 1;
+}
+
+.order-breadcrumb span {
+    margin: 0 7px;
+    opacity: 0.6;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 22px;
+    margin-bottom: 22px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.order-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    line-height: 1.05;
+}
+
+.order-header p {
+    margin-top: 6px;
+    opacity: 0.75;
+}
+
+.order-header-side {
+    display: grid;
+    gap: 10px;
+    justify-items: end;
+}
+
+.order-total {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--accent);
+    font-size: 1.6rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.status-pending {
+    background: #fbbf24;
+    color: #1a1a1a;
+}
+
+.status-processing {
+    background: #60a5fa;
+    color: #ffffff;
+}
+
+.status-shipped {
+    background: #a78bfa;
+    color: #ffffff;
+}
+
+.status-delivered {
+    background: #4ade80;
+    color: #1a1a1a;
+}
+
+.status-cancelled {
+    background: #f87171;
+    color: #ffffff;
+}
+
+.cancel-box {
+    margin-bottom: 22px;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.45);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.cancel-box h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.cancel-box p {
+    opacity: 0.9;
+}
+
+.cancel-form {
+    margin-top: 12px;
+}
+
+.cancel-btn {
+    border: none;
+    border-radius: 8px;
+    background: #c01818;
+    color: #fff;
+    padding: 12px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background: #9f1010;
+}
+
+.order-items {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.order-items h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.order-items-table-wrap {
+    overflow-x: auto;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-items-table th,
+.order-items-table td {
+    padding: 14px;
+    text-align: left;
+}
+
+.order-items-table th {
+    font-size: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.order-items-table tbody tr + tr td {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.order-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.back-link,
+.shop-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.shop-link {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+}
+
+@media (max-width: 780px) {
+    .order-detail-page {
+        padding: 120px 4vw 60px;
+    }
+
+    .order-header {
+        flex-direction: column;
+    }
+
+    .order-header-side {
+        justify-items: start;
+    }
+
+    .order-items-table thead {
+        display: none;
+    }
+
+    .order-items-table,
+    .order-items-table tbody,
+    .order-items-table tr,
+    .order-items-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .order-items-table tr + tr {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .order-items-table td {
+        padding: 9px 0;
+    }
+
+    .order-items-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 900;
+        opacity: 0.72;
+        margin-bottom: 2px;
+    }
+}

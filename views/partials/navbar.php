@@ -7,6 +7,7 @@
 
 $navLinks = [
     '/products' => ['label' => 'Switches', 'key' => 'products'],
+    '/orders' => ['label' => 'Orders', 'key' => 'orders'],
     '/customizer' => ['label' => 'Customize', 'key' => 'customizer'],
     '/about' => ['label' => 'About', 'key' => 'about'],
     '/cart' => ['label' => 'Cart', 'key' => 'cart'],

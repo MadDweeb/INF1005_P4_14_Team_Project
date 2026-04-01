@@ -88,7 +88,27 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->processCheckout();
 
+} elseif ($uri === '/orders' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->orderHistory();
+
+} elseif (preg_match('#^/orders/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->orderDetail((int) $matches[1]);
+
+} elseif ($uri === '/orders/cancel' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->cancelOrder();
+
     // ── Admin routes ──────────────────────────────────────────────────────────────
+
+} elseif ($uri === '/admin/orders' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminIndex();
+
+} elseif ($uri === '/admin/orders/status' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminUpdateStatus();
 
 } elseif ($uri === '/admin/products' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
