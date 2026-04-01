@@ -9,6 +9,8 @@
  *   POST /checkout/process       → processCheckout() (login required)
  *   GET  /orders                 → orderHistory()    (login required)
  *   GET  /orders/{id}            → orderDetail($id)  (login required)
+ *   POST /orders/cancel          → cancelOrder()     (login required)
+ *   GET  /admin/orders           → adminIndex()      (admin required)
  *   POST /admin/orders/status    → adminUpdateStatus()  (admin required)
  */
 
@@ -141,7 +143,13 @@ class OrderController
             : [];
 
         $currentPage = 'orders';
-        require_once __DIR__ . '/../../views/pages/orders.php';
+        $viewPath = __DIR__ . '/../../views/pages/orders.php';
+        if (!file_exists($viewPath)) {
+            $_SESSION['flash_error'] = 'Order history page is not available yet.';
+            header('Location: /');
+            exit;
+        }
+        require_once $viewPath;
     }
 
     /**
@@ -179,7 +187,78 @@ class OrderController
         }
 
         $currentPage = 'orders';
-        require_once __DIR__ . '/../../views/pages/order-detail.php';
+        $viewPath = __DIR__ . '/../../views/pages/order-detail.php';
+        if (!file_exists($viewPath)) {
+            $_SESSION['flash_error'] = 'Order detail page is not available yet.';
+            header('Location: /');
+            exit;
+        }
+        require_once $viewPath;
+    }
+
+    /**
+     * Customer: cancel an order (POST /orders/cancel).
+     *
+     * Rules:
+     * - User must own the order.
+     * - User can only cancel while status is pending.
+     * - Cancelling restores stock and sets status to cancelled atomically.
+     */
+    public function cancelOrder(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $orderId = sanitizeInt($_POST['order_id'] ?? 0);
+        if (!isPositiveInt($orderId)) {
+            http_response_code(400);
+            echo 'Invalid order ID.';
+            return;
+        }
+
+        $user  = currentUser();
+        $order = $this->orderModel
+            ? $this->orderModel->getById($orderId)
+            : false;
+
+        if (!$order) {
+            http_response_code(404);
+            require_once __DIR__ . '/../../views/pages/404.php';
+            return;
+        }
+
+        if ((int) $order['user_id'] !== $user['id']) {
+            http_response_code(403);
+            echo 'You do not have permission to cancel this order.';
+            return;
+        }
+
+        $result = $this->orderModel
+            ? $this->orderModel->cancelWithRestock($orderId, ['pending'])
+            : ['ok' => false, 'reason' => 'db_unavailable'];
+
+        if (!$result['ok']) {
+            switch ($result['reason']) {
+                case 'already_cancelled':
+                    $_SESSION['flash_error'] = 'This order has already been cancelled.';
+                    break;
+                case 'invalid_status':
+                    $_SESSION['flash_error'] = 'Only pending orders can be cancelled.';
+                    break;
+                case 'not_found':
+                    $_SESSION['flash_error'] = 'Order not found.';
+                    break;
+                default:
+                    $_SESSION['flash_error'] = 'Unable to cancel the order right now.';
+                    break;
+            }
+            header('Location: /orders/' . $orderId);
+            exit;
+        }
+
+        $_SESSION['flash_success'] = 'Order cancelled successfully.';
+        header('Location: /orders/' . $orderId);
+        exit;
     }
 
     /**
@@ -213,12 +292,39 @@ class OrderController
             return;
         }
 
+        if ($status === 'cancelled') {
+            $result = $this->orderModel
+                ? $this->orderModel->cancelWithRestock($orderId)
+                : ['ok' => false, 'reason' => 'db_unavailable'];
+
+            if (!$result['ok']) {
+                switch ($result['reason']) {
+                    case 'already_cancelled':
+                        $_SESSION['flash_error'] = 'Order is already cancelled.';
+                        break;
+                    case 'not_found':
+                        $_SESSION['flash_error'] = 'Order not found.';
+                        break;
+                    default:
+                        $_SESSION['flash_error'] = 'Unable to cancel order right now.';
+                        break;
+                }
+            } else {
+                $_SESSION['flash_success'] = 'Order cancelled successfully.';
+            }
+
+            header('Location: /admin/orders');
+            exit;
+        }
+
         $updated = $this->orderModel
             ? $this->orderModel->updateStatus($orderId, $status)
             : false;
 
         if (!$updated) {
             $_SESSION['flash_error'] = 'Invalid status value.';
+        } else {
+            $_SESSION['flash_success'] = 'Order status updated.';
         }
 
         header('Location: /admin/orders');

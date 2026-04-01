@@ -143,6 +143,34 @@ main {
     min-height: 40vh;
 }
 
+/* -- Flash Messages ----------------------------------------------------------- */
+.flash-stack {
+    width: min(980px, 100%);
+    margin: 110px auto 0;
+    display: grid;
+    gap: 12px;
+}
+
+.flash-banner {
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    backdrop-filter: blur(4px);
+}
+
+.flash-banner-success {
+    background: rgba(74, 222, 128, 0.14);
+    border-color: rgba(74, 222, 128, 0.55);
+    color: #14532d;
+}
+
+.flash-banner-error {
+    background: rgba(248, 113, 113, 0.14);
+    border-color: rgba(248, 113, 113, 0.55);
+    color: #7f1d1d;
+}
+
 /* -- Footer ------------------------------------------------------------------- */
 .main-footer {
     background-color: var(--footer-bg);

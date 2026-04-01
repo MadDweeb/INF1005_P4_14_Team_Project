@@ -238,6 +238,86 @@ class Order
     }
 
     /**
+     * Cancel an order and restore stock inside one transaction.
+     *
+     * @param  int        $orderId                The order to cancel.
+     * @param  array|null $allowedCurrentStatuses Restrict allowed source statuses.
+     *                                            Pass null to allow any non-cancelled status.
+     * @return array                              Result payload with ok + reason keys.
+     */
+    public function cancelWithRestock(int $orderId, ?array $allowedCurrentStatuses = null): array
+    {
+        try {
+            $this->pdo->beginTransaction();
+
+            // Lock the order row so concurrent cancellation attempts stay consistent.
+            $orderStmt = $this->pdo->prepare(
+                "SELECT order_id, status
+                 FROM {$this->table}
+                 WHERE order_id = :order_id
+                 LIMIT 1
+                 FOR UPDATE"
+            );
+            $orderStmt->execute([':order_id' => $orderId]);
+            $order = $orderStmt->fetch();
+
+            if (!$order) {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'not_found'];
+            }
+
+            $currentStatus = (string) ($order['status'] ?? '');
+            if ($currentStatus === 'cancelled') {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'already_cancelled'];
+            }
+
+            if (
+                $allowedCurrentStatuses !== null
+                && !in_array($currentStatus, $allowedCurrentStatuses, true)
+            ) {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'invalid_status'];
+            }
+
+            $itemsStmt = $this->pdo->prepare(
+                "SELECT product_id, quantity
+                 FROM order_items
+                 WHERE order_id = :order_id"
+            );
+            $itemsStmt->execute([':order_id' => $orderId]);
+            $items = $itemsStmt->fetchAll();
+
+            $restoreStmt = $this->pdo->prepare(
+                "UPDATE products
+                 SET stock_quantity = stock_quantity + :quantity
+                 WHERE product_id = :product_id"
+            );
+
+            foreach ($items as $item) {
+                $restoreStmt->execute([
+                    ':quantity'   => (int) $item['quantity'],
+                    ':product_id' => (int) $item['product_id'],
+                ]);
+            }
+
+            if (!$this->updateStatus($orderId, 'cancelled')) {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'status_update_failed'];
+            }
+
+            $this->pdo->commit();
+            return ['ok' => true, 'reason' => 'cancelled'];
+
+        } catch (\PDOException $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            return ['ok' => false, 'reason' => 'db_error'];
+        }
+    }
+
+    /**
      * Update the status of an order (admin action).
      *
      * @param  int    $orderId  The order to update.
