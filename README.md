@@ -41,6 +41,12 @@ router.php         # PHP built-in server router
 
 3. Open http://localhost:8000 in your browser.
 
+## Production Note
+
+Set APP_URL in your environment (for example, https://your-domain.duckdns.org)
+so cart and checkout POST forms submit to the canonical HTTPS origin.
+This avoids HTTP->HTTPS redirects that can break POST handling on some servers.
+
 > The index page works without a database configured.
 > All other pages return 404 until you implement the routes.
 

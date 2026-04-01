@@ -13,6 +13,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/helpers/auth.php';
 require_once __DIR__ . '/../src/helpers/csrf.php';
 require_once __DIR__ . '/../src/helpers/sanitize.php';
+require_once __DIR__ . '/../src/helpers/url.php';
 
 $uri = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') ?: '/';
 $method = $_SERVER['REQUEST_METHOD'];

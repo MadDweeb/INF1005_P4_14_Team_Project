@@ -107,9 +107,10 @@ $extraCss = ['/css/product-detail.css'];
 
             <!-- Add to Cart Form -->
             <?php if ($product['stock_quantity'] > 0): ?>
-                <form method="POST" action="/cart/add" class="add-to-cart-form">
+                <form method="POST" action="<?= htmlspecialchars(appUrl('/cart/add'), ENT_QUOTES, 'UTF-8') ?>" class="add-to-cart-form">
                     <?= csrfInput() ?>
                     <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+                    <input type="hidden" name="redirect" value="/products/<?= $product['product_id'] ?>">
 
                     <div class="quantity-selector">
                         <label for="quantity">Quantity:</label>

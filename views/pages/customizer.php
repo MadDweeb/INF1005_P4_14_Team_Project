@@ -411,7 +411,7 @@ $extraJs = ['/js/customizer.js'];
             // Create a hidden form to submit to cart
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = '/cart/add';
+            form.action = '<?= htmlspecialchars(appUrl('/cart/add'), ENT_QUOTES, 'UTF-8') ?>';
             form.style.display = 'none';
             
             // Add CSRF token

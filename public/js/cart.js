@@ -73,14 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = 'scale(1)';
             }, 150);
 
-            // Show updating feedback
+            // Keep text feedback lightweight so native form submission is not interrupted.
             const originalText = this.textContent;
             this.textContent = 'Updating...';
-            this.disabled = true;
-            
             setTimeout(() => {
                 this.textContent = originalText;
-                this.disabled = false;
             }, 1000);
         });
     });

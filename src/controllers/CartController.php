@@ -111,7 +111,29 @@ class CartController
         }
 
         $user = currentUser();
-        $this->cartModel->addOrUpdate($user['id'], $productId, $quantity);
+        if (!$this->cartModel) {
+            $_SESSION['flash_error'] = 'Cart service is currently unavailable. Please try again shortly.';
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        try {
+            $added = $this->cartModel->addOrUpdate($user['id'], $productId, $quantity);
+        } catch (\Throwable $e) {
+            error_log('Cart add failed: ' . $e->getMessage());
+            $_SESSION['flash_error'] = 'Unable to add this item to cart right now. Please try again.';
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        if (!$added) {
+            $_SESSION['flash_error'] = 'Unable to add this item to cart right now. Please try again.';
+            $redirect = sanitizeString($_POST['redirect'] ?? '/products/' . $productId);
+            header('Location: ' . $redirect);
+            exit;
+        }
 
         $_SESSION['flash_success'] = 'Item added to cart.';
 
@@ -142,10 +164,37 @@ class CartController
             exit;
         }
 
+        if ($quantity < 1) {
+            $_SESSION['flash_error'] = 'Quantity must be at least 1.';
+            header('Location: /cart');
+            exit;
+        }
+
         $user = currentUser();
 
+        if (!$this->cartModel) {
+            $_SESSION['flash_error'] = 'Cart service is currently unavailable. Please try again shortly.';
+            header('Location: /cart');
+            exit;
+        }
+
         // updateQuantity() handles quantity <= 0 by calling remove() internally.
-        $this->cartModel->updateQuantity($user['id'], $cartItemId, $quantity);
+        try {
+            $updated = $this->cartModel->updateQuantity($user['id'], $cartItemId, $quantity);
+        } catch (\Throwable $e) {
+            error_log('Cart update failed: ' . $e->getMessage());
+            $_SESSION['flash_error'] = 'Unable to update quantity right now. Please try again.';
+            header('Location: /cart');
+            exit;
+        }
+
+        if (!$updated) {
+            $_SESSION['flash_error'] = 'Could not update this cart item. Please refresh and try again.';
+            header('Location: /cart');
+            exit;
+        }
+
+        $_SESSION['flash_success'] = 'Cart quantity updated.';
 
         header('Location: /cart');
         exit;

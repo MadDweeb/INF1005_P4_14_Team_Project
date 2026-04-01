@@ -6,7 +6,8 @@
 
 ob_start();
 $extraCss = ['/css/cart.css'];
-$extraJs = ['/js/cart.js'];
+$cartJsVersion = @filemtime(__DIR__ . '/../../public/js/cart.js') ?: time();
+$extraJs = ['/js/cart.js?v=' . $cartJsVersion];
 ?>
 
 <div class="cart-page">
@@ -53,7 +54,7 @@ $extraJs = ['/js/cart.js'];
                                 </td>
                                 <td data-label="Quantity">
                                     <form method="POST" action="/cart/update" class="cart-item-quantity">
-                                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+                                        <?= csrfInput() ?>
                                         <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
                                         <label for="qty-<?= $item['cart_item_id'] ?>" class="sr-only">
                                             Quantity for <?= htmlspecialchars($item['name']) ?>
@@ -71,7 +72,7 @@ $extraJs = ['/js/cart.js'];
                                 </td>
                                 <td data-label="Actions">
                                     <form method="POST" action="/cart/remove">
-                                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+                                        <?= csrfInput() ?>
                                         <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
                                         <button type="submit" class="remove-btn">Remove</button>
                                     </form>

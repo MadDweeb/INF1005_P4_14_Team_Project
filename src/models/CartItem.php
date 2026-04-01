@@ -78,13 +78,14 @@ class CartItem
     {
         $stmt = $this->pdo->prepare(
             "INSERT INTO {$this->table} (user_id, product_id, quantity)
-             VALUES (:user_id, :product_id, :qty)
-             ON DUPLICATE KEY UPDATE quantity = quantity + :qty"
+             VALUES (:user_id, :product_id, :qty_insert)
+             ON DUPLICATE KEY UPDATE quantity = quantity + :qty_increment"
         );
         return $stmt->execute([
             ':user_id'    => $userId,
             ':product_id' => $productId,
-            ':qty'        => $quantity,
+            ':qty_insert' => $quantity,
+            ':qty_increment' => $quantity,
         ]);
     }
 
@@ -112,11 +113,39 @@ class CartItem
              WHERE cart_item_id = :cart_item_id
                AND user_id = :user_id"
         );
-        return $stmt->execute([
+        $ok = $stmt->execute([
             ':qty'          => $quantity,
             ':cart_item_id' => $cartItemId,
             ':user_id'      => $userId,
         ]);
+
+        if (!$ok) {
+            return false;
+        }
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+        // MySQL may report 0 affected rows when setting the same value.
+        $check = $this->pdo->prepare(
+            "SELECT quantity
+             FROM {$this->table}
+             WHERE cart_item_id = :cart_item_id
+               AND user_id = :user_id
+             LIMIT 1"
+        );
+        $check->execute([
+            ':cart_item_id' => $cartItemId,
+            ':user_id'      => $userId,
+        ]);
+        $current = $check->fetchColumn();
+
+        if ($current === false) {
+            return false;
+        }
+
+        return ((int) $current) === $quantity;
     }
 
     /**
