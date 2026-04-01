@@ -46,7 +46,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/UserController.php';
     (new UserController($pdo))->processRegister();
 
-} elseif ($uri === '/logout' && $method === 'GET') {
+} elseif ($uri === '/logout' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/UserController.php';
     (new UserController($pdo))->logout();
 
