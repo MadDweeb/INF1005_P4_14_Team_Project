@@ -125,6 +125,12 @@ if ($uri === '/' && $method === 'GET') {
     }
     $currentPage = 'customizer';
     require __DIR__ . '/../views/pages/customizer.php';
+    // ── API routes ────────────────────────────────────────────────────────────────
+
+} elseif ($uri === '/api/search' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/ProductController.php';
+    (new ProductController($pdo))->apiSearch();
+
     // ── 404 fallback ──────────────────────────────────────────────────────────────
 
 } else {

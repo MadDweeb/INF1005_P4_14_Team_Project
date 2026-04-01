@@ -101,6 +101,63 @@ class ProductController
         require_once __DIR__ . '/../../views/pages/product-detail.php';
     }
 
+    // ─── JSON API ──────────────────────────────────────────────────────────────
+
+    /**
+     * Live search endpoint for the AJAX product search (GET /api/search).
+     *
+     * Accepts:
+     *   q         - search term (matched against name and description)
+     *   type[]    - optional switch type filter(s)
+     *   price_min - optional minimum price
+     *   price_max - optional maximum price
+     *   limit     - max results to return (capped at 24, default 12)
+     *
+     * Returns JSON:
+     *   { "products": [...], "count": int, "query": string }
+     *
+     * Each product object includes only the fields needed to render a card,
+     * keeping the payload small.
+     */
+    public function apiSearch(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        header('X-Content-Type-Options: nosniff');
+
+        $query    = sanitizeString($_GET['q'] ?? '');
+        $limit    = min(24, max(1, sanitizeInt($_GET['limit'] ?? 12)));
+
+        $filters = [
+            'q'         => $query,
+            'type'      => $_GET['type'] ?? [],
+            'price_min' => $_GET['price_min'] ?? '',
+            'price_max' => $_GET['price_max'] ?? '',
+        ];
+
+        $result   = $this->productModel
+            ? $this->productModel->getAll($filters, 1, $limit)
+            : ['products' => [], 'total_count' => 0];
+
+        // Return only the fields the product card needs - keeps payload lean.
+        $cards = array_map(fn($p) => [
+            'product_id'     => $p['product_id'],
+            'name'           => $p['name'],
+            'manufacturer'   => $p['manufacturer'],
+            'switch_type'    => $p['switch_type'],
+            'price'          => $p['price'],
+            'stock_quantity' => $p['stock_quantity'],
+            'product_image'  => $p['product_image'] ?? 'placeholder.webp',
+        ], $result['products']);
+
+        echo json_encode([
+            'products' => $cards,
+            'count'    => $result['total_count'],
+            'query'    => $query,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        exit;
+    }
+
     // ─── Admin ─────────────────────────────────────────────────────────────────
 
     /**
