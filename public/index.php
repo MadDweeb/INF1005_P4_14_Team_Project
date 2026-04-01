@@ -152,7 +152,7 @@ if ($uri === '/' && $method === 'GET') {
 
 } elseif ($uri === '/orders' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->index();
+    (new OrderController($pdo))->orderHistory();
 
     // ── API routes ────────────────────────────────────────────────────────────────
 

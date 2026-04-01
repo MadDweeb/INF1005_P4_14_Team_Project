@@ -75,21 +75,36 @@ class OrderController
         requireLogin();
         verifyCsrf();
 
+        error_log('=== CHECKOUT DEBUG START ===');
+        error_log('POST data: ' . print_r($_POST, true));
         $user = currentUser();
+        error_log('User ID: ' . $user['id']);
 
         // - Validate shipping fields -
         $errors = [];
 
-        $name    = sanitizeString($_POST['shipping_name']    ?? '');
-        $address = sanitizeString($_POST['shipping_address'] ?? '');
-        $city    = sanitizeString($_POST['shipping_city']    ?? '');
-        $postal  = sanitizeString($_POST['shipping_postal']  ?? '');
+        // Combine first + last name
+        $name = trim(($_POST['first_name'] ?? '') . ' ' . ($_POST['last_name'] ?? ''));
 
-        if (strlen($name)    < 2)  $errors['shipping_name']    = 'Please enter your full name.';
-        if (strlen($address) < 5)  $errors['shipping_address'] = 'Please enter a valid address.';
-        if (strlen($city)    < 2)  $errors['shipping_city']    = 'Please enter your city.';
+        // Use existing form fields
+        $address = sanitizeString($_POST['address'] ?? '');
+        $city = sanitizeString($_POST['city'] ?? '');
+        $postal = sanitizeString($_POST['zip'] ?? '');
+
+        if (strlen($name) < 2) {
+            $errors['first_name'] = 'Please enter your full name.';
+        }
+
+        if (strlen($address) < 5) {
+            $errors['address'] = 'Please enter a valid address.';
+        }
+
+        if (strlen($city) < 2) {
+            $errors['city'] = 'Please enter your city.';
+        }
+
         if (!preg_match('/^\d{6}$/', $postal)) {
-            $errors['shipping_postal'] = 'Please enter a valid 6-digit postal code.';
+            $errors['zip'] = 'Please enter a valid 6-digit postal code.';
         }
 
         // - Re-fetch cart (never trust the browser to tell us what's in the cart) -
@@ -136,8 +151,8 @@ class OrderController
             $cartTotal += ($build['price'] * $build['quantity']);
         }
         
-        $orderId   = $this->orderModel
-            ? $this->orderModel->create($user['id'], $cartItems, $cartTotal)
+        $orderId = $this->orderModel
+            ? $this->orderModel->create($user['id'], $cartItems, $cartTotal, $name, $address, $city, $postal)
             : 0;
 
         if ($orderId === 0) {
@@ -152,8 +167,8 @@ class OrderController
         unset($_SESSION['custom_builds']);
 
         // - Success - send the user to their new order's detail page -
-        $_SESSION['flash_success'] = 'Order placed successfully!';
-        header('Location: /orders/' . $orderId);
+        $_SESSION['flash_success'] = 'Order successfully created and updated in your Orders page.';
+        header('Location: /orders');
         exit;
     }
 

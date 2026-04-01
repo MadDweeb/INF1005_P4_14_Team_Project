@@ -158,20 +158,35 @@ class Order
      * @param  float $totalAmount  Pre-calculated cart total.
      * @return int                 The new order_id, or 0 on failure.
      */
-    public function create(int $userId, array $cartItems, float $totalAmount): int
+    public function create(
+        int $userId,
+        array $cartItems,
+        float $totalAmount,
+        string $name,
+        string $address,
+        string $city,
+        string $postal
+    ): int
     {
         try {
             $this->pdo->beginTransaction();
 
             // Step 1 - create the order header.
             $orderStmt = $this->pdo->prepare(
-                "INSERT INTO {$this->table} (user_id, total_amount, status)
-                 VALUES (:user_id, :total_amount, 'pending')"
+                "INSERT INTO {$this->table}
+                    (user_id, total_amount, status, shipping_name, shipping_address, shipping_city, shipping_postal)
+                VALUES
+                    (:user_id, :total_amount, 'pending', :shipping_name, :shipping_address, :shipping_city, :shipping_postal)"
             );
             $orderStmt->execute([
-                ':user_id'      => $userId,
-                ':total_amount' => $totalAmount,
+                ':user_id'          => $userId,
+                ':total_amount'     => $totalAmount,
+                ':shipping_name'    => $name,
+                ':shipping_address' => $address,
+                ':shipping_city'    => $city,
+                ':shipping_postal'  => $postal,
             ]);
+
             $orderId = (int) $this->pdo->lastInsertId();
 
             // Step 2 - insert a snapshot of each line item.
@@ -186,13 +201,10 @@ class Order
 
             // Step 3 - deduct stock for each item.
             $stockStmt = $this->pdo->prepare(
-                "UPDATE products
-                 SET stock_quantity = stock_quantity - :quantity
-                 WHERE product_id = :product_id
-                   AND stock_quantity >= :quantity"
-                // The AND guard is a last-resort race-condition check:
-                // if stock dropped to zero between the controller's check and
-                // this UPDATE, rowCount() will be 0 and we roll back.
+                            "UPDATE products
+                            SET stock_quantity = stock_quantity - :qty_deduct
+                            WHERE product_id = :product_id
+                            AND stock_quantity >= :qty_check"
             );
 
             foreach ($cartItems as $item) {
@@ -207,8 +219,9 @@ class Order
 
                 // Deduct stock - roll back everything if a product ran out.
                 $stockStmt->execute([
-                    ':quantity'   => $item['quantity'],
+                    ':qty_deduct' => $item['quantity'],
                     ':product_id' => $item['product_id'],
+                    ':qty_check'  => $item['quantity'],
                 ]);
 
                 if ($stockStmt->rowCount() === 0) {
@@ -233,6 +246,7 @@ class Order
             if ($this->pdo->inTransaction()) {
                 $this->pdo->rollBack();
             }
+            error_log('Order create failed: ' . $e->getMessage());
             return 0;
         }
     }
@@ -324,20 +338,22 @@ class Order
      * @param  string $status   New status - must match an ENUM value.
      * @return bool             True on success, false if status is invalid.
      */
-    public function updateStatus(int $orderId, string $status): bool
-    {
-        if (!in_array($status, self::ALLOWED_STATUSES, true)) {
-            return false;
-        }
-
-        $stmt = $this->pdo->prepare(
-            "UPDATE {$this->table}
-             SET status = :status
-             WHERE order_id = :order_id"
-        );
-        return $stmt->execute([
-            ':status'   => $status,
-            ':order_id' => $orderId,
-        ]);
+public function updateStatus(int $orderId, string $status): bool
+{
+    if (!in_array($status, self::ALLOWED_STATUSES, true)) {
+        return false;
     }
+
+    $stmt = $this->pdo->prepare("
+        UPDATE {$this->table}
+        SET status = :status,
+            updated_at = NOW()
+        WHERE order_id = :order_id
+    ");
+
+    return $stmt->execute([
+        ':status'   => $status,
+        ':order_id' => $orderId,
+    ]);
+}
 }
