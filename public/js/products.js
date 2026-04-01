@@ -123,13 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let debounceTimer = null;
     let currentQuery  = searchInput.value.trim();
 
-    // Status element injected above the grid to show result count / loading.
-    const status = document.createElement('p');
-    status.className    = 'search-status';
-    status.setAttribute('aria-live', 'polite');
-    status.setAttribute('aria-atomic', 'true');
-    if (productsMain) productsMain.insertBefore(status, productsMain.firstChild);
-
     searchInput.addEventListener('input', function () {
         clearTimeout(debounceTimer);
         const q = this.value.trim();
@@ -142,14 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function runSearch(q) {
         currentQuery = q;
 
-        // Empty query — restore the original server-rendered content.
+        // Empty query - restore the original server-rendered content.
         if (q === '') {
             restoreOriginal();
-            status.textContent = '';
             return;
         }
 
-        status.textContent = 'Searching…';
 
         // Carry the current filter sidebar values along so type/price filters
         // remain active while the user types.
@@ -177,22 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderResults(data);
             })
             .catch(() => {
-                // On any error, fall back silently — the form submit still works.
+                // On any error, fall back silently - the form submit still works.
                 if (q !== currentQuery) return;
-                status.textContent = '';
             });
     }
 
     function renderResults(data) {
-        // Hide pagination — it belongs to the full server-rendered result set.
+        // Hide pagination - it belongs to the full server-rendered result set.
         const paginationEl = document.querySelector('.pagination');
         if (paginationEl) paginationEl.style.display = 'none';
-
-        status.textContent = data.count === 0
-            ? 'No results found.'
-            : data.count === 1
-                ? '1 result found.'
-                : `${data.count} results found.`;
 
         // Re-use or create the grid element.
         let gridEl = document.querySelector('.products-grid');
@@ -270,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Minimal HTML escaper — avoids XSS from API data rendered via innerHTML.
+    // Minimal HTML escaper - avoids XSS from API data rendered via innerHTML.
     function escHtml(str) {
         return String(str ?? '')
             .replace(/&/g, '&amp;')

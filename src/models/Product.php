@@ -75,10 +75,16 @@ class Product
         $conditions = [];
         $params     = [];
 
-        // - Search: match name OR description -
+        // - Search: match name, manufacturer, switch_type, or description -
+        // NOTE: PDO with EMULATE_PREPARES=false (native MySQL) does not allow
+        // the same named parameter to appear more than once. Use q1–q4 instead.
         if (!empty($filters['q'])) {
-            $conditions[] = '(name LIKE :q OR description LIKE :q)';
-            $params[':q'] = '%' . $filters['q'] . '%';
+            $conditions[] = '(name LIKE :q1 OR manufacturer LIKE :q2 OR switch_type LIKE :q3 OR description LIKE :q4)';
+            $term = '%' . $filters['q'] . '%';
+            $params[':q1'] = $term;
+            $params[':q2'] = $term;
+            $params[':q3'] = $term;
+            $params[':q4'] = $term;
         }
 
         // - Switch type: supports a single string or an array of types -
