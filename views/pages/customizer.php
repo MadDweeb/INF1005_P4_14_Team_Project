@@ -258,8 +258,9 @@ $extraJs = ['/js/customizer.js'];
         }).join('');
         
         grid.querySelectorAll('.option-card').forEach(card => {
-            card.querySelector('.select-option-btn').addEventListener('click', function(e) {
-                e.stopPropagation();
+            // Make entire card clickable
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function() {
                 const index = parseInt(card.dataset.index);
                 selectComponent(part, components[index]);
             });

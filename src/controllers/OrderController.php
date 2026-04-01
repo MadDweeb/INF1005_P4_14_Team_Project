@@ -43,12 +43,22 @@ class OrderController
             ? $this->cartModel->getByUser($user['id'])
             : [];
 
-        if (empty($cartItems)) {
+        // Include custom builds from session
+        $customBuilds = $_SESSION['custom_builds'] ?? [];
+
+        // Redirect if BOTH cart and custom builds are empty
+        if (empty($cartItems) && empty($customBuilds)) {
             header('Location: /cart');
             exit;
         }
 
         $cartTotal   = $this->calculateTotal($cartItems);
+        
+        // Add custom builds to total
+        foreach ($customBuilds as $build) {
+            $cartTotal += ($build['price'] * $build['quantity']);
+        }
+        
         $currentPage = 'checkout';
         require_once __DIR__ . '/../../views/pages/checkout.php';
     }
@@ -87,7 +97,11 @@ class OrderController
             ? $this->cartModel->getByUser($user['id'])
             : [];
 
-        if (empty($cartItems)) {
+        // Include custom builds from session
+        $customBuilds = $_SESSION['custom_builds'] ?? [];
+
+        // Redirect if BOTH are empty
+        if (empty($cartItems) && empty($customBuilds)) {
             header('Location: /cart');
             exit;
         }
@@ -99,10 +113,17 @@ class OrderController
                 break;
             }
         }
+        
+        // Custom builds always have stock (they're built to order)
+        // No stock check needed for custom builds
 
         // - Re-render checkout with errors if validation failed -
         if (!empty($errors)) {
-            $cartTotal   = $this->calculateTotal($cartItems);
+            $cartTotal = $this->calculateTotal($cartItems);
+            // Add custom builds to total
+            foreach ($customBuilds as $build) {
+                $cartTotal += ($build['price'] * $build['quantity']);
+            }
             $currentPage = 'checkout';
             require_once __DIR__ . '/../../views/pages/checkout.php';
             return;
@@ -110,6 +131,11 @@ class OrderController
 
         // - Place the order inside a transaction -
         $cartTotal = $this->calculateTotal($cartItems);
+        // Add custom builds to total
+        foreach ($customBuilds as $build) {
+            $cartTotal += ($build['price'] * $build['quantity']);
+        }
+        
         $orderId   = $this->orderModel
             ? $this->orderModel->create($user['id'], $cartItems, $cartTotal)
             : 0;
@@ -121,6 +147,9 @@ class OrderController
             require_once __DIR__ . '/../../views/pages/checkout.php';
             return;
         }
+
+        // - Clear custom builds from session after successful order -
+        unset($_SESSION['custom_builds']);
 
         // - Success - send the user to their new order's detail page -
         $_SESSION['flash_success'] = 'Order placed successfully!';

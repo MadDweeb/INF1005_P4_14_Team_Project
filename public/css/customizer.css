@@ -268,12 +268,18 @@
     padding: 25px;
     transition: all 0.3s ease;
     cursor: pointer;
+    user-select: none;
 }
 
 .option-card:hover {
     background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(215, 58, 58, 0.5);
+    border-color: var(--accent);
     transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(215, 58, 58, 0.3);
+}
+
+.option-card:active {
+    transform: translateY(-2px);
 }
 
 .option-card.selected {

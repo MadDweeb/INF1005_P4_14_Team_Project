@@ -7,6 +7,9 @@
 ob_start();
 $extraCss = ['/css/checkout.css'];
 $extraJs = ['/js/checkout.js'];
+
+// Get custom builds from session
+$customBuilds = $_SESSION['custom_builds'] ?? [];
 ?>
 
 <div class="checkout-page">
@@ -14,7 +17,7 @@ $extraJs = ['/js/checkout.js'];
         <h1>Checkout</h1>
     </div>
 
-    <?php if (empty($cartItems)): ?>
+    <?php if (empty($cartItems) && empty($customBuilds)): ?>
         <div class="empty-cart-message">
             <h2>Your cart is empty</h2>
             <p>Please add items to your cart before checking out.</p>
@@ -167,6 +170,26 @@ $extraJs = ['/js/checkout.js'];
                             </div>
                             <div class="order-item-price">
                                 $<?= number_format($item['price'] * $item['quantity'], 2) ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    
+                    <?php foreach ($customBuilds as $build): ?>
+                        <div class="order-item custom-build-item">
+                            <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
+                                alt="<?= htmlspecialchars($build['name']) ?>" class="order-item-image">
+                            <div class="order-item-info">
+                                <div class="order-item-name">
+                                    <?= htmlspecialchars($build['name']) ?> 
+                                    <span class="custom-badge">CUSTOM</span>
+                                </div>
+                                <div class="order-item-details">
+                                    <?= htmlspecialchars($build['description']) ?><br>
+                                    Qty: <?= $build['quantity'] ?> × $<?= number_format($build['price'], 2) ?>
+                                </div>
+                            </div>
+                            <div class="order-item-price">
+                                $<?= number_format($build['price'] * $build['quantity'], 2) ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
