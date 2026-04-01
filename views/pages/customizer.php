@@ -283,8 +283,22 @@ $extraJs = ['/js/customizer.js'];
         const partElement = document.querySelector(`.switch-part-exploded[data-part="${part}"]`);
         const imgElement = partElement.querySelector('.exploded-image');
         
-        // Apply color filter based on component selection
-        applyComponentColor(imgElement, part, component);
+        // If component has an image file, swap the image
+        if (component.image) {
+            imgElement.src = `/assets/images/${component.image}`;
+            
+            // Only apply color filters for missing images (Nylon Black)
+            if (component.image.includes('nylon_black')) {
+                // These images don't exist, so use the default image with dark filter
+                imgElement.src = part.includes('top') ? '/assets/images/pc_clear_top.webp' : '/assets/images/pc_clear_bottom.webp';
+                imgElement.style.filter = 'brightness(0.3) saturate(0)';
+                imgElement.style.transition = 'filter 0.5s ease';
+            } else {
+                // Image exists, remove any filters
+                imgElement.style.filter = '';
+                imgElement.style.opacity = '1';
+            }
+        }
         
         updateCharacteristics();
         updateTotalPrice();
@@ -297,76 +311,6 @@ $extraJs = ['/js/customizer.js'];
         }, 300);
         
         openOptions(part);
-    }
-
-    function applyComponentColor(imgElement, part, component) {
-        // Remove any existing filters
-        imgElement.style.filter = '';
-        imgElement.style.opacity = '1';
-        
-        if (part === 'top_housing' || part === 'bottom_housing') {
-            // Housing colors based on material
-            if (component.name.includes('Clear')) {
-                // Polycarbonate Clear - bright, slight blue tint
-                imgElement.style.filter = 'brightness(1.3) saturate(0.8) hue-rotate(200deg)';
-                imgElement.style.opacity = '0.9';
-            } else if (component.name.includes('Black')) {
-                // Nylon Black - dark
-                imgElement.style.filter = 'brightness(0.3) saturate(0)';
-            } else if (component.name.includes('Frosted')) {
-                // ABS Frosted - white/milky
-                imgElement.style.filter = 'brightness(1.8) saturate(0.3)';
-                imgElement.style.opacity = '0.85';
-            } else if (component.name.includes('Smoky')) {
-                // PC Smoky - gray tinted
-                imgElement.style.filter = 'brightness(0.6) saturate(0.5) hue-rotate(220deg)';
-                imgElement.style.opacity = '0.8';
-            } else if (component.name.includes('POM White')) {
-                // POM White - solid white
-                imgElement.style.filter = 'brightness(2) saturate(0)';
-            } else if (component.name.includes('Milky')) {
-                // PC Milky - milky white
-                imgElement.style.filter = 'brightness(1.6) saturate(0.4)';
-                imgElement.style.opacity = '0.9';
-            }
-        } else if (part === 'stem') {
-            // Stem colors based on type
-            if (component.name === 'Linear') {
-                // Red
-                imgElement.style.filter = 'brightness(1.1) saturate(1.5) hue-rotate(350deg)';
-            } else if (component.name === 'Tactile') {
-                // Brown
-                imgElement.style.filter = 'brightness(0.8) saturate(0.7) hue-rotate(20deg)';
-            } else if (component.name === 'Clicky') {
-                // Blue
-                imgElement.style.filter = 'brightness(1.1) saturate(1.3) hue-rotate(200deg)';
-            } else if (component.name === 'Silent Linear') {
-                // Pink
-                imgElement.style.filter = 'brightness(1.2) saturate(1.2) hue-rotate(320deg)';
-            }
-        } else if (part === 'spring') {
-            // Spring weight affects brightness/thickness appearance
-            const weight = component.force;
-            if (weight <= 35) {
-                // Ultra light - brighter, gold
-                imgElement.style.filter = 'brightness(1.4) saturate(1.2) hue-rotate(40deg)';
-            } else if (weight <= 45) {
-                // Light - gold
-                imgElement.style.filter = 'brightness(1.2) saturate(1.1) hue-rotate(35deg)';
-            } else if (weight <= 55) {
-                // Medium - standard gold
-                imgElement.style.filter = 'brightness(1.1) saturate(1) hue-rotate(30deg)';
-            } else if (weight <= 62) {
-                // Medium-Heavy - darker gold
-                imgElement.style.filter = 'brightness(0.9) saturate(1.1) hue-rotate(25deg)';
-            } else {
-                // Heavy - darkest, more silver
-                imgElement.style.filter = 'brightness(0.8) saturate(0.8) hue-rotate(0deg)';
-            }
-        }
-        
-        // Add smooth transition
-        imgElement.style.transition = 'filter 0.5s ease, opacity 0.5s ease';
     }
 
     function updateCharacteristics() {
@@ -414,7 +358,12 @@ $extraJs = ['/js/customizer.js'];
             if (confirm('Reset your entire build?')) {
                 selections = { top_housing: null, stem: null, spring: null, bottom_housing: null };
                 
-                // Reset all component colors to default
+                // Reset all component images and filters to default
+                document.querySelector('.top-housing-exploded .exploded-image').src = '/assets/images/top_housing.webp';
+                document.querySelector('.stem-exploded .exploded-image').src = '/assets/images/stem.webp';
+                document.querySelector('.spring-exploded .exploded-image').src = '/assets/images/spring.webp';
+                document.querySelector('.bottom-housing-exploded .exploded-image').src = '/assets/images/bottom_housing.webp';
+                
                 document.querySelectorAll('.exploded-image').forEach(img => {
                     img.style.filter = '';
                     img.style.opacity = '1';
@@ -431,7 +380,9 @@ $extraJs = ['/js/customizer.js'];
     }
 
     function setupAddToCartButton() {
-        document.getElementById('addToCartBtn').addEventListener('click', async function() {
+        document.getElementById('addToCartBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
             const allSelected = Object.values(selections).every(s => s !== null);
             
             if (!allSelected) {
@@ -447,52 +398,66 @@ $extraJs = ['/js/customizer.js'];
                 selections.bottom_housing.price
             ).toFixed(2);
             
-            // Create custom switch description
-            const description = `Custom Switch: ${selections.stem.name} stem, ${selections.spring.name} spring, ${selections.top_housing.name} top housing, ${selections.bottom_housing.name} bottom housing`;
+            // Create custom switch description for the cart
+            const customBuildData = JSON.stringify({
+                top_housing: selections.top_housing.name,
+                stem: selections.stem.name,
+                spring: selections.spring.name,
+                bottom_housing: selections.bottom_housing.name,
+                total_price: totalPrice
+            });
             
-            // Prepare cart data
-            const cartData = new FormData();
-            cartData.append('product_name', 'Custom Built Switch');
-            cartData.append('price', totalPrice);
-            cartData.append('quantity', 10); // Minimum order
-            cartData.append('description', description);
-            cartData.append('custom_build', JSON.stringify(selections));
+            // Create a hidden form to submit to cart
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/cart/add';
+            form.style.display = 'none';
             
-            try {
-                // Add to cart (you can implement actual cart endpoint)
-                this.disabled = true;
-                this.innerHTML = '<span>⏳</span> Adding to Cart...';
-                
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                this.innerHTML = '<span>✓</span> Added to Cart!';
-                this.style.background = '#4ade80';
-                
-                setTimeout(() => {
-                    // Redirect to cart or products page
-                    if (confirm('Custom switch added to cart! View cart now?')) {
-                        window.location.href = '/cart';
-                    } else {
-                        this.innerHTML = '<span>🛒</span> Add to Cart';
-                        this.style.background = '';
-                        this.disabled = false;
-                        this.classList.add('enabled');
-                    }
-                }, 1500);
-                
-            } catch (error) {
-                console.error('Error adding to cart:', error);
-                this.innerHTML = '<span>❌</span> Error - Try Again';
-                this.style.background = '#ef4444';
-                
-                setTimeout(() => {
-                    this.innerHTML = '<span>🛒</span> Add to Cart';
-                    this.style.background = '';
-                    this.disabled = false;
-                    this.classList.add('enabled');
-                }, 2000);
-            }
+            // Add CSRF token
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrf_token';
+            csrfInput.value = '<?= generateCsrfToken() ?>';
+            form.appendChild(csrfInput);
+            
+            // Add product ID (use a special ID for custom switches, e.g., 999 or 0)
+            const productIdInput = document.createElement('input');
+            productIdInput.type = 'hidden';
+            productIdInput.name = 'product_id';
+            productIdInput.value = '0'; // 0 indicates custom build
+            form.appendChild(productIdInput);
+            
+            // Add quantity (minimum 10 switches)
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'hidden';
+            quantityInput.name = 'quantity';
+            quantityInput.value = '10';
+            form.appendChild(quantityInput);
+            
+            // Add custom build data
+            const customDataInput = document.createElement('input');
+            customDataInput.type = 'hidden';
+            customDataInput.name = 'custom_build';
+            customDataInput.value = customBuildData;
+            form.appendChild(customDataInput);
+            
+            // Add custom price
+            const priceInput = document.createElement('input');
+            priceInput.type = 'hidden';
+            priceInput.name = 'custom_price';
+            priceInput.value = totalPrice;
+            form.appendChild(priceInput);
+            
+            // Add redirect URL
+            const redirectInput = document.createElement('input');
+            redirectInput.type = 'hidden';
+            redirectInput.name = 'redirect';
+            redirectInput.value = '/cart';
+            form.appendChild(redirectInput);
+            
+            // Append form to body and submit
+            document.body.appendChild(form);
+            form.submit();
         });
     }
 </script>

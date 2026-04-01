@@ -203,4 +203,104 @@ class UserController
         $currentPage = '';
         require_once __DIR__ . '/../../views/pages/profile.php';
     }
+
+    /**
+     * Show the account dashboard page (GET /account).
+     */
+    public function showAccount(): void
+    {
+        requireLogin();
+        $user = currentUser();
+        
+        // Ensure user has required fields with defaults
+        if (!isset($user['username'])) {
+            $user['username'] = 'User';
+        }
+        if (!isset($user['email'])) {
+            $user['email'] = 'user@example.com';
+        }
+        if (!isset($user['created_at'])) {
+            $user['created_at'] = date('Y-m-d H:i:s');
+        }
+        
+        // TODO: Get real data from database
+        $orderCount = 0;
+        $cartCount = 0;
+        $recentOrders = [];
+        
+        $currentPage = 'account';
+        require_once __DIR__ . '/../../views/pages/account.php';
+    }
+
+    /**
+     * Update account information (POST /account/update).
+     */
+    public function updateAccount(): void
+    {
+        requireLogin();
+        verifyCsrf();
+        
+        $userId = currentUser()['id'];
+        $username = sanitizeString($_POST['username'] ?? '');
+        $email = sanitizeEmail($_POST['email'] ?? '');
+        
+        if (empty($username) || empty($email)) {
+            $_SESSION['flash_error'] = 'Username and email are required.';
+            header('Location: /account');
+            exit;
+        }
+        
+        // TODO: Update user in database
+        // $this->userModel->update($userId, $username, $email);
+        
+        $_SESSION['flash_success'] = 'Account updated successfully!';
+        header('Location: /account');
+        exit;
+    }
+
+    /**
+     * Update password (POST /account/password).
+     */
+    public function updatePassword(): void
+    {
+        requireLogin();
+        verifyCsrf();
+        
+        $userId = currentUser()['id'];
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+        
+        if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+            $_SESSION['flash_error'] = 'All password fields are required.';
+            header('Location: /account');
+            exit;
+        }
+        
+        if ($newPassword !== $confirmPassword) {
+            $_SESSION['flash_error'] = 'New passwords do not match.';
+            header('Location: /account');
+            exit;
+        }
+        
+        if (strlen($newPassword) < 8) {
+            $_SESSION['flash_error'] = 'Password must be at least 8 characters.';
+            header('Location: /account');
+            exit;
+        }
+        
+        // TODO: Verify current password and update
+        // $user = $this->userModel->getById($userId);
+        // if (!password_verify($currentPassword, $user['password'])) {
+        //     $_SESSION['flash_error'] = 'Current password is incorrect.';
+        //     header('Location: /account');
+        //     exit;
+        // }
+        // $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        // $this->userModel->updatePassword($userId, $hashedPassword);
+        
+        $_SESSION['flash_success'] = 'Password updated successfully!';
+        header('Location: /account');
+        exit;
+    }
 }

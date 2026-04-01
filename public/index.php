@@ -78,6 +78,10 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->remove();
 
+} elseif ($uri === '/cart/remove-custom' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/CartController.php';
+    (new CartController($pdo))->removeCustom();
+
     // ── Checkout & Order routes ───────────────────────────────────────────────────
 
 } elseif ($uri === '/checkout' && $method === 'GET') {
@@ -88,27 +92,7 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->processCheckout();
 
-} elseif ($uri === '/orders' && $method === 'GET') {
-    require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->orderHistory();
-
-} elseif (preg_match('#^/orders/(\d+)$#', $uri, $matches) && $method === 'GET') {
-    require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->orderDetail((int) $matches[1]);
-
-} elseif ($uri === '/orders/cancel' && $method === 'POST') {
-    require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->cancelOrder();
-
     // ── Admin routes ──────────────────────────────────────────────────────────────
-
-} elseif ($uri === '/admin/orders' && $method === 'GET') {
-    require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->adminIndex();
-
-} elseif ($uri === '/admin/orders/status' && $method === 'POST') {
-    require_once __DIR__ . '/../src/controllers/OrderController.php';
-    (new OrderController($pdo))->adminUpdateStatus();
 
 } elseif ($uri === '/admin/products' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
@@ -136,10 +120,6 @@ if ($uri === '/' && $method === 'GET') {
     $currentPage = 'contact';
     require __DIR__ . '/../views/pages/contact.php';
 
-} elseif ($uri === '/contact' && $method === 'POST') {
-    require_once __DIR__ . '/../src/controllers/ContactController.php';
-    (new ContactController($pdo))->submit();
-
 } elseif ($uri === '/customizer' && $method === 'GET') {
     require_once __DIR__ . '/../src/models/Product.php';
     $products = [];
@@ -150,6 +130,25 @@ if ($uri === '/' && $method === 'GET') {
     }
     $currentPage = 'customizer';
     require __DIR__ . '/../views/pages/customizer.php';
+
+    // ── Account & Orders routes ───────────────────────────────────────────────────
+
+} elseif ($uri === '/account' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/UserController.php';
+    (new UserController($pdo))->showAccount();
+
+} elseif ($uri === '/account/update' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/UserController.php';
+    (new UserController($pdo))->updateAccount();
+
+} elseif ($uri === '/account/password' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/UserController.php';
+    (new UserController($pdo))->updatePassword();
+
+} elseif ($uri === '/orders' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->index();
+
     // ── API routes ────────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/api/search' && $method === 'GET') {

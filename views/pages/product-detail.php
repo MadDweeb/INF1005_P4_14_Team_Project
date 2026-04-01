@@ -108,7 +108,7 @@ $extraCss = ['/css/product-detail.css'];
             <!-- Add to Cart Form -->
             <?php if ($product['stock_quantity'] > 0): ?>
                 <form method="POST" action="/cart/add" class="add-to-cart-form">
-                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+                    <?= csrfInput() ?>
                     <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
 
                     <div class="quantity-selector">

@@ -15,7 +15,7 @@ $extraJs = ['/js/cart.js'];
     </div>
 
     <div class="cart-container">
-        <?php if (empty($cartItems)): ?>
+        <?php if (empty($cartItems) && empty($customBuilds)): ?>
             <div class="empty-cart">
                 <h2>Your cart is empty</h2>
                 <p>Looks like you haven't added any switches yet!</p>
@@ -73,6 +73,41 @@ $extraJs = ['/js/cart.js'];
                                     <form method="POST" action="/cart/remove">
                                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
                                         <input type="hidden" name="cart_item_id" value="<?= $item['cart_item_id'] ?>">
+                                        <button type="submit" class="remove-btn">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        
+                        <?php foreach ($customBuilds as $index => $build): ?>
+                            <tr class="custom-build-item">
+                                <td data-label="Product">
+                                    <div class="cart-item-product">
+                                        <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
+                                            alt="<?= htmlspecialchars($build['name']) ?>" class="cart-item-image">
+                                        <div class="cart-item-info">
+                                            <h3><?= htmlspecialchars($build['name']) ?> <span class="custom-badge">CUSTOM</span></h3>
+                                            <p><?= htmlspecialchars($build['description']) ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Price">
+                                    <div class="cart-item-price">$<?= number_format($build['price'], 2) ?></div>
+                                </td>
+                                <td data-label="Quantity">
+                                    <div class="cart-item-quantity">
+                                        <?= $build['quantity'] ?>
+                                    </div>
+                                </td>
+                                <td data-label="Subtotal">
+                                    <div class="cart-item-subtotal">
+                                        $<?= number_format($build['price'] * $build['quantity'], 2) ?>
+                                    </div>
+                                </td>
+                                <td data-label="Actions">
+                                    <form method="POST" action="/cart/remove-custom">
+                                        <?= csrfInput() ?>
+                                        <input type="hidden" name="custom_index" value="<?= $index ?>">
                                         <button type="submit" class="remove-btn">Remove</button>
                                     </form>
                                 </td>

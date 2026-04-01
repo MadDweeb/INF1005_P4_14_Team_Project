@@ -45,10 +45,18 @@ class CartController
             ? $this->cartModel->getByUser($user['id'])
             : [];
 
+        // Add custom builds from session
+        $customBuilds = $_SESSION['custom_builds'] ?? [];
+
         // Calculate the running total from the joined price * quantity columns.
         $cartTotal = array_reduce($cartItems, function (float $carry, array $item): float {
             return $carry + ($item['price'] * $item['quantity']);
         }, 0.0);
+
+        // Add custom builds to total
+        foreach ($customBuilds as $build) {
+            $cartTotal += ($build['price'] * $build['quantity']);
+        }
 
         $currentPage = 'cart';
         require_once __DIR__ . '/../../views/pages/cart.php';
@@ -69,6 +77,12 @@ class CartController
 
         $productId = sanitizeInt($_POST['product_id'] ?? 0);
         $quantity = sanitizeInt($_POST['quantity'] ?? 1);
+
+        // Handle custom build (product_id = 0)
+        if ($productId === 0 && isset($_POST['custom_build'])) {
+            $this->addCustomBuild();
+            return;
+        }
 
         // Basic validation - reject nonsensical values immediately.
         if (!isPositiveInt($productId) || $quantity < 1) {
@@ -161,6 +175,77 @@ class CartController
         // user_id is passed so the model's WHERE clause prevents cross-user deletion.
         $this->cartModel->remove($user['id'], $cartItemId);
 
+        header('Location: /cart');
+        exit;
+    }
+
+    /**
+     * Handle custom switch builds from the customizer.
+     * Stores the build in session as a special cart item.
+     */
+    private function addCustomBuild(): void
+    {
+        $customData = json_decode($_POST['custom_build'] ?? '{}', true);
+        $quantity = sanitizeInt($_POST['quantity'] ?? 10);
+        $customPrice = floatval($_POST['custom_price'] ?? 0);
+
+        if (empty($customData) || $customPrice <= 0) {
+            $_SESSION['flash_error'] = 'Invalid custom build data.';
+            header('Location: /customizer');
+            exit;
+        }
+
+        // Store custom build in session (not in database since it's a custom configuration)
+        if (!isset($_SESSION['custom_builds'])) {
+            $_SESSION['custom_builds'] = [];
+        }
+
+        // Create a description
+        $description = sprintf(
+            'Custom Switch: %s top, %s stem, %s spring, %s bottom',
+            $customData['top_housing'] ?? '',
+            $customData['stem'] ?? '',
+            $customData['spring'] ?? '',
+            $customData['bottom_housing'] ?? ''
+        );
+
+        // Add to custom builds array
+        $_SESSION['custom_builds'][] = [
+            'name' => 'Custom Built Switch',
+            'description' => $description,
+            'price' => $customPrice,
+            'quantity' => $quantity,
+            'build_data' => $customData,
+            'product_image' => 'custom_switch.webp' // Generic custom switch image
+        ];
+
+        $_SESSION['flash_success'] = 'Custom switch added to cart!';
+        
+        $redirect = sanitizeString($_POST['redirect'] ?? '/cart');
+        header('Location: ' . $redirect);
+        exit;
+    }
+
+    /**
+     * Remove a custom build from the session cart.
+     */
+    public function removeCustom(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $customIndex = sanitizeInt($_POST['custom_index'] ?? -1);
+
+        if (!isset($_SESSION['custom_builds'][$customIndex])) {
+            $_SESSION['flash_error'] = 'Custom build not found.';
+            header('Location: /cart');
+            exit;
+        }
+
+        // Remove the custom build
+        array_splice($_SESSION['custom_builds'], $customIndex, 1);
+
+        $_SESSION['flash_success'] = 'Custom build removed from cart.';
         header('Location: /cart');
         exit;
     }

@@ -79,10 +79,23 @@
 
 .exploded-image {
     width: 200px;
-    height: auto;
+    height: 200px;
     display: block;
+    object-fit: contain;
     filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
     transition: filter 0.3s ease;
+}
+
+/* Make springs smaller since they're taller/thinner */
+.spring-exploded .exploded-image {
+    width: 120px;
+    height: 200px;
+}
+
+/* Make stems slightly smaller for better proportion */
+.stem-exploded .exploded-image {
+    width: 160px;
+    height: 200px;
 }
 
 .switch-part-exploded:hover .exploded-image {

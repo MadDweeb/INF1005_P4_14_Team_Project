@@ -26,7 +26,7 @@ $navLinks = [
         <?php endforeach; ?>
 
         <?php if (isLoggedIn()): ?>
-            <li><a href="/profile">Account</a></li>
+            <li><a href="/account">Account</a></li>
             <li>
                 <form method="POST" action="/logout" style="display:inline">
                     <?= csrfInput() ?>
