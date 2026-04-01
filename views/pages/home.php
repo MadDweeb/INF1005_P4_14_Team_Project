@@ -196,11 +196,11 @@ ob_start();
 <section class="home-custom-wrapper" data-theme="dark" aria-labelledby="homeCustomHeading">
     <div class="home-custom-sticky">
         <div class="home-assembly-container" aria-hidden="true">
-            <img src="/assets/images/top_housing.webp" alt="" class="home-assembly-part h-part-top-housing"
+            <img src="/assets/images/pc_smoky_top.webp" alt="" class="home-assembly-part h-part-top-housing"
                 loading="lazy">
-            <img src="/assets/images/stem.webp" alt="" class="home-assembly-part h-part-stem" loading="lazy">
-            <img src="/assets/images/spring.webp" alt="" class="home-assembly-part h-part-spring" loading="lazy">
-            <img src="/assets/images/bottom_housing.webp" alt="" class="home-assembly-part h-part-bottom"
+            <img src="/assets/images/tactile_stem.webp" alt="" class="home-assembly-part h-part-stem" loading="lazy">
+            <img src="/assets/images/spring_45g.webp" alt="" class="home-assembly-part h-part-spring" loading="lazy">
+            <img src="/assets/images/pc_milky_bottom.webp" alt="" class="home-assembly-part h-part-bottom"
                 loading="lazy">
         </div>
 
