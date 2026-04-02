@@ -158,6 +158,10 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ContactController.php';
     (new ContactController($pdo))->submit();
 
+} elseif ($uri === '/subscribe' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/SubscriptionController.php';
+    (new SubscriptionController($pdo))->subscribe();
+
 } elseif ($uri === '/customizer' && $method === 'GET') {
     require_once __DIR__ . '/../src/models/Product.php';
     $products = [];

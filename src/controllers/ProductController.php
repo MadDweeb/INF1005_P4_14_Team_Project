@@ -297,8 +297,8 @@ class ProductController
             }
             $this->productModel->delete($productId);
         } catch (\PDOException $e) {
-            // FK still fired — product is part of an active order.
-            $_SESSION['flash_error'] = 'Cannot delete this product — it is part of an active order (pending, processing, shipped, or delivered).';
+            // FK still fired - product is part of an active order.
+            $_SESSION['flash_error'] = 'Cannot delete this product - it is part of an active order (pending, processing, shipped, or delivered).';
             header('Location: /admin/products');
             exit;
         }
