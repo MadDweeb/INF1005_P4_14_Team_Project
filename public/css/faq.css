@@ -1,0 +1,129 @@
+.faq-page {
+    padding: 120px 0 100px;
+}
+
+.faq-header {
+    background-color: #1a1a1a;
+    color: white;
+    text-align: center;
+    padding: 120px 5vw 100px;
+    margin-bottom: 80px;
+}
+
+.faq-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.faq-header p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 5vw;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.faq-item.active {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.faq-item h3 {
+    margin: 0;
+}
+
+.faq-item button {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 35px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faq-item button:hover,
+.faq-item button:focus {
+    color: #d73a3a;
+    outline: none;
+}
+
+.faq-item button:focus-visible {
+    outline: 3px solid #d73a3a;
+    outline-offset: 4px;
+}
+
+.faq-icon-fa {
+    font-size: 1.2rem;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--accent);
+    margin-left: 20px;
+}
+
+.faq-item.active .faq-icon-fa {
+    transform: rotate(45deg);
+    /* Plux to X transition */
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.5s ease;
+    opacity: 0;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    opacity: 1;
+    padding: 10px 0 40px;
+}
+
+.faq-answer p {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    opacity: 0.85;
+    color: #cccccc;
+}
+
+.faq-answer strong {
+    color: #ff4d4d;
+}
+
+@media (max-width: 768px) {
+    .faq-header {
+        padding: 80px 5vw 60px;
+    }
+
+    .faq-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .faq-item button {
+        font-size: 1.1rem;
+        padding: 25px 0;
+    }
+}

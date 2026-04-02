@@ -50,7 +50,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <?php endif; ?>
 </head>
 
-<body>
+<body class="<?= htmlspecialchars($bodyClass ?? '') ?>">
     <?php include __DIR__ . '/../partials/skip-links.php'; ?>
 
     <?php include __DIR__ . '/../partials/header.php'; ?>

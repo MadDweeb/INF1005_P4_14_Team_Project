@@ -154,6 +154,10 @@ if ($uri === '/' && $method === 'GET') {
     $currentPage = 'contact';
     require __DIR__ . '/../views/pages/contact.php';
 
+} elseif ($uri === '/faq' && $method === 'GET') {
+    $currentPage = 'faq';
+    require __DIR__ . '/../views/pages/faq.php';
+
 } elseif ($uri === '/contact' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/ContactController.php';
     (new ContactController($pdo))->submit();
