@@ -91,6 +91,13 @@
     color: var(--bg-main);
 }
 
+.admin-nav-link:focus-visible,
+.admin-logout-btn:focus-visible,
+.admin-mobile-toggle:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
 .admin-nav-link.active {
     background: var(--accent);
     color: #fff;

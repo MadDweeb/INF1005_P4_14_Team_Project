@@ -31,6 +31,7 @@ require_once __DIR__ . '/../helpers/sanitize.php';
 class UserController
 {
     private ?User $userModel;
+    private const MAX_LOGIN_ATTEMPTS = 5;
 
     public function __construct(?PDO $pdo)
     {
@@ -72,11 +73,39 @@ class UserController
         }
 
         $user = null;
-        if (empty($errors) && $this->userModel) {
-            $user = $this->userModel->findByEmail($email);
+        if (empty($errors)) {
+            if (!$this->userModel) {
+                $errors['general'] = 'Login is currently unavailable. Please try again later.';
+            } else {
+                $user = $this->userModel->findByEmail($email);
 
-            if (!$user || !password_verify($password, $user['password'])) {
-                $errors['general'] = 'Invalid email or password.';
+                // Keep unknown emails generic to reduce account enumeration risk.
+                if (!$user) {
+                    $errors['general'] = 'Invalid email or password.';
+                } else {
+                    if ($this->isLockoutExpired($user)) {
+                        $this->userModel->clearLoginLockout((int) $user['user_id']);
+                        $user['failed_login_attempts'] = 0;
+                        $user['locked_until'] = null;
+                    }
+
+                    if ($this->isAccountLocked($user)) {
+                        $errors['general'] = $this->buildLockedMessage((string) $user['locked_until']);
+                    } elseif (!password_verify($password, (string) $user['password'])) {
+                        $failedAttempts = $this->userModel->incrementFailedLoginAttempts((int) $user['user_id']);
+                        $remainingAttempts = max(0, self::MAX_LOGIN_ATTEMPTS - $failedAttempts);
+
+                        if ($remainingAttempts === 0) {
+                            $this->userModel->lockAccountForOneHour((int) $user['user_id']);
+                            $errors['general'] = 'Wrong credentials! Your account is now locked for 1 hour.';
+                        } else {
+                            $attemptWord = $remainingAttempts === 1 ? 'attempt' : 'attempts';
+                            $errors['general'] = "Wrong credentials! {$remainingAttempts} {$attemptWord} left.";
+                        }
+                    } else {
+                        $this->userModel->clearLoginLockout((int) $user['user_id']);
+                    }
+                }
             }
         }
 
@@ -95,6 +124,38 @@ class UserController
 
         $redirect = ($user['role'] === 'admin') ? '/admin/dashboard' : '/';
         header('Location: ' . $redirect);
+        exit;
+    }
+
+    /**
+     * Admin: clear lockout state for a user account.
+     */
+    public function adminResetLockout(): void
+    {
+        requireAdmin();
+        verifyCsrf();
+
+        $userId = sanitizeInt($_POST['user_id'] ?? 0);
+
+        if (!$this->userModel) {
+            $_SESSION['flash_error'] = 'Database unavailable. Could not reset lockout.';
+            header('Location: /admin/dashboard');
+            exit;
+        }
+
+        if (!isPositiveInt($userId)) {
+            $_SESSION['flash_error'] = 'Invalid user selected.';
+            header('Location: /admin/dashboard');
+            exit;
+        }
+
+        if ($this->userModel->clearLoginLockout($userId)) {
+            $_SESSION['flash_success'] = 'Login lockout state reset successfully.';
+        } else {
+            $_SESSION['flash_error'] = 'Could not reset lockout for that user.';
+        }
+
+        header('Location: /admin/dashboard#login-lockout-management');
         exit;
     }
 
@@ -306,5 +367,58 @@ class UserController
         $_SESSION['flash_success'] = 'Password updated successfully!';
         header('Location: /account');
         exit;
+    }
+
+    /**
+     * Determine if an account is currently locked.
+     */
+    private function isAccountLocked(array $user): bool
+    {
+        $lockedUntil = $user['locked_until'] ?? null;
+        if (empty($lockedUntil)) {
+            return false;
+        }
+
+        $lockedUntilTs = strtotime((string) $lockedUntil);
+        if ($lockedUntilTs === false) {
+            return false;
+        }
+
+        return $lockedUntilTs > time();
+    }
+
+    /**
+     * Identify lockouts that have already passed so counters can be reset.
+     */
+    private function isLockoutExpired(array $user): bool
+    {
+        $lockedUntil = $user['locked_until'] ?? null;
+        if (empty($lockedUntil)) {
+            return false;
+        }
+
+        $lockedUntilTs = strtotime((string) $lockedUntil);
+        if ($lockedUntilTs === false) {
+            return false;
+        }
+
+        return $lockedUntilTs <= time();
+    }
+
+    /**
+     * Build a user-friendly lock message with a rough remaining time.
+     */
+    private function buildLockedMessage(string $lockedUntil): string
+    {
+        $lockedUntilTs = strtotime($lockedUntil);
+        if ($lockedUntilTs === false) {
+            return 'Your account is temporarily locked due to too many failed login attempts. Please try again later.';
+        }
+
+        $secondsRemaining = max(0, $lockedUntilTs - time());
+        $minutesRemaining = max(1, (int) ceil($secondsRemaining / 60));
+        $minuteWord = $minutesRemaining === 1 ? 'minute' : 'minutes';
+
+        return "Your account is temporarily locked due to too many failed login attempts. Try again in {$minutesRemaining} {$minuteWord}.";
     }
 }

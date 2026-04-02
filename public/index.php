@@ -100,13 +100,17 @@ if ($uri === '/' && $method === 'GET') {
     requireAdmin();
     require_once __DIR__ . '/../src/models/Product.php';
     require_once __DIR__ . '/../src/models/Order.php';
+    require_once __DIR__ . '/../src/models/User.php';
     $productCount = 0;
     $orderCount = 0;
     $totalRevenue = 0;
     $pendingOrders = 0;
+    $usersWithLockoutStatus = [];
     if ($pdo !== null) {
         $productModel = new Product($pdo);
+        $userModel = new User($pdo);
         $productResult = $productModel->getAll([], 1, 1);
+        $usersWithLockoutStatus = $userModel->getUsersWithLockoutStatus();
         $productCount = $productResult['total'] ?? 0;
         $stmt = $pdo->query("SELECT COUNT(*) AS cnt, COALESCE(SUM(total_amount), 0) AS revenue FROM orders");
         $row = $stmt->fetch();
@@ -144,6 +148,10 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/admin/products/delete' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
     (new ProductController($pdo))->adminDelete();
+
+} elseif ($uri === '/admin/users/reset-lockout' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/UserController.php';
+    (new UserController($pdo))->adminResetLockout();
 
     // ── Static pages ──────────────────────────────────────────────────────────────
 

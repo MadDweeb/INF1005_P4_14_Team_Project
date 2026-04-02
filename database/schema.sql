@@ -12,10 +12,44 @@ CREATE TABLE IF NOT EXISTS users (
     email      VARCHAR(255) NOT NULL UNIQUE,
     password   VARCHAR(255) NOT NULL COMMENT 'bcrypt hash - NEVER store plaintext',
     role       ENUM('customer', 'admin') NOT NULL DEFAULT 'customer',
+    failed_login_attempts INT UNSIGNED NOT NULL DEFAULT 0,
+    locked_until TIMESTAMP NULL DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_email (email)
 ) ENGINE=InnoDB;
+
+SET @failed_login_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'users'
+      AND COLUMN_NAME = 'failed_login_attempts'
+);
+SET @failed_login_sql = IF(
+    @failed_login_exists = 0,
+    'ALTER TABLE users ADD COLUMN failed_login_attempts INT UNSIGNED NOT NULL DEFAULT 0',
+    'SELECT 1'
+);
+PREPARE stmt_failed_login FROM @failed_login_sql;
+EXECUTE stmt_failed_login;
+DEALLOCATE PREPARE stmt_failed_login;
+
+SET @locked_until_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'users'
+      AND COLUMN_NAME = 'locked_until'
+);
+SET @locked_until_sql = IF(
+    @locked_until_exists = 0,
+    'ALTER TABLE users ADD COLUMN locked_until TIMESTAMP NULL DEFAULT NULL',
+    'SELECT 1'
+);
+PREPARE stmt_locked_until FROM @locked_until_sql;
+EXECUTE stmt_locked_until;
+DEALLOCATE PREPARE stmt_locked_until;
 
 -- Products table
 CREATE TABLE IF NOT EXISTS products (

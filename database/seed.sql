@@ -8,7 +8,12 @@ USE switchstore;
 INSERT INTO users (username, email, password, role) VALUES
     ('admin',    'admin@keyforge.example', '$2y$12$BpS3I3viYhFl/cghr4sexOSDCLJGKWYXesNUiTzA2upCipl1ffonq',    'admin'),
     ('testuser', 'user@keyforge.example',  '$2y$12$HBcjkNxHHX4UZ68KaLAGs.hmwyYtNjVAC1qwPuf4M1Kd2KHYPp9IW', 'customer')
-ON DUPLICATE KEY UPDATE username = username;
+ON DUPLICATE KEY UPDATE
+    username = VALUES(username),
+    password = VALUES(password),
+    role = VALUES(role),
+    failed_login_attempts = 0,
+    locked_until = NULL;
 
 -- Sample products with existing images
 INSERT INTO products

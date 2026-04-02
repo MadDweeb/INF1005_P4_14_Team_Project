@@ -16,6 +16,8 @@
  *   email      - Login identifier (unique)
  *   password   - Bcrypt hash (never store or log plaintext)
  *   role       - 'customer' (default) or 'admin'
+ *   failed_login_attempts - Number of consecutive failed login attempts
+ *   locked_until - Timestamp until login is blocked (null when unlocked)
  *   created_at - Registration timestamp
  *   updated_at - Last profile update timestamp
  */
@@ -112,5 +114,83 @@ class User
         $sql = "UPDATE {$this->table} SET " . implode(', ', $setClauses) . " WHERE user_id = :id";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($params);
+    }
+
+    /**
+     * Increment failed login attempts for a user and return the new count.
+     */
+    public function incrementFailedLoginAttempts(int $userId): int
+    {
+        $stmt = $this->pdo->prepare(
+            "UPDATE {$this->table}
+             SET failed_login_attempts = failed_login_attempts + 1
+             WHERE user_id = :user_id"
+        );
+        $stmt->execute([':user_id' => $userId]);
+
+        $countStmt = $this->pdo->prepare(
+            "SELECT failed_login_attempts
+             FROM {$this->table}
+             WHERE user_id = :user_id
+             LIMIT 1"
+        );
+        $countStmt->execute([':user_id' => $userId]);
+
+        $result = $countStmt->fetch();
+        return (int) ($result['failed_login_attempts'] ?? 0);
+    }
+
+    /**
+     * Lock an account for one hour starting from current DB server time.
+     */
+    public function lockAccountForOneHour(int $userId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            "UPDATE {$this->table}
+             SET locked_until = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 HOUR)
+             WHERE user_id = :user_id"
+        );
+
+        return $stmt->execute([':user_id' => $userId]);
+    }
+
+    /**
+     * Clear lockout state for a user.
+     */
+    public function clearLoginLockout(int $userId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            "UPDATE {$this->table}
+             SET failed_login_attempts = 0,
+                 locked_until = NULL
+             WHERE user_id = :user_id"
+        );
+
+        return $stmt->execute([':user_id' => $userId]);
+    }
+
+    /**
+     * Return users and lockout status for admin dashboard tools.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getUsersWithLockoutStatus(): array
+    {
+        $stmt = $this->pdo->query(
+            "SELECT user_id,
+                    username,
+                    email,
+                    role,
+                    failed_login_attempts,
+                    locked_until,
+                    CASE
+                        WHEN locked_until IS NOT NULL AND locked_until > CURRENT_TIMESTAMP THEN 1
+                        ELSE 0
+                    END AS is_locked
+             FROM {$this->table}
+             ORDER BY is_locked DESC, failed_login_attempts DESC, username ASC"
+        );
+
+        return $stmt->fetchAll();
     }
 }
