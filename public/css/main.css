@@ -915,7 +915,7 @@ body.accessibility-hide-images * {
 
 /* Readable fonts -- uses Open Sans (slim, clean) across entire site */
 body.accessibility-readable-fonts,
-body.accessibility-readable-fonts * {
+body.accessibility-readable-fonts *:not(i):not([class*="fa-"]) {
     font-family: 'Open Sans', 'Segoe UI', Tahoma, sans-serif !important;
     line-height: 1.9 !important;
     letter-spacing: 0.02em !important;
