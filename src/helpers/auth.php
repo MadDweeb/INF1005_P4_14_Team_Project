@@ -73,7 +73,7 @@ function requireLogin(string $redirectTo = '/login'): void
 
 function enforceSessionTimeout(): void
 {
-    $timeout = 10; // testing, change back to 1800 later
+    $timeout = 1800; // testing, change back to 1800 later
 
     if (!isLoggedIn()) {
         return;
