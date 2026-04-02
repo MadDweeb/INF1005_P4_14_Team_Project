@@ -28,9 +28,12 @@ $navLinks = [
         <?php if (isLoggedIn()): ?>
             <li><a href="/account">Account</a></li>
             <li>
-                <form method="POST" action="/logout" style="display:inline">
+                <form method="POST" action="/logout" class="logout-form">
                     <?= csrfInput() ?>
-                    <button type="submit" class="btn-link">Logout</button>
+                    <button type="submit" class="nav-logout-btn" aria-label="Logout">
+                        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                        Logout
+                    </button>
                 </form>
             </li>
         <?php else: ?>

@@ -143,6 +143,45 @@ body.theme-blue {
     font-weight: bold;
 }
 
+/* -- Logout Button ----------------------------------------------------------- */
+.nav-logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-logout-btn i {
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.nav-logout-btn:hover {
+    color: var(--accent);
+}
+
+.nav-logout-btn:hover i {
+    transform: translateX(3px);
+}
+
+.nav-logout-btn:focus-visible {
+    color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 /* -- Main content ------------------------------------------------------------- */
 main {
     margin: 0 auto 2rem auto;
