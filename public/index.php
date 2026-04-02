@@ -99,20 +99,20 @@ if ($uri === '/' && $method === 'GET') {
     requireAdmin();
     require_once __DIR__ . '/../src/models/Product.php';
     require_once __DIR__ . '/../src/models/Order.php';
-    $productCount  = 0;
-    $orderCount    = 0;
-    $totalRevenue  = 0;
+    $productCount = 0;
+    $orderCount = 0;
+    $totalRevenue = 0;
     $pendingOrders = 0;
     if ($pdo !== null) {
         $productModel = new Product($pdo);
         $productResult = $productModel->getAll([], 1, 1);
-        $productCount  = $productResult['total'] ?? 0;
+        $productCount = $productResult['total'] ?? 0;
         $stmt = $pdo->query("SELECT COUNT(*) AS cnt, COALESCE(SUM(total_amount), 0) AS revenue FROM orders");
-        $row  = $stmt->fetch();
-        $orderCount   = (int)($row['cnt'] ?? 0);
-        $totalRevenue = (float)($row['revenue'] ?? 0);
+        $row = $stmt->fetch();
+        $orderCount = (int) ($row['cnt'] ?? 0);
+        $totalRevenue = (float) ($row['revenue'] ?? 0);
         $stmt2 = $pdo->query("SELECT COUNT(*) AS cnt FROM orders WHERE status = 'pending'");
-        $pendingOrders = (int)($stmt2->fetchColumn() ?: 0);
+        $pendingOrders = (int) ($stmt2->fetchColumn() ?: 0);
     }
     require __DIR__ . '/../views/admin/dashboard.php';
 
@@ -157,6 +157,13 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/faq' && $method === 'GET') {
     $currentPage = 'faq';
     require __DIR__ . '/../views/pages/faq.php';
+} elseif ($uri === '/privacy' && $method === 'GET') {
+    $currentPage = '';
+    require __DIR__ . '/../views/pages/privacy.php';
+
+} elseif ($uri === '/terms' && $method === 'GET') {
+    $currentPage = '';
+    require __DIR__ . '/../views/pages/terms.php';
 
 } elseif ($uri === '/contact' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/ContactController.php';
