@@ -58,16 +58,19 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <main id="main-content" tabindex="-1">
         <?php if (!empty($flashSuccess) || !empty($flashError)): ?>
             <div class="flash-stack" aria-live="polite">
+                
                 <?php if (!empty($flashSuccess)): ?>
                     <div class="flash-banner flash-banner-success" role="status">
                         <?= htmlspecialchars((string) $flashSuccess, ENT_QUOTES, 'UTF-8') ?>
                     </div>
                 <?php endif; ?>
+
                 <?php if (!empty($flashError)): ?>
                     <div class="flash-banner flash-banner-error" role="alert">
                         <?= htmlspecialchars((string) $flashError, ENT_QUOTES, 'UTF-8') ?>
                     </div>
                 <?php endif; ?>
+
             </div>
         <?php endif; ?>
 

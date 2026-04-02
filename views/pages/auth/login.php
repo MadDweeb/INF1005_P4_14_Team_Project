@@ -21,7 +21,7 @@ $extraCss = ['/css/auth.css'];
 
         <?php if (!empty($errors['general'])): ?>
             <div class="alert alert-danger" role="alert">
-                <?= escapeHtml($errors['general']) ?>
+                <?= escapeHtml($flashError) ?>
             </div>
         <?php endif; ?>
 

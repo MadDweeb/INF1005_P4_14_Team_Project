@@ -91,6 +91,7 @@ class UserController
         $_SESSION['username']  = $user['username'];
         $_SESSION['email']     = $user['email'];
         $_SESSION['user_role'] = $user['role'];
+        $_SESSION['last_activity'] = time();
 
         $redirect = ($user['role'] === 'admin') ? '/admin/dashboard' : '/';
         header('Location: ' . $redirect);
@@ -166,6 +167,7 @@ class UserController
         $_SESSION['username']  = $username;
         $_SESSION['email']     = $email;
         $_SESSION['user_role'] = 'customer';
+        $_SESSION['last_activity'] = time();
 
         header('Location: /');
         exit;
