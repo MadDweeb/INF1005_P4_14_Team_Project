@@ -7,10 +7,20 @@
     margin-left: -50vw;
     margin-right: -50vw;
     padding: 180px 10vw 80px 10vw;
+
+    background-image: url('/assets/images/home2.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     min-height: 95vh;
     display: flex;
     align-items: center;
     overflow: hidden;
+}
+
+.no-js .hero {
+    overflow: visible !important;
 }
 
 .hero h1 {
@@ -53,6 +63,14 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    background-color: var(--text-main);
+    color: var(--bg-main);
+}
+
+.no-js .value-propositions {
+    overflow: visible !important;
+    min-height: auto;
+    padding: 500px 0;
 }
 
 .vp-center-text {
@@ -263,6 +281,11 @@
     margin-right: -50vw;
 }
 
+.no-js .featured-drops {
+    overflow: visible !important;
+    min-height: auto;
+}
+
 #featuredHeading {
     font-family: 'Montserrat', sans-serif;
     font-size: 4rem;
@@ -275,12 +298,22 @@
 .carousel-container {
     position: relative;
     width: 70%;
-    max-width: 1600px;
     margin: 0 auto;
-    height: 520px;
+    height: 500px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+.no-js .carousel-container {
+    height: auto;
+    min-height: 200px;
+    display: block;
+}
+
+.no-js .carousel-track,
+.no-js .carousel-nav {
+    display: none !important;
 }
 
 .carousel-track {
@@ -712,6 +745,13 @@
     overflow: hidden;
 }
 
+.no-js .home-custom-wrapper {
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+    padding: 100px 0;
+}
+
 .home-custom-sticky {
     width: 100%;
     height: 100%;
@@ -740,42 +780,68 @@
     will-change: transform, opacity;
     left: 0;
     top: 0;
+}
+
+.js-enabled .home-assembly-part {
     opacity: 0;
 }
 
 /* Precise VH-based offsets. Since image height is 15vh, spacing by 17vh guarantees 2vh padding between them. */
-.h-part-top-housing {
+.js-enabled .h-part-top-housing {
     z-index: 4;
     transform: translateX(-100vw);
     top: 0;
 }
 
-.h-part-stem {
+.h-part-top-housing {
+    top: 0;
+    z-index: 4;
+}
+
+.js-enabled .h-part-stem {
     z-index: 3;
     transform: translateX(100vw);
     top: 17vh;
 }
 
-.h-part-spring {
+.h-part-stem {
+    top: 17vh;
+    z-index: 3;
+}
+
+.js-enabled .h-part-spring {
     z-index: 2;
     transform: translateX(-100vw);
     top: 34vh;
 }
 
-.h-part-bottom {
+.h-part-spring {
+    top: 34vh;
+    z-index: 2;
+}
+
+.js-enabled .h-part-bottom {
     z-index: 1;
     transform: translateX(100vw);
     top: 51vh;
 }
 
+.h-part-bottom {
+    top: 51vh;
+    z-index: 1;
+}
+
 /* Responsive Text Area */
 .home-custom-content {
     text-align: center;
-    opacity: 0;
-    transform: translateY(2vh);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     width: 100%;
     max-width: 800px;
+}
+
+.js-enabled .home-custom-content {
+    opacity: 0;
+    transform: translateY(2vh);
 }
 
 .home-custom-content.h-show-content {

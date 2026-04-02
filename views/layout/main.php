@@ -20,10 +20,13 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
  */
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        document.documentElement.classList.replace('no-js', 'js-enabled');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') . ' | ' : '' ?>Keyboard Switch
         Store</title>
