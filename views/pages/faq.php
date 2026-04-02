@@ -1,12 +1,7 @@
 <?php
-/*
- * views/pages/faq.php
- * Frequently Asked Questions page - interactive accordion for mechanical keyboard switches and delivery.
- * Refined with semantic HTML, FontAwesome icons, and project-standard themes.
- */
 
 $pageTitle = 'FAQ';
-$bodyClass = 'theme-dark'; // Global theme from main.css
+$bodyClass = 'theme-dark';
 ob_start();
 $extraCss = ['/css/faq.css'];
 $extraJs = ['/js/faq.js'];
@@ -19,7 +14,6 @@ $extraJs = ['/js/faq.js'];
     </header>
 
     <div class="faq-container">
-        <!-- Accordion Item 1 -->
         <section class="faq-item" aria-labelledby="faq-question-1">
             <h3>
                 <button type="button" aria-expanded="false" aria-controls="faq-answer-1" id="faq-question-1">
@@ -38,7 +32,6 @@ $extraJs = ['/js/faq.js'];
             </article>
         </section>
 
-        <!-- Accordion Item 2 -->
         <section class="faq-item" aria-labelledby="faq-question-2">
             <h3>
                 <button type="button" aria-expanded="false" aria-controls="faq-answer-2" id="faq-question-2">
@@ -53,7 +46,6 @@ $extraJs = ['/js/faq.js'];
             </article>
         </section>
 
-        <!-- Accordion Item 3 -->
         <section class="faq-item" aria-labelledby="faq-question-3">
             <h3>
                 <button type="button" aria-expanded="false" aria-controls="faq-answer-3" id="faq-question-3">
@@ -67,7 +59,6 @@ $extraJs = ['/js/faq.js'];
             </article>
         </section>
 
-        <!-- Accordion Item 4 -->
         <section class="faq-item" aria-labelledby="faq-question-4">
             <h3>
                 <button type="button" aria-expanded="false" aria-controls="faq-answer-4" id="faq-question-4">
@@ -82,7 +73,6 @@ $extraJs = ['/js/faq.js'];
             </article>
         </section>
 
-        <!-- Accordion Item 5 -->
         <section class="faq-item" aria-labelledby="faq-question-5">
             <h3>
                 <button type="button" aria-expanded="false" aria-controls="faq-answer-5" id="faq-question-5">

@@ -84,7 +84,6 @@
 
 .faq-item.active .faq-icon-fa {
     transform: rotate(45deg);
-    /* Plux to X transition */
 }
 
 .faq-answer {
