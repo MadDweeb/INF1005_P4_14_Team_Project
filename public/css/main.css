@@ -33,6 +33,13 @@ body {
     overflow-x: hidden;
 }
 
+/* Ensure native scrolling works when JavaScript is disabled */
+html.no-js,
+.no-js body {
+    overflow-y: auto !important;
+    height: auto !important;
+}
+
 body {
     background-color: var(--text-main);
     color: var(--bg-main);

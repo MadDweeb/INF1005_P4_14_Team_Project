@@ -151,6 +151,14 @@ ob_start();
         <button class="carousel-nav right" aria-label="Next product" type="button">
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
+        <noscript>
+            <div style="margin-top: 40px; text-align: center;">
+                <p style="margin-bottom: 20px; font-weight: 600;">Interactive carousel is disabled. Explore our full range of
+                    switches below.</p>
+                <a href="/products" class="btn-shop">VIEW ALL PRODUCTS <i class="fas fa-arrow-right"
+                        aria-hidden="true"></i></a>
+            </div>
+        </noscript>
     </div>
 </section>
 
@@ -207,6 +215,11 @@ ob_start();
         <div class="home-custom-content">
             <h2 id="homeCustomHeading">Custom Switches?</h2>
             <h3 class="home-custom-subheading">Find your preferred Switch</h3>
+            <noscript>
+                <div style="color: var(--accent); margin-bottom: 20px; font-weight: 600;">
+                    Note: Interactive 3D assembly animation is disabled. You can still customize your switches below.
+                </div>
+            </noscript>
             <a href="/customizer" class="btn-shop">CUSTOMIZE NOW <i class="fas fa-arrow-right"
                     aria-hidden="true"></i></a>
         </div>
