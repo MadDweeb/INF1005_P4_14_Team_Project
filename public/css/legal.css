@@ -1,0 +1,132 @@
+.legal-page {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    padding: 140px 1rem 4rem;
+}
+
+.legal-hero {
+    margin-bottom: 2rem;
+}
+
+.legal-kicker {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.legal-hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+}
+
+.legal-meta {
+    color: rgba(244, 240, 234, 0.9);
+    font-size: 0.98rem;
+}
+
+.legal-toc {
+    margin-bottom: 2rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.legal-toc h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+}
+
+.legal-toc ul {
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+    padding: 0;
+}
+
+.legal-toc a {
+    color: #f5f0e8;
+    text-underline-offset: 3px;
+}
+
+.legal-toc a:hover {
+    color: #ffffff;
+}
+
+.legal-content {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.legal-content section {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 1.2rem 1.2rem 1.1rem;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.legal-content h2 {
+    font-size: 1.4rem;
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+}
+
+.legal-content p,
+.legal-content li {
+    max-width: 70ch;
+    color: rgba(244, 240, 234, 0.94);
+}
+
+.legal-content ul {
+    margin-top: 0.5rem;
+    margin-left: 1.2rem;
+}
+
+.legal-content a {
+    color: #ffffff;
+    font-weight: 600;
+    text-underline-offset: 3px;
+}
+
+.legal-backtop-wrap {
+    margin-top: 1.4rem;
+}
+
+.legal-backtop {
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.legal-backtop:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.legal-page a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .legal-page {
+        padding-top: 120px;
+    }
+
+    .legal-content section,
+    .legal-toc {
+        padding: 1rem;
+    }
+}
