@@ -4,14 +4,17 @@
  * Interactive switch builder with exploding assembly animation
  */
 
-ob_start();
+$pageTitle = 'Switch Builder';
+$currentPage = 'customizer';
 $extraCss = ['/css/customizer.css'];
 $extraJs = ['/js/customizer.js'];
+ob_start();
 ?>
 
 <div class="customizer-page">
     <div class="customizer-header">
         <h1>Build Your Dream Switch</h1>
+        <p>Click any component to choose your material, stem type, and spring weight.</p>
     </div>
 
     <div class="builder-main">
@@ -55,6 +58,26 @@ $extraJs = ['/js/customizer.js'];
             </div>
         </div>
 
+        <!-- Component Progress Indicators -->
+        <div class="component-indicators" id="componentIndicators">
+            <div class="indicator-item" id="ind-top_housing">
+                <div class="indicator-label">Top Housing</div>
+                <div class="indicator-value" id="ind-val-top_housing">Not Selected</div>
+            </div>
+            <div class="indicator-item" id="ind-stem">
+                <div class="indicator-label">Stem</div>
+                <div class="indicator-value" id="ind-val-stem">Not Selected</div>
+            </div>
+            <div class="indicator-item" id="ind-spring">
+                <div class="indicator-label">Spring</div>
+                <div class="indicator-value" id="ind-val-spring">Not Selected</div>
+            </div>
+            <div class="indicator-item" id="ind-bottom_housing">
+                <div class="indicator-label">Bottom Housing</div>
+                <div class="indicator-value" id="ind-val-bottom_housing">Not Selected</div>
+            </div>
+        </div>
+
         <!-- Options Panel -->
         <div class="options-panel" id="optionsPanel">
             <div class="options-header">
@@ -75,6 +98,10 @@ $extraJs = ['/js/customizer.js'];
                 <div class="price-display">
                     <span class="price-label">Per Switch:</span>
                     <span class="price-value" id="total-price">$0.00</span>
+                </div>
+                <div class="price-display price-display-total" id="total-price-row" style="display:none">
+                    <span class="price-label">Total (<span id="qty-display">10</span>×):</span>
+                    <span class="price-value price-total-value" id="total-price-all">$0.00</span>
                 </div>
                 <p class="price-note">Minimum order: 10 switches</p>
             </div>
@@ -99,6 +126,16 @@ $extraJs = ['/js/customizer.js'];
                         <span class="char-value" id="char-feel">-</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="quantity-selector">
+                <label for="build-quantity">Quantity</label>
+                <div class="quantity-controls">
+                    <button type="button" class="qty-btn" id="qty-minus" aria-label="Decrease quantity">−</button>
+                    <input type="number" id="build-quantity" value="10" min="10" step="1" aria-label="Number of switches">
+                    <button type="button" class="qty-btn" id="qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <p class="qty-note">Min. 10 switches</p>
             </div>
 
             <div class="build-actions">
@@ -155,6 +192,7 @@ $extraJs = ['/js/customizer.js'];
         setupCloseButton();
         setupResetButton();
         setupAddToCartButton();
+        setupQuantityControls();
         playExplodeAnimation();
     });
 
@@ -303,14 +341,15 @@ $extraJs = ['/js/customizer.js'];
         
         updateCharacteristics();
         updateTotalPrice();
-        
+        updateIndicators();
+
         // Pulse the selected part
         const currentTransform = partElement.style.transform;
         partElement.style.transform = currentTransform + ' scale(1.2)';
         setTimeout(() => {
             partElement.style.transform = currentTransform;
         }, 300);
-        
+
         openOptions(part);
     }
 
@@ -340,7 +379,15 @@ $extraJs = ['/js/customizer.js'];
         if (priceElement) {
             priceElement.textContent = `$${total.toFixed(2)}`;
         }
-        
+
+        const qty = Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10));
+        const totalAllEl = document.getElementById('total-price-all');
+        const qtyDisplay  = document.getElementById('qty-display');
+        const totalRow    = document.getElementById('total-price-row');
+        if (totalAllEl) totalAllEl.textContent = `$${(total * qty).toFixed(2)}`;
+        if (qtyDisplay)  qtyDisplay.textContent = qty;
+        if (totalRow)    totalRow.style.display = total > 0 ? 'flex' : 'none';
+
         // Enable Add to Cart if all parts selected
         const addToCartBtn = document.getElementById('addToCartBtn');
         if (addToCartBtn) {
@@ -374,9 +421,43 @@ $extraJs = ['/js/customizer.js'];
                 document.getElementById('total-price').textContent = '$0.00';
                 
                 closeOptions();
+                updateIndicators();
                 updateTotalPrice();
                 playExplodeAnimation();
             }
+        });
+    }
+
+    function updateIndicators() {
+        const parts = ['top_housing', 'stem', 'spring', 'bottom_housing'];
+        parts.forEach(part => {
+            const item = document.getElementById(`ind-${part}`);
+            const val  = document.getElementById(`ind-val-${part}`);
+            if (!item || !val) return;
+            if (selections[part]) {
+                item.classList.add('selected');
+                val.textContent = selections[part].name;
+            } else {
+                item.classList.remove('selected');
+                val.textContent = 'Not Selected';
+            }
+        });
+    }
+
+    function setupQuantityControls() {
+        const qtyInput = document.getElementById('build-quantity');
+        if (!qtyInput) return;
+        document.getElementById('qty-minus').addEventListener('click', () => {
+            const v = parseInt(qtyInput.value);
+            if (v > 10) { qtyInput.value = v - 1; updateTotalPrice(); }
+        });
+        document.getElementById('qty-plus').addEventListener('click', () => {
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+            updateTotalPrice();
+        });
+        qtyInput.addEventListener('change', () => {
+            if (parseInt(qtyInput.value) < 10) qtyInput.value = 10;
+            updateTotalPrice();
         });
     }
 
@@ -432,7 +513,7 @@ $extraJs = ['/js/customizer.js'];
             const quantityInput = document.createElement('input');
             quantityInput.type = 'hidden';
             quantityInput.name = 'quantity';
-            quantityInput.value = '10';
+            quantityInput.value = String(Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10)));
             form.appendChild(quantityInput);
             
             // Add custom build data

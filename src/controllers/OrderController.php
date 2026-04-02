@@ -227,6 +227,49 @@ class OrderController
     }
 
     /**
+     * Cancel a pending order and restore stock (POST /orders/cancel).
+     * Only the order's owner may cancel; only 'pending' orders are eligible.
+     */
+    public function cancelOrder(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $orderId = sanitizeInt($_POST['order_id'] ?? 0);
+        if (!isPositiveInt($orderId)) {
+            $_SESSION['flash_error'] = 'Invalid order ID.';
+            header('Location: /orders');
+            exit;
+        }
+
+        $user  = currentUser();
+        $order = $this->orderModel ? $this->orderModel->getById($orderId) : false;
+
+        if (!$order || (int) $order['user_id'] !== $user['id']) {
+            $_SESSION['flash_error'] = 'Order not found or access denied.';
+            header('Location: /orders');
+            exit;
+        }
+
+        $result = $this->orderModel
+            ? $this->orderModel->cancelWithRestock($orderId, ['pending'])
+            : ['ok' => false, 'reason' => 'no_model'];
+
+        if ($result['ok']) {
+            $_SESSION['flash_success'] = 'Order #' . str_pad((string) $orderId, 5, '0', STR_PAD_LEFT) . ' has been cancelled and stock restored.';
+        } else {
+            $_SESSION['flash_error'] = match ($result['reason']) {
+                'invalid_status'   => 'This order can no longer be cancelled (it may already be in progress).',
+                'already_cancelled' => 'This order has already been cancelled.',
+                default            => 'Could not cancel the order. Please try again.',
+            };
+        }
+
+        header('Location: /orders');
+        exit;
+    }
+
+    /**
      * Admin: show all orders (GET /admin/orders).
      */
     public function adminIndex(): void
@@ -239,17 +282,48 @@ class OrderController
     }
 
     /**
+     * Admin: view a single order's detail page (GET /admin/orders/{id}).
+     */
+    public function adminOrderDetail(int $id): void
+    {
+        requireAdmin();
+
+        if (!isPositiveInt($id)) {
+            http_response_code(404);
+            require_once __DIR__ . '/../../views/pages/404.php';
+            return;
+        }
+
+        $order = $this->orderModel ? $this->orderModel->getById($id) : false;
+
+        if (!$order) {
+            http_response_code(404);
+            require_once __DIR__ . '/../../views/pages/404.php';
+            return;
+        }
+
+        $currentAdminPage = 'orders';
+        require_once __DIR__ . '/../../views/admin/order-detail.php';
+    }
+
+    /**
      * Admin: update an order's status (POST /admin/orders/status).
      *
-     * Expects $_POST: order_id, status
+     * Expects $_POST: order_id, status, redirect (optional — defaults to /admin/orders)
      */
     public function adminUpdateStatus(): void
     {
         requireAdmin();
         verifyCsrf();
 
-        $orderId = sanitizeInt($_POST['order_id'] ?? 0);
-        $status  = sanitizeString($_POST['status'] ?? '');
+        $orderId  = sanitizeInt($_POST['order_id'] ?? 0);
+        $status   = sanitizeString($_POST['status'] ?? '');
+        $redirect = sanitizeString($_POST['redirect'] ?? '/admin/orders');
+
+        // Only allow redirects within the admin area.
+        if (!str_starts_with($redirect, '/admin/')) {
+            $redirect = '/admin/orders';
+        }
 
         if (!isPositiveInt($orderId)) {
             http_response_code(400);
@@ -261,11 +335,13 @@ class OrderController
             ? $this->orderModel->updateStatus($orderId, $status)
             : false;
 
-        if (!$updated) {
+        if ($updated) {
+            $_SESSION['flash_success'] = 'Order status updated to ' . ucfirst($status) . '.';
+        } else {
             $_SESSION['flash_error'] = 'Invalid status value.';
         }
 
-        header('Location: /admin/orders');
+        header('Location: ' . $redirect);
         exit;
     }
 

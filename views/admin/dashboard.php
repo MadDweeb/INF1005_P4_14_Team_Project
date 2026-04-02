@@ -7,15 +7,11 @@
 require_once __DIR__ . '/../../src/helpers/auth.php';
 requireAdmin(); // Ensure only admins can access
 
+$currentAdminPage = 'dashboard';
 ob_start();
 ?>
 
 <style>
-    .admin-page {
-        padding: 140px 5vw 80px;
-        min-height: 100vh;
-    }
-
     .admin-header {
         margin-bottom: 50px;
     }
@@ -32,29 +28,6 @@ ob_start();
     .admin-header p {
         font-size: 1.1rem;
         opacity: 0.7;
-    }
-
-    .admin-nav {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-
-    .admin-nav-link {
-        padding: 12px 25px;
-        background: rgba(255, 255, 255, 0.05);
-        color: inherit;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 700;
-        transition: all 0.3s;
-    }
-
-    .admin-nav-link:hover,
-    .admin-nav-link.active {
-        background: var(--accent);
-        color: white;
     }
 
     .dashboard-grid {
@@ -133,10 +106,6 @@ ob_start();
     }
 
     @media (max-width: 768px) {
-        .admin-page {
-            padding: 120px 5vw 60px;
-        }
-
         .dashboard-grid {
             grid-template-columns: 1fr;
         }
@@ -148,13 +117,6 @@ ob_start();
         <h1>Admin Dashboard</h1>
         <p>Manage your KeyForge store</p>
     </div>
-
-    <nav class="admin-nav">
-        <a href="/admin/dashboard" class="admin-nav-link active">Dashboard</a>
-        <a href="/admin/products" class="admin-nav-link">Products</a>
-        <a href="/admin/orders" class="admin-nav-link">Orders</a>
-        <a href="/" class="admin-nav-link">Back to Store</a>
-    </nav>
 
     <div class="dashboard-grid">
         <div class="stat-card">
@@ -197,6 +159,7 @@ ob_start();
 </div>
 
 <?php
-$content = ob_get_clean();
-require_once __DIR__ . '/../layout/main.php';
+$pageContent = ob_get_clean();
+$pageTitle    = 'Admin Dashboard';
+require_once __DIR__ . '/../layout/admin.php';
 ?>

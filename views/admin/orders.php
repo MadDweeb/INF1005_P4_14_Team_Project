@@ -7,15 +7,11 @@
 require_once __DIR__ . '/../../src/helpers/auth.php';
 requireAdmin();
 
+$currentAdminPage = 'orders';
 ob_start();
 ?>
 
 <style>
-    .admin-page {
-        padding: 140px 5vw 80px;
-        min-height: 100vh;
-    }
-
     .admin-header {
         margin-bottom: 40px;
     }
@@ -26,29 +22,6 @@ ob_start();
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 2px;
-    }
-
-    .admin-nav {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-
-    .admin-nav-link {
-        padding: 12px 25px;
-        background: rgba(255, 255, 255, 0.05);
-        color: inherit;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 700;
-        transition: all 0.3s;
-    }
-
-    .admin-nav-link:hover,
-    .admin-nav-link.active {
-        background: var(--accent);
-        color: white;
     }
 
     .orders-table-wrapper {
@@ -143,21 +116,9 @@ ob_start();
         margin-bottom: 15px;
     }
 
-    @media (max-width: 768px) {
-        .admin-page {
-            padding: 120px 5vw 60px;
-        }
-    }
 </style>
 
 <div class="admin-page">
-    <nav class="admin-nav">
-        <a href="/admin/dashboard" class="admin-nav-link">Dashboard</a>
-        <a href="/admin/products" class="admin-nav-link">Products</a>
-        <a href="/admin/orders" class="admin-nav-link active">Orders</a>
-        <a href="/" class="admin-nav-link">Back to Store</a>
-    </nav>
-
     <div class="admin-header">
         <h1>Order Management</h1>
     </div>
@@ -218,6 +179,7 @@ ob_start();
 </div>
 
 <?php
-$content = ob_get_clean();
-require_once __DIR__ . '/../layout/main.php';
+$pageContent = ob_get_clean();
+$pageTitle    = 'Admin — Orders';
+require_once __DIR__ . '/../layout/admin.php';
 ?>

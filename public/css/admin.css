@@ -1,0 +1,244 @@
+/*
+ * public/css/admin.css
+ * Styles for the admin panel — header, nav bar, and layout.
+ */
+
+/* -- Admin body --------------------------------------------------------------- */
+.admin-body {
+    background-color: #111;
+    color: var(--bg-main);
+}
+
+/* -- Admin header bar --------------------------------------------------------- */
+.admin-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #1a1a1a;
+    border-bottom: 3px solid var(--accent);
+    padding: 0 40px;
+    height: 64px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* -- Admin logo --------------------------------------------------------------- */
+.admin-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--bg-main);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.admin-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 8px;
+    line-height: 1.4;
+}
+
+/* -- Admin nav bar ------------------------------------------------------------ */
+.admin-nav-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.admin-nav-bar ul {
+    display: flex;
+    list-style: none;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav-link {
+    display: inline-block;
+    padding: 8px 18px;
+    color: rgba(244, 240, 234, 0.75);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--bg-main);
+}
+
+.admin-nav-link.active {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* -- Divider between nav links and actions ------------------------------------ */
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-back-link {
+    color: rgba(244, 240, 234, 0.6);
+    font-size: 0.8rem;
+}
+
+.admin-back-link:hover {
+    color: var(--bg-main);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* -- Logout button ------------------------------------------------------------ */
+.admin-logout-btn {
+    padding: 8px 18px;
+    background: transparent;
+    border: 1px solid rgba(192, 24, 24, 0.5);
+    color: var(--accent);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.admin-logout-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+/* -- Admin main content area -------------------------------------------------- */
+.admin-main {
+    padding-top: 64px; /* offset for fixed header */
+}
+
+.admin-page {
+    padding: 50px 5vw 80px;
+    min-height: calc(100vh - 64px);
+}
+
+/* -- Admin footer ------------------------------------------------------------- */
+.admin-footer {
+    text-align: center;
+    padding: 20px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    font-size: 0.8rem;
+    opacity: 0.4;
+}
+
+/* -- Mobile toggle ------------------------------------------------------------ */
+.admin-mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--bg-main);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.admin-mobile-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* -- Responsive --------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .admin-header-bar {
+        padding: 0 20px;
+        flex-wrap: wrap;
+        height: auto;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .admin-mobile-toggle {
+        display: block;
+    }
+
+    .admin-nav-bar {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px 0 14px;
+        gap: 4px;
+    }
+
+    .admin-nav-bar.open {
+        display: flex;
+    }
+
+    .admin-nav-bar ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .admin-nav-link {
+        width: 100%;
+        display: block;
+    }
+
+    .admin-header-actions {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-back-link,
+    .admin-logout-btn {
+        width: 100%;
+        text-align: left;
+        display: block;
+    }
+
+    .admin-logout-btn {
+        padding: 8px 18px;
+    }
+
+    .admin-main {
+        padding-top: 0;
+    }
+
+    .admin-page {
+        padding: 30px 5vw 60px;
+    }
+}

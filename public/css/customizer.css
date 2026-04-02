@@ -458,6 +458,87 @@
     color: var(--accent);
 }
 
+/* Quantity Selector */
+.quantity-selector {
+    margin-bottom: 30px;
+}
+
+.quantity-selector label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: fit-content;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.07);
+    color: inherit;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.qty-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.quantity-controls input[type="number"] {
+    width: 72px;
+    height: 44px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    color: inherit;
+    border: none;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    -moz-appearance: textfield;
+}
+
+.quantity-controls input[type="number"]::-webkit-inner-spin-button,
+.quantity-controls input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.qty-note {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.price-display-total {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-total-value {
+    font-size: 2rem;
+}
+
 .build-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -7,15 +7,11 @@
 require_once __DIR__ . '/../../src/helpers/auth.php';
 requireAdmin();
 
+$currentAdminPage = 'products';
 ob_start();
 ?>
 
 <style>
-    .admin-page {
-        padding: 140px 5vw 80px;
-        min-height: 100vh;
-    }
-
     .admin-header {
         display: flex;
         justify-content: space-between;
@@ -51,29 +47,6 @@ ob_start();
     .add-product-btn:hover {
         background: #c32a2a;
         transform: translateY(-2px);
-    }
-
-    .admin-nav {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 40px;
-        flex-wrap: wrap;
-    }
-
-    .admin-nav-link {
-        padding: 12px 25px;
-        background: rgba(255, 255, 255, 0.05);
-        color: inherit;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 700;
-        transition: all 0.3s;
-    }
-
-    .admin-nav-link:hover,
-    .admin-nav-link.active {
-        background: var(--accent);
-        color: white;
     }
 
     .products-table-wrapper {
@@ -300,10 +273,6 @@ ob_start();
     }
 
     @media (max-width: 768px) {
-        .admin-page {
-            padding: 120px 5vw 60px;
-        }
-
         .form-row {
             grid-template-columns: 1fr;
         }
@@ -315,13 +284,6 @@ ob_start();
 </style>
 
 <div class="admin-page">
-    <nav class="admin-nav">
-        <a href="/admin/dashboard" class="admin-nav-link">Dashboard</a>
-        <a href="/admin/products" class="admin-nav-link active">Products</a>
-        <a href="/admin/orders" class="admin-nav-link">Orders</a>
-        <a href="/" class="admin-nav-link">Back to Store</a>
-    </nav>
-
     <div class="admin-header">
         <h1>Product Management</h1>
         <button class="add-product-btn" onclick="openAddModal()">+ Add New Product</button>
@@ -537,6 +499,7 @@ ob_start();
 </script>
 
 <?php
-$content = ob_get_clean();
-require_once __DIR__ . '/../layout/main.php';
+$pageContent = ob_get_clean();
+$pageTitle    = 'Admin — Products';
+require_once __DIR__ . '/../layout/admin.php';
 ?>

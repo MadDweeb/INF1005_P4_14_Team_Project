@@ -41,7 +41,8 @@ class UserController
     public function showLogin(): void
     {
         if (isLoggedIn()) {
-            header('Location: /');
+            $redirect = ($_SESSION['user_role'] ?? '') === 'admin' ? '/admin/dashboard' : '/';
+            header('Location: ' . $redirect);
             exit;
         }
         $errors = [];
@@ -91,7 +92,8 @@ class UserController
         $_SESSION['email']     = $user['email'];
         $_SESSION['user_role'] = $user['role'];
 
-        header('Location: /');
+        $redirect = ($user['role'] === 'admin') ? '/admin/dashboard' : '/';
+        header('Location: ' . $redirect);
         exit;
     }
 

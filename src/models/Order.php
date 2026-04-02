@@ -48,6 +48,10 @@ class Order
                 o.total_amount,
                 o.status,
                 o.created_at,
+                o.shipping_name,
+                o.shipping_address,
+                o.shipping_city,
+                o.shipping_postal,
                 COUNT(oi.order_item_id) AS item_count
              FROM {$this->table} o
              LEFT JOIN order_items oi ON oi.order_id = o.order_id
@@ -106,11 +110,14 @@ class Order
      */
     public function getById(int $orderId): array|false
     {
-        // 1. Fetch the order header row.
+        // 1. Fetch the order header row (joined with users for admin views).
         $orderStmt = $this->pdo->prepare(
-            "SELECT order_id, user_id, total_amount, status, created_at
-             FROM {$this->table}
-             WHERE order_id = :order_id
+            "SELECT o.order_id, o.user_id, o.total_amount, o.status, o.created_at,
+                    o.shipping_name, o.shipping_address, o.shipping_city, o.shipping_postal,
+                    u.username, u.email
+             FROM {$this->table} o
+             JOIN users u ON u.user_id = o.user_id
+             WHERE o.order_id = :order_id
              LIMIT 1"
         );
         $orderStmt->execute([':order_id' => $orderId]);

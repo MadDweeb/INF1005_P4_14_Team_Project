@@ -1,7 +1,7 @@
 <?php
 /*
  * views/pages/orders.php
- * User order history and tracking
+ * User order history — dynamic tracker, status badges, cancel + view-details actions
  */
 
 $pageTitle = 'My Orders';
@@ -12,140 +12,125 @@ ob_start();
 ?>
 
 <div class="orders-page">
-    <!-- Header -->
-    <div class="orders-header">
+    <div class="page-header">
         <h1>My Orders</h1>
-        <p>Track and view your order history</p>
+        <p>View your order history and track deliveries</p>
     </div>
 
     <div class="orders-container">
         <?php if (empty($orders)): ?>
-            <!-- Empty State -->
-            <div class="empty-orders">
-                <div class="empty-icon">📦</div>
+            <div class="empty-state">
                 <h2>No orders yet</h2>
-                <p>Start shopping to see your orders here!</p>
-                <a href="/products" class="browse-btn">Browse Switches</a>
+                <p>Your orders will appear here once you make a purchase</p>
+                <a href="/products" class="shop-btn">Start Shopping</a>
             </div>
         <?php else: ?>
-            <!-- Orders List -->
-            <div class="orders-list">
-                <?php foreach ($orders as $order): ?>
-                    <div class="order-card">
-                        <!-- Order Header -->
-                        <div class="order-card-header">
-                            <div class="order-main-info">
-                                <h3 class="order-number">Order #<?= htmlspecialchars($order['order_id']) ?></h3>
-                                <span class="order-date">
-                                    Placed on <?= date('F d, Y', strtotime($order['created_at'])) ?>
-                                </span>
-                            </div>
-                            <div class="order-status-badge status-<?= strtolower($order['status']) ?>">
-                                <?= ucfirst($order['status']) ?>
-                            </div>
+            <?php foreach ($orders as $order):
+                $status      = strtolower((string) ($order['status'] ?? 'pending'));
+                $isCancelled = ($status === 'cancelled');
+                $isPending   = ($status === 'pending');
+
+                // Map status → tracker step index (0-3)
+                $statusMap = ['pending' => 0, 'processing' => 1, 'shipped' => 2, 'delivered' => 3];
+                $statusIdx = $statusMap[$status] ?? 0;
+
+                // Helper: CSS class for a tracker circle (index 0-3)
+                $paddedId = str_pad((string) $order['order_id'], 5, '0', STR_PAD_LEFT);
+
+                $circleClass = function(int $i) use ($statusIdx): string {
+                    if ($i <= $statusIdx) return 'completed';
+                    if ($i === $statusIdx + 1 && $statusIdx < 3) return 'active';
+                    return '';
+                };
+                // Helper: CSS class for a tracker line (index 0-2, sits between circles i and i+1)
+                $lineClass = function(int $i) use ($statusIdx): string {
+                    return $i < $statusIdx ? 'completed' : '';
+                };
+            ?>
+                <div class="order-card">
+                    <!-- Order Header -->
+                    <div class="order-header">
+                        <div class="order-id">
+                            <span class="label">Order</span>
+                            <span class="value">#<?= $paddedId ?></span>
                         </div>
-
-                        <!-- Order Details -->
-                        <div class="order-details">
-                            <div class="order-items">
-                                <h4>Items (<?= count($order['items'] ?? []) ?>)</h4>
-                                <div class="items-list">
-                                    <?php foreach (($order['items'] ?? []) as $item): ?>
-                                        <div class="order-item">
-                                            <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>" 
-                                                 alt="<?= htmlspecialchars($item['name']) ?>" 
-                                                 class="item-image">
-                                            <div class="item-info">
-                                                <span class="item-name"><?= htmlspecialchars($item['name']) ?></span>
-                                                <span class="item-quantity">Qty: <?= $item['quantity'] ?></span>
-                                            </div>
-                                            <div class="item-price">
-                                                $<?= number_format($item['price'] * $item['quantity'], 2) ?>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-
-                            <div class="order-summary">
-                                <div class="summary-row">
-                                    <span>Subtotal</span>
-                                    <span>$<?= number_format($order['total_amount'], 2) ?></span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Shipping</span>
-                                    <span>$<?= number_format($order['shipping_cost'] ?? 0, 2) ?></span>
-                                </div>
-                                <div class="summary-row total">
-                                    <span>Total</span>
-                                    <span>$<?= number_format($order['total_amount'] + ($order['shipping_cost'] ?? 0), 2) ?></span>
-                                </div>
-                            </div>
+                        <div class="order-date">
+                            <span class="label">Placed</span>
+                            <span class="value"><?= date('M d, Y', strtotime($order['created_at'])) ?></span>
                         </div>
-
-                        <!-- Order Progress -->
-                        <?php if ($order['status'] !== 'cancelled'): ?>
-                        <div class="order-progress">
-                            <div class="progress-track">
-                                <div class="progress-step <?= in_array($order['status'], ['pending', 'processing', 'shipped', 'delivered']) ? 'completed' : '' ?>">
-                                    <div class="step-icon">📋</div>
-                                    <span class="step-label">Pending</span>
-                                </div>
-                                <div class="progress-line <?= in_array($order['status'], ['processing', 'shipped', 'delivered']) ? 'completed' : '' ?>"></div>
-                                
-                                <div class="progress-step <?= in_array($order['status'], ['processing', 'shipped', 'delivered']) ? 'completed' : '' ?>">
-                                    <div class="step-icon">⚙️</div>
-                                    <span class="step-label">Processing</span>
-                                </div>
-                                <div class="progress-line <?= in_array($order['status'], ['shipped', 'delivered']) ? 'completed' : '' ?>"></div>
-                                
-                                <div class="progress-step <?= in_array($order['status'], ['shipped', 'delivered']) ? 'completed' : '' ?>">
-                                    <div class="step-icon">🚚</div>
-                                    <span class="step-label">Shipped</span>
-                                </div>
-                                <div class="progress-line <?= $order['status'] === 'delivered' ? 'completed' : '' ?>"></div>
-                                
-                                <div class="progress-step <?= $order['status'] === 'delivered' ? 'completed' : '' ?>">
-                                    <div class="step-icon">✅</div>
-                                    <span class="step-label">Delivered</span>
-                                </div>
-                            </div>
+                        <div class="order-status-col">
+                            <span class="label">Status</span>
+                            <span class="status-badge status-<?= htmlspecialchars($status, ENT_QUOTES) ?>">
+                                <?= htmlspecialchars(ucfirst($status), ENT_QUOTES) ?>
+                            </span>
                         </div>
-                        <?php endif; ?>
-
-                        <!-- Shipping Info -->
-                        <div class="shipping-info">
-                            <h4>Shipping Address</h4>
-                            <address>
-                                <?= htmlspecialchars($order['shipping_name'] ?? $user['username']) ?><br>
-                                <?= htmlspecialchars($order['shipping_address']) ?><br>
-                                <?= htmlspecialchars($order['shipping_city']) ?>, 
-                                <?= htmlspecialchars($order['shipping_state']) ?> 
-                                <?= htmlspecialchars($order['shipping_zip']) ?>
-                            </address>
-                        </div>
-
-                        <!-- Order Actions -->
-                        <div class="order-actions">
-                            <?php if ($order['tracking_number']): ?>
-                                <button class="track-btn" onclick="alert('Tracking: <?= $order['tracking_number'] ?>')">
-                                    📍 Track Package
-                                </button>
-                            <?php endif; ?>
-                            
-                            <?php if ($order['status'] === 'delivered'): ?>
-                                <a href="/products/<?= $order['items'][0]['product_id'] ?? '' ?>" class="reorder-btn">
-                                    🔄 Reorder
-                                </a>
-                            <?php endif; ?>
-
-                            <button class="details-btn" onclick="toggleOrderDetails(<?= $order['order_id'] ?>)">
-                                📄 View Details
-                            </button>
+                        <div class="order-total">
+                            <span class="label">Total</span>
+                            <span class="value">$<?= number_format($order['total_amount'], 2) ?></span>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+
+                    <!-- Shipment Tracker (hidden for cancelled orders) -->
+                    <?php if ($isCancelled): ?>
+                        <div class="cancelled-notice">
+                            This order was cancelled and stock has been restored.
+                        </div>
+                    <?php else: ?>
+                        <div class="shipment-tracker">
+                            <h3>Shipment Status</h3>
+                            <div class="tracker">
+                                <div class="tracker-step <?= $circleClass(0) ?>">
+                                    <div class="step-circle"><?= $circleClass(0) === 'completed' ? '✓' : '' ?></div>
+                                    <div class="step-label">Order Placed</div>
+                                </div>
+                                <div class="tracker-line <?= $lineClass(0) ?>"></div>
+                                <div class="tracker-step <?= $circleClass(1) ?>">
+                                    <div class="step-circle"><?= $circleClass(1) === 'completed' ? '✓' : '' ?></div>
+                                    <div class="step-label">Processing</div>
+                                </div>
+                                <div class="tracker-line <?= $lineClass(1) ?>"></div>
+                                <div class="tracker-step <?= $circleClass(2) ?>">
+                                    <div class="step-circle"><?= $circleClass(2) === 'completed' ? '✓' : '' ?></div>
+                                    <div class="step-label">Shipped</div>
+                                </div>
+                                <div class="tracker-line <?= $lineClass(2) ?>"></div>
+                                <div class="tracker-step <?= $circleClass(3) ?>">
+                                    <div class="step-circle"><?= $circleClass(3) === 'completed' ? '✓' : '' ?></div>
+                                    <div class="step-label">Delivered</div>
+                                </div>
+                            </div>
+                            <?php if ($status !== 'delivered'): ?>
+                                <div class="delivery-estimate">
+                                    Estimated Delivery: <strong>3–5 business days</strong>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Card Footer -->
+                    <div class="order-footer">
+                        <span class="order-item-count">
+                            <?= (int) $order['item_count'] ?> item<?= $order['item_count'] != 1 ? 's' : '' ?>
+                            <?php if (!empty($order['shipping_city'])): ?>
+                                · <?= htmlspecialchars($order['shipping_city'], ENT_QUOTES) ?>
+                            <?php endif; ?>
+                        </span>
+                        <div class="order-footer-actions">
+                            <?php if ($isPending): ?>
+                                <form method="POST" action="/orders/cancel" class="inline-cancel-form"
+                                      onsubmit="return confirm('Cancel order #<?= $paddedId ?>? Stock will be restored.');">
+                                    <?= csrfInput() ?>
+                                    <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
+                                    <button type="submit" class="order-cancel-btn">Cancel Order</button>
+                                </form>
+                            <?php endif; ?>
+                            <a href="/orders/<?= (int) $order['order_id'] ?>" class="view-order-btn">
+                                View Details →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         <?php endif; ?>
     </div>
 </div>

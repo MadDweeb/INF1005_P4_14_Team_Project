@@ -80,6 +80,18 @@ ob_start();
                     </div>
                 </div>
 
+                <!-- Sort -->
+                <div class="filter-section">
+                    <h3>Sort By</h3>
+                    <select name="sort" class="sort-select" aria-label="Sort products">
+                        <option value="">Default</option>
+                        <option value="price_asc"  <?= ($filters['sort'] ?? '') === 'price_asc'  ? 'selected' : '' ?>>Price: Low → High</option>
+                        <option value="price_desc" <?= ($filters['sort'] ?? '') === 'price_desc' ? 'selected' : '' ?>>Price: High → Low</option>
+                        <option value="name_asc"   <?= ($filters['sort'] ?? '') === 'name_asc'   ? 'selected' : '' ?>>Name: A → Z</option>
+                        <option value="name_desc"  <?= ($filters['sort'] ?? '') === 'name_desc'  ? 'selected' : '' ?>>Name: Z → A</option>
+                    </select>
+                </div>
+
                 <!-- Filter Actions -->
                 <div class="filter-actions">
                     <button type="submit" class="filter-btn filter-apply">Apply</button>
@@ -90,6 +102,9 @@ ob_start();
 
         <!-- Products Grid -->
         <main class="products-main" role="main">
+            <?php if (!empty($products)): ?>
+                <p class="results-count"><?= count($products) ?> product<?= count($products) !== 1 ? 's' : '' ?> found</p>
+            <?php endif; ?>
             <?php if (empty($products)): ?>
                 <div class="no-products">
                     <h2>No products found</h2>
@@ -110,10 +125,13 @@ ob_start();
                                 <h2 class="product-name"><?= htmlspecialchars($product['name']) ?></h2>
                                 <div class="product-manufacturer"><?= htmlspecialchars($product['manufacturer']) ?></div>
                                 <div class="product-price">$<?= number_format($product['price'], 2) ?></div>
-                                <div class="product-stock">
-                                    <?= $product['stock_quantity'] > 0 
-                                        ? "{$product['stock_quantity']} in stock" 
-                                        : "Out of stock" 
+                                <div class="product-stock <?=
+                                    $product['stock_quantity'] == 0 ? 'stock-out' :
+                                    ($product['stock_quantity'] < 20 ? 'stock-low' : 'stock-in')
+                                ?>">
+                                    <?= $product['stock_quantity'] > 0
+                                        ? "{$product['stock_quantity']} in stock"
+                                        : "Out of stock"
                                     ?>
                                 </div>
                             </div>

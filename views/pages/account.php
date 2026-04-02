@@ -1,34 +1,240 @@
 <?php
 /*
  * views/pages/account.php
- * User account dashboard
+ * User account dashboard - matches login/register theme
  */
 
 $pageTitle = 'My Account';
-$extraCss = ['/css/account.css'];
-$extraJs = ['/js/account.js'];
-
 ob_start();
 ?>
 
-<div class="account-page">
-    <!-- Header -->
-    <div class="account-header">
-        <h1>My Account</h1>
-        <p>Welcome back, <?= htmlspecialchars($user['username']) ?>!</p>
-    </div>
+<style>
+.account-page {
+    padding: 140px 5vw 80px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.account-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 50px 60px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+}
+
+.account-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.account-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.account-header p {
+    opacity: 0.7;
+    font-size: 1.1rem;
+}
+
+.account-section {
+    margin-bottom: 35px;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--accent);
+}
+
+.info-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.info-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.info-label {
+    font-weight: 700;
+    opacity: 0.7;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+    border: 2px solid #4ade80;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 25px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-weight: 600;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.action-btn {
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    color: inherit;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    display: block;
+}
+
+.action-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(215, 58, 58, 0.4);
+}
+
+.logout-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.logout-btn {
+    padding: 14px 40px;
+    background: transparent;
+    border: 2px solid rgba(248, 113, 113, 0.5);
+    color: #f87171;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: #f87171;
+}
+
+@media (max-width: 768px) {
+    .account-page {
+        padding: 120px 5vw 60px;
+    }
+    
+    .account-container {
+        padding: 40px 30px;
+    }
+
+    .account-header h1 {
+        font-size: 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="account-page">
     <div class="account-container">
-        <!-- Account Info Card -->
-        <div class="account-card">
-            <div class="card-header">
-                <h2>Account Information</h2>
-                <button class="edit-btn" id="editAccountBtn">
-                    <span>✏️</span> Edit
-                </button>
-            </div>
-            
-            <div class="info-grid" id="accountInfo">
+        <div class="account-header">
+            <h1>My Account</h1>
+            <p>Welcome back, <?= htmlspecialchars($user['username']) ?>!</p>
+        </div>
+
+        <!-- Account Information -->
+        <div class="account-section">
+            <h2 class="section-title">Account Information</h2>
+            <div class="info-grid">
                 <div class="info-item">
                     <span class="info-label">Username</span>
                     <span class="info-value"><?= htmlspecialchars($user['username']) ?></span>
@@ -39,148 +245,51 @@ ob_start();
                 </div>
                 <div class="info-item">
                     <span class="info-label">Member Since</span>
-                    <span class="info-value"><?= date('F Y', strtotime($user['created_at'] ?? 'now')) ?></span>
+                    <span class="info-value"><?= date('F d, Y', strtotime($user['created_at'] ?? 'now')) ?></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">Account Status</span>
-                    <span class="info-value status-active">Active</span>
+                    <span class="status-badge">Active</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Edit Form (Hidden by default) -->
-            <form method="POST" action="/account/update" class="edit-form hidden" id="editForm">
+        <!-- Quick Stats -->
+        <div class="account-section">
+            <h2 class="section-title">Quick Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value"><?= $orderCount ?? 0 ?></div>
+                    <div class="stat-label">Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><?= $cartCount ?? 0 ?></div>
+                    <div class="stat-label">Cart Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value"><?= ucfirst($user['role'] ?? 'Customer') ?></div>
+                    <div class="stat-label">Account Type</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="account-section">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="/orders" class="action-btn">View My Orders</a>
+                <a href="/cart" class="action-btn">Shopping Cart</a>
+                <a href="/products" class="action-btn">Browse Products</a>
+                <a href="/customizer" class="action-btn">Build Custom</a>
+            </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="logout-section">
+            <form method="POST" action="/logout" style="display: inline;">
                 <?= csrfInput() ?>
-                
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" 
-                           value="<?= htmlspecialchars($user['username']) ?>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" 
-                           value="<?= htmlspecialchars($user['email']) ?>" required>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="cancel-btn" id="cancelEditBtn">Cancel</button>
-                    <button type="submit" class="save-btn">Save Changes</button>
-                </div>
+                <button type="submit" class="logout-btn">Sign Out</button>
             </form>
-        </div>
-
-        <!-- Password Card -->
-        <div class="account-card">
-            <div class="card-header">
-                <h2>Change Password</h2>
-                <button class="edit-btn" id="showPasswordBtn">
-                    <span>🔒</span> Update
-                </button>
-            </div>
-
-            <form method="POST" action="/account/password" class="password-form hidden" id="passwordForm">
-                <?= csrfInput() ?>
-                
-                <div class="form-group">
-                    <label for="current_password">Current Password</label>
-                    <input type="password" id="current_password" name="current_password" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="new_password">New Password</label>
-                    <input type="password" id="new_password" name="new_password" 
-                           minlength="8" required>
-                    <small>Minimum 8 characters</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm_password">Confirm New Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="cancel-btn" id="cancelPasswordBtn">Cancel</button>
-                    <button type="submit" class="save-btn">Update Password</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Quick Actions Card -->
-        <div class="account-card actions-card">
-            <div class="card-header">
-                <h2>Quick Actions</h2>
-            </div>
-            
-            <div class="actions-grid">
-                <a href="/orders" class="action-btn">
-                    <span class="action-icon">📦</span>
-                    <span class="action-label">My Orders</span>
-                    <span class="action-count"><?= $orderCount ?? 0 ?> orders</span>
-                </a>
-
-                <a href="/products" class="action-btn">
-                    <span class="action-icon">🛍️</span>
-                    <span class="action-label">Browse Switches</span>
-                </a>
-
-                <a href="/customizer" class="action-btn">
-                    <span class="action-icon">⚙️</span>
-                    <span class="action-label">Build Custom Switch</span>
-                </a>
-
-                <a href="/cart" class="action-btn">
-                    <span class="action-icon">🛒</span>
-                    <span class="action-label">View Cart</span>
-                    <?php if (!empty($cartCount)): ?>
-                        <span class="action-count"><?= $cartCount ?> items</span>
-                    <?php endif; ?>
-                </a>
-            </div>
-        </div>
-
-        <!-- Recent Orders Preview -->
-        <?php if (!empty($recentOrders)): ?>
-        <div class="account-card">
-            <div class="card-header">
-                <h2>Recent Orders</h2>
-                <a href="/orders" class="view-all-link">View All →</a>
-            </div>
-            
-            <div class="recent-orders">
-                <?php foreach (array_slice($recentOrders, 0, 3) as $order): ?>
-                    <div class="order-preview">
-                        <div class="order-preview-header">
-                            <span class="order-number">Order #<?= htmlspecialchars($order['order_id']) ?></span>
-                            <span class="order-status status-<?= strtolower($order['status']) ?>">
-                                <?= ucfirst($order['status']) ?>
-                            </span>
-                        </div>
-                        <div class="order-preview-details">
-                            <span class="order-date">
-                                <?= date('M d, Y', strtotime($order['created_at'])) ?>
-                            </span>
-                            <span class="order-total">
-                                $<?= number_format($order['total_amount'], 2) ?>
-                            </span>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-        <?php endif; ?>
-
-        <!-- Danger Zone -->
-        <div class="account-card danger-card">
-            <div class="card-header">
-                <h2>Account Actions</h2>
-            </div>
-            
-            <div class="danger-actions">
-                <button class="logout-btn" onclick="window.location.href='/logout'">
-                    <span>🚪</span> Sign Out
-                </button>
-            </div>
         </div>
     </div>
 </div>

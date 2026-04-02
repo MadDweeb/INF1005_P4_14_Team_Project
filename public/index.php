@@ -95,6 +95,39 @@ if ($uri === '/' && $method === 'GET') {
 
     // ── Admin routes ──────────────────────────────────────────────────────────────
 
+} elseif ($uri === '/admin/dashboard' && $method === 'GET') {
+    requireAdmin();
+    require_once __DIR__ . '/../src/models/Product.php';
+    require_once __DIR__ . '/../src/models/Order.php';
+    $productCount  = 0;
+    $orderCount    = 0;
+    $totalRevenue  = 0;
+    $pendingOrders = 0;
+    if ($pdo !== null) {
+        $productModel = new Product($pdo);
+        $productResult = $productModel->getAll([], 1, 1);
+        $productCount  = $productResult['total'] ?? 0;
+        $stmt = $pdo->query("SELECT COUNT(*) AS cnt, COALESCE(SUM(total_amount), 0) AS revenue FROM orders");
+        $row  = $stmt->fetch();
+        $orderCount   = (int)($row['cnt'] ?? 0);
+        $totalRevenue = (float)($row['revenue'] ?? 0);
+        $stmt2 = $pdo->query("SELECT COUNT(*) AS cnt FROM orders WHERE status = 'pending'");
+        $pendingOrders = (int)($stmt2->fetchColumn() ?: 0);
+    }
+    require __DIR__ . '/../views/admin/dashboard.php';
+
+} elseif ($uri === '/admin/orders' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminIndex();
+
+} elseif (preg_match('#^/admin/orders/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminOrderDetail((int) $matches[1]);
+
+} elseif ($uri === '/admin/orders/status' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminUpdateStatus();
+
 } elseif ($uri === '/admin/products' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
     (new ProductController($pdo))->adminIndex();
@@ -153,6 +186,14 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/orders' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->orderHistory();
+
+} elseif (preg_match('#^/orders/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->orderDetail((int) $matches[1]);
+
+} elseif ($uri === '/orders/cancel' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->cancelOrder();
 
     // ── API routes ────────────────────────────────────────────────────────────────
 
