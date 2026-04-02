@@ -113,6 +113,15 @@ class Product
 
         $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
+        // - Sort order (whitelist to prevent SQL injection) -
+        $sortMap = [
+            'price_asc'  => 'price ASC',
+            'price_desc' => 'price DESC',
+            'name_asc'   => 'name ASC',
+            'name_desc'  => 'name DESC',
+        ];
+        $orderBy = $sortMap[$filters['sort'] ?? ''] ?? 'created_at DESC';
+
         // - Total count (no LIMIT) so the pagination widget knows how many pages exist -
         $countStmt = $this->pdo->prepare("SELECT COUNT(*) FROM {$this->table} {$where}");
         $countStmt->execute($params);
@@ -124,7 +133,7 @@ class Product
         $offset = (max(1, $page) - 1) * $perPage;
         $stmt   = $this->pdo->prepare(
             "SELECT * FROM {$this->table} {$where}
-             ORDER BY created_at DESC
+             ORDER BY {$orderBy}
              LIMIT {$perPage} OFFSET {$offset}"
         );
         $stmt->execute($params);
@@ -251,12 +260,31 @@ class Product
     }
 
     /**
+     * Remove order_items rows that reference a product in closed orders,
+     * so the FK no longer blocks product deletion.
+     *
+     * Closed orders (cancelled/completed) are final and the itemised line
+     * list is no longer needed once the product is deleted.
+     *
+     * @param  int  $productId  The product being deleted.
+     */
+    public function detachFromClosedOrders(int $productId): void
+    {
+        $stmt = $this->pdo->prepare(
+            "DELETE oi FROM order_items oi
+             INNER JOIN orders o ON o.order_id = oi.order_id
+             WHERE oi.product_id = :product_id
+               AND o.status IN ('cancelled', 'completed')"
+        );
+        $stmt->execute([':product_id' => $productId]);
+    }
+
+    /**
      * Delete a product by ID.
      *
-     * Because order_items references products with ON DELETE RESTRICT, deleting
-     * a product that exists in any order will throw a PDOException. Catch it in
-     * the controller and show a friendly error, or switch to a soft-delete
-     * approach (add an `is_deleted` column) to preserve order history safely.
+     * Call detachFromClosedOrders() first to unlink the product from closed orders.
+     * If any active (pending/processing/shipped/delivered) orders still reference
+     * the product, the FK constraint will fire and the controller will catch it.
      *
      * @param  int  $id  The product_id to delete.
      * @return bool      True on success.

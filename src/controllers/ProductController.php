@@ -53,10 +53,11 @@ class ProductController
 
         // Collect and lightly sanitize filter parameters from the query string.
         $filters = [
-            'q' => sanitizeString($_GET['q'] ?? ''),
-            'type' => $_GET['type'] ?? [],   // array from type[] checkboxes
+            'q'         => sanitizeString($_GET['q'] ?? ''),
+            'type'      => $_GET['type'] ?? [],
             'price_min' => $_GET['price_min'] ?? '',
             'price_max' => $_GET['price_max'] ?? '',
+            'sort'      => sanitizeString($_GET['sort'] ?? ''),
         ];
         $page = max(1, sanitizeInt($_GET['page'] ?? 1));
 
@@ -289,11 +290,15 @@ class ProductController
         }
 
         try {
+            // Remove this product's line items from closed orders first,
+            // so the FK no longer blocks the delete.
+            if ($this->productModel) {
+                $this->productModel->detachFromClosedOrders($productId);
+            }
             $this->productModel->delete($productId);
         } catch (\PDOException $e) {
-            // FK constraint fired - product is referenced by existing orders.
-            // Redirect back with an error message rather than crashing.
-            $_SESSION['flash_error'] = 'Cannot delete this product - it appears in existing orders.';
+            // FK still fired — product is part of an active order.
+            $_SESSION['flash_error'] = 'Cannot delete this product — it is part of an active order (pending, processing, shipped, or delivered).';
             header('Location: /admin/products');
             exit;
         }

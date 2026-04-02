@@ -131,10 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
     summaryRows.forEach((amount, index) => {
         const text = amount.textContent;
         if (text.includes('$')) {
-            const value = parseFloat(text.replace('$', ''));
+            const value = parseFloat(text.replace('$', '').replace(/,/g, ''));
             if (!isNaN(value)) {
                 amount.textContent = '$0.00';
-                
+
                 setTimeout(() => {
                     animateValue(amount, 0, value, 800);
                 }, 600 + (index * 200));
@@ -155,7 +155,7 @@ function animateValue(element, start, end, duration) {
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const current = start + (range * easeOutQuart);
         
-        element.textContent = '$' + current.toFixed(2);
+        element.textContent = '$' + current.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         
         if (progress < 1) {
             requestAnimationFrame(update);

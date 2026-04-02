@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    // Smooth filter toggle animations
+    // Auto-submit form when a checkbox changes; also animate the label
     const checkboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
@@ -98,10 +98,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 label.style.transform = 'scale(1.05)';
                 setTimeout(() => {
                     label.style.transform = 'scale(1)';
-                }, 200);
+                }, 150);
             }
+            // Submit the whole form so all currently-checked boxes are sent together
+            setTimeout(() => {
+                this.closest('form').submit();
+            }, 180);
         });
     });
+
+    // Auto-submit when sort changes
+    const sortSelect = document.querySelector('.sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            this.closest('form').submit();
+        });
+    }
 });
 
 // ── Live AJAX Search ──────────────────────────────────────────────────────────
