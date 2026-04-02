@@ -26,17 +26,17 @@
 
         <ul class="social-links">
             <li>
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/singaporetech/?hl=en" aria-label="Instagram">
                     <i class="fab fa-instagram" aria-hidden="true"></i>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="Facebook">
+                <a href="https://www.facebook.com/SingaporeTech/" aria-label="Facebook">
                     <i class="fab fa-facebook-f" aria-hidden="true"></i>
                 </a>
             </li>
             <li>
-                <a href="#" aria-label="X (Twitter)">
+                <a href="https://x.com/singaporetech" aria-label="X (Twitter)">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>

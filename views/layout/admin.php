@@ -11,7 +11,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
  * of the public-facing site header.
  *
  * Usage pattern in an admin view:
- *   $pageTitle        = 'Admin — Products';
+ *   $pageTitle        = 'Admin - Products';
  *   $currentAdminPage = 'products';   // used to highlight the active nav link
  *   ob_start();
  *   // ... render page HTML ...

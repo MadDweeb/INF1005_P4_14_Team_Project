@@ -1,7 +1,7 @@
 <?php
 /*
  * views/admin/order-detail.php
- * Admin order detail — view full order info and update shipping status
+ * Admin order detail - view full order info and update shipping status
  */
 
 require_once __DIR__ . '/../../src/helpers/auth.php';
@@ -354,11 +354,11 @@ ob_start();
                 <h2>Customer</h2>
                 <div class="info-row">
                     <span class="info-label">Username</span>
-                    <span class="info-value"><?= htmlspecialchars((string) ($order['username'] ?? '—'), ENT_QUOTES) ?></span>
+                    <span class="info-value"><?= htmlspecialchars((string) ($order['username'] ?? '-'), ENT_QUOTES) ?></span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Email</span>
-                    <span class="info-value"><?= htmlspecialchars((string) ($order['email'] ?? '—'), ENT_QUOTES) ?></span>
+                    <span class="info-value"><?= htmlspecialchars((string) ($order['email'] ?? '-'), ENT_QUOTES) ?></span>
                 </div>
             </div>
 
@@ -367,16 +367,16 @@ ob_start();
                 <h2>Shipping Address</h2>
                 <div class="info-row">
                     <span class="info-label">Name</span>
-                    <span class="info-value"><?= htmlspecialchars((string) ($order['shipping_name'] ?? '—'), ENT_QUOTES) ?></span>
+                    <span class="info-value"><?= htmlspecialchars((string) ($order['shipping_name'] ?? '-'), ENT_QUOTES) ?></span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Address</span>
-                    <span class="info-value"><?= htmlspecialchars((string) ($order['shipping_address'] ?? '—'), ENT_QUOTES) ?></span>
+                    <span class="info-value"><?= htmlspecialchars((string) ($order['shipping_address'] ?? '-'), ENT_QUOTES) ?></span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">City</span>
                     <span class="info-value">
-                        <?= htmlspecialchars((string) ($order['shipping_city'] ?? '—'), ENT_QUOTES) ?>
+                        <?= htmlspecialchars((string) ($order['shipping_city'] ?? '-'), ENT_QUOTES) ?>
                         <?php if (!empty($order['shipping_postal'])): ?>
                             <?= htmlspecialchars((string) $order['shipping_postal'], ENT_QUOTES) ?>
                         <?php endif; ?>
@@ -420,6 +420,6 @@ ob_start();
 
 <?php
 $pageContent = ob_get_clean();
-$pageTitle   = 'Admin — Order #' . $paddedId;
+$pageTitle   = 'Admin - Order #' . $paddedId;
 require_once __DIR__ . '/../layout/admin.php';
 ?>

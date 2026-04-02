@@ -2,7 +2,7 @@
 /*
  * views/partials/admin-header.php
  *
- * Admin-specific header partial — replaces the main site header on admin pages.
+ * Admin-specific header partial - replaces the main site header on admin pages.
  * Uses $currentAdminPage (set by each admin view) to mark the active nav link.
  */
 

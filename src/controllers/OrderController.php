@@ -271,7 +271,7 @@ class OrderController
 
     /**
      * Customer: mark a delivered order as received/completed (POST /orders/received).
-     * Locks the order to 'completed' — no further status changes by anyone.
+     * Locks the order to 'completed' - no further status changes by anyone.
      */
     public function markReceived(): void
     {
@@ -344,7 +344,7 @@ class OrderController
     /**
      * Admin: update an order's status (POST /admin/orders/status).
      *
-     * Expects $_POST: order_id, status, redirect (optional — defaults to /admin/orders)
+     * Expects $_POST: order_id, status, redirect (optional - defaults to /admin/orders)
      */
     public function adminUpdateStatus(): void
     {

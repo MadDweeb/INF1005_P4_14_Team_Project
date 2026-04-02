@@ -500,6 +500,6 @@ ob_start();
 
 <?php
 $pageContent = ob_get_clean();
-$pageTitle    = 'Admin — Products';
+$pageTitle    = 'Admin - Products';
 require_once __DIR__ . '/../layout/admin.php';
 ?>

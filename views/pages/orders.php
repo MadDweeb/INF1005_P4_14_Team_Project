@@ -1,7 +1,7 @@
 <?php
 /*
  * views/pages/orders.php
- * User order history — dynamic tracker, status badges, cancel + view-details actions
+ * User order history - dynamic tracker, status badges, cancel + view-details actions
  */
 
 $pageTitle = 'My Orders';
