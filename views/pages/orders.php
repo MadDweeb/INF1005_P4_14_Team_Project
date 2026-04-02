@@ -27,11 +27,13 @@ ob_start();
         <?php else: ?>
             <?php foreach ($orders as $order):
                 $status      = strtolower((string) ($order['status'] ?? 'pending'));
-                $isCancelled = ($status === 'cancelled');
-                $isPending   = ($status === 'pending');
+                $isCancelled  = ($status === 'cancelled');
+                $isCompleted  = ($status === 'completed');
+                $isPending    = ($status === 'pending');
+                $isDelivered  = ($status === 'delivered');
 
                 // Map status → tracker step index (0-3)
-                $statusMap = ['pending' => 0, 'processing' => 1, 'shipped' => 2, 'delivered' => 3];
+                $statusMap = ['pending' => 0, 'processing' => 1, 'shipped' => 2, 'delivered' => 3, 'completed' => 3];
                 $statusIdx = $statusMap[$status] ?? 0;
 
                 // Helper: CSS class for a tracker circle (index 0-3)
@@ -74,6 +76,10 @@ ob_start();
                     <?php if ($isCancelled): ?>
                         <div class="cancelled-notice">
                             This order was cancelled and stock has been restored.
+                        </div>
+                    <?php elseif ($isCompleted): ?>
+                        <div class="cancelled-notice" style="background: rgba(74,222,128,0.12); border-color: #4ade80; color: #4ade80;">
+                            You have confirmed this order as received.
                         </div>
                     <?php else: ?>
                         <div class="shipment-tracker">
@@ -122,6 +128,13 @@ ob_start();
                                     <?= csrfInput() ?>
                                     <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
                                     <button type="submit" class="order-cancel-btn">Cancel Order</button>
+                                </form>
+                            <?php elseif ($isDelivered): ?>
+                                <form method="POST" action="/orders/received" class="inline-cancel-form"
+                                      onsubmit="return confirm('Confirm you have received order #<?= $paddedId ?>?');">
+                                    <?= csrfInput() ?>
+                                    <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
+                                    <button type="submit" class="order-cancel-btn" style="background: #4ade80; color: #1a1a1a; border-color: #4ade80;">Order Received</button>
                                 </form>
                             <?php endif; ?>
                             <a href="/orders/<?= (int) $order['order_id'] ?>" class="view-order-btn">

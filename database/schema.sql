@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS orders (
     order_id     INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id      INT UNSIGNED NOT NULL,
     total_amount DECIMAL(10,2) NOT NULL,
-    status       ENUM('pending','processing','shipped','delivered','cancelled')
+    status       ENUM('pending','processing','shipped','delivered','cancelled','completed')
                  NOT NULL DEFAULT 'pending',
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

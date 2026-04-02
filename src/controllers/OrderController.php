@@ -270,6 +270,41 @@ class OrderController
     }
 
     /**
+     * Customer: mark a delivered order as received/completed (POST /orders/received).
+     * Locks the order to 'completed' — no further status changes by anyone.
+     */
+    public function markReceived(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $orderId = sanitizeInt($_POST['order_id'] ?? 0);
+        if (!isPositiveInt($orderId)) {
+            $_SESSION['flash_error'] = 'Invalid order ID.';
+            header('Location: /orders');
+            exit;
+        }
+
+        $user   = currentUser();
+        $result = $this->orderModel
+            ? $this->orderModel->markAsReceived($orderId, $user['id'])
+            : ['ok' => false, 'reason' => 'no_model'];
+
+        if ($result['ok']) {
+            $_SESSION['flash_success'] = 'Order #' . str_pad((string) $orderId, 5, '0', STR_PAD_LEFT) . ' marked as received. Thank you!';
+        } else {
+            $_SESSION['flash_error'] = match ($result['reason']) {
+                'invalid_status' => 'This order is not in a delivered state.',
+                'forbidden'      => 'You do not have permission to update this order.',
+                default          => 'Could not update the order. Please try again.',
+            };
+        }
+
+        header('Location: /orders');
+        exit;
+    }
+
+    /**
      * Admin: show all orders (GET /admin/orders).
      */
     public function adminIndex(): void
@@ -331,14 +366,38 @@ class OrderController
             return;
         }
 
-        $updated = $this->orderModel
-            ? $this->orderModel->updateStatus($orderId, $status)
-            : false;
+        // Block any edits to orders the customer has already confirmed as received.
+        $order = $this->orderModel ? $this->orderModel->getById($orderId) : false;
+        if ($order && $order['status'] === 'completed') {
+            $_SESSION['flash_error'] = 'This order has been confirmed as received and cannot be changed.';
+            header('Location: ' . $redirect);
+            exit;
+        }
 
-        if ($updated) {
-            $_SESSION['flash_success'] = 'Order status updated to ' . ucfirst($status) . '.';
+        // When cancelling, use cancelWithRestock() so inventory is restored.
+        if ($status === 'cancelled') {
+            $result = $this->orderModel
+                ? $this->orderModel->cancelWithRestock($orderId, null)
+                : ['ok' => false, 'reason' => 'no_model'];
+
+            if ($result['ok']) {
+                $_SESSION['flash_success'] = 'Order cancelled and stock restored.';
+            } else {
+                $_SESSION['flash_error'] = match ($result['reason']) {
+                    'already_cancelled' => 'This order is already cancelled.',
+                    default             => 'Could not cancel the order. Please try again.',
+                };
+            }
         } else {
-            $_SESSION['flash_error'] = 'Invalid status value.';
+            $updated = $this->orderModel
+                ? $this->orderModel->updateStatus($orderId, $status)
+                : false;
+
+            if ($updated) {
+                $_SESSION['flash_success'] = 'Order status updated to ' . ucfirst($status) . '.';
+            } else {
+                $_SESSION['flash_error'] = 'Invalid status value.';
+            }
         }
 
         header('Location: ' . $redirect);

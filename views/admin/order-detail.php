@@ -98,6 +98,7 @@ ob_start();
     .status-shipped    { background: #a78bfa; color: #fff; }
     .status-delivered  { background: #4ade80; color: #1a1a1a; }
     .status-cancelled  { background: #f87171; color: #fff; }
+    .status-completed  { background: #34d399; color: #1a1a1a; }
 
     /* Two-column layout */
     .aod-grid {
@@ -215,6 +216,11 @@ ob_start();
         font-size: 0.95rem;
         margin-bottom: 14px;
         cursor: pointer;
+    }
+
+    .status-form select option {
+        background: #fff;
+        color: #1a1a1a;
     }
 
     .status-form select:focus {
@@ -379,7 +385,12 @@ ob_start();
             </div>
 
             <!-- Status update -->
-            <?php if ($status !== 'cancelled'): ?>
+            <?php if ($status === 'completed'): ?>
+                <div class="aod-card">
+                    <h2>Update Status</h2>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">This order has been confirmed as received by the customer and is now closed.</p>
+                </div>
+            <?php elseif ($status !== 'cancelled'): ?>
                 <div class="aod-card">
                     <h2>Update Status</h2>
                     <form method="POST" action="/admin/orders/status" class="status-form">

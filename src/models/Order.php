@@ -24,7 +24,7 @@ class Order
     private string $table = 'orders';
 
     private const ALLOWED_STATUSES = [
-        'pending', 'processing', 'shipped', 'delivered', 'cancelled',
+        'pending', 'processing', 'shipped', 'delivered', 'cancelled', 'completed',
     ];
 
     public function __construct(PDO $pdo)
@@ -334,6 +334,60 @@ class Order
             if ($this->pdo->inTransaction()) {
                 $this->pdo->rollBack();
             }
+            return ['ok' => false, 'reason' => 'db_error'];
+        }
+    }
+
+    /**
+     * Mark a delivered order as received/completed by the customer.
+     *
+     * Only the order owner may call this, and only when status is 'delivered'.
+     * Once marked completed, no further status changes are allowed.
+     *
+     * @param  int  $orderId  The order to complete.
+     * @param  int  $userId   The customer's user_id (ownership check).
+     * @return array          Result payload with ok + reason keys.
+     */
+    public function markAsReceived(int $orderId, int $userId): array
+    {
+        try {
+            $this->pdo->beginTransaction();
+
+            $stmt = $this->pdo->prepare(
+                "SELECT order_id, user_id, status
+                 FROM {$this->table}
+                 WHERE order_id = :order_id
+                 LIMIT 1
+                 FOR UPDATE"
+            );
+            $stmt->execute([':order_id' => $orderId]);
+            $order = $stmt->fetch();
+
+            if (!$order) {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'not_found'];
+            }
+
+            if ((int) $order['user_id'] !== $userId) {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'forbidden'];
+            }
+
+            if ($order['status'] !== 'delivered') {
+                $this->pdo->rollBack();
+                return ['ok' => false, 'reason' => 'invalid_status'];
+            }
+
+            $this->updateStatus($orderId, 'completed');
+
+            $this->pdo->commit();
+            return ['ok' => true, 'reason' => 'completed'];
+
+        } catch (\PDOException $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            error_log('Order markAsReceived failed: ' . $e->getMessage());
             return ['ok' => false, 'reason' => 'db_error'];
         }
     }

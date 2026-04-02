@@ -354,6 +354,7 @@
 .status-shipped    { background: #a78bfa; color: #fff; }
 .status-delivered  { background: #4ade80; color: #1a1a1a; }
 .status-cancelled  { background: #f87171; color: #fff; }
+.status-completed  { background: #34d399; color: #1a1a1a; }
 
 /* Status column in order header */
 .order-status-col {

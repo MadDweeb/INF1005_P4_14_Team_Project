@@ -86,6 +86,11 @@ ob_start();
         color: white;
     }
 
+    .status-completed {
+        background: #34d399;
+        color: #1a1a1a;
+    }
+
     .view-details-btn {
         padding: 8px 16px;
         background: rgba(255, 255, 255, 0.1);

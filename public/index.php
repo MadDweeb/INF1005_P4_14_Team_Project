@@ -195,6 +195,10 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->cancelOrder();
 
+} elseif ($uri === '/orders/received' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->markReceived();
+
     // ── API routes ────────────────────────────────────────────────────────────────
 
 } elseif ($uri === '/api/search' && $method === 'GET') {
