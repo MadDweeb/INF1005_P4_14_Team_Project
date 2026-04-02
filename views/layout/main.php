@@ -27,6 +27,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') . ' | ' : '' ?>Keyboard Switch
         Store</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon-32x32.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Open+Sans:wght@400;600;700&display=swap"
