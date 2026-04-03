@@ -293,12 +293,12 @@ ob_start();
         <table class="products-table">
             <thead>
                 <tr>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Actions</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -313,7 +313,7 @@ ob_start();
                         <tr>
                             <td>
                                 <img src="/assets/images/<?= htmlspecialchars($product['product_image'] ?? 'placeholder.webp') ?>"
-                                    alt="<?= htmlspecialchars($product['name']) ?>" class="product-thumb">
+                                    alt="" class="product-thumb">
                             </td>
                             <td class="product-name-cell">
                                 <strong><?= htmlspecialchars($product['name']) ?></strong><br>
@@ -353,11 +353,11 @@ ob_start();
 </div>
 
 <!-- Add/Edit Product Modal -->
-<div id="productModal" class="modal">
+<div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <div class="modal-header">
             <h2 id="modalTitle">Add New Product</h2>
-            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <button class="close-modal" onclick="closeModal()" aria-label="Close product form">&times;</button>
         </div>
 
         <form id="productForm" method="POST" enctype="multipart/form-data">

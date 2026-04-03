@@ -41,7 +41,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                 <td data-label="Product">
                                     <div class="cart-item-product">
                                         <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>"
-                                            alt="<?= htmlspecialchars($item['name']) ?>" class="cart-item-image">
+                                            alt="" class="cart-item-image">
                                         <div class="cart-item-info">
                                             <h3><?= htmlspecialchars($item['name']) ?></h3>
                                             <p><?= htmlspecialchars($item['manufacturer']) ?> •
@@ -60,8 +60,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                             Quantity for <?= htmlspecialchars($item['name']) ?>
                                         </label>
                                         <input type="number" id="qty-<?= $item['cart_item_id'] ?>" name="quantity" min="1"
-                                            max="<?= $item['stock_quantity'] ?>" value="<?= $item['quantity'] ?>"
-                                            aria-label="Quantity">
+                                            max="<?= $item['stock_quantity'] ?>" value="<?= $item['quantity'] ?>">
                                         <button type="submit" class="update-btn">Update</button>
                                     </form>
                                 </td>
@@ -85,7 +84,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                 <td data-label="Product">
                                     <div class="cart-item-product">
                                         <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
-                                            alt="<?= htmlspecialchars($build['name']) ?>" class="cart-item-image">
+                                            alt="" class="cart-item-image">
                                         <div class="cart-item-info">
                                             <h3><?= htmlspecialchars($build['name']) ?> <span class="custom-badge">CUSTOM</span></h3>
                                             <p><?= htmlspecialchars($build['description']) ?></p>
@@ -103,7 +102,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                             Quantity for <?= htmlspecialchars($build['name']) ?>
                                         </label>
                                         <input type="number" id="custom-qty-<?= $index ?>" name="quantity"
-                                            min="10" value="<?= $build['quantity'] ?>" aria-label="Quantity">
+                                            min="10" value="<?= $build['quantity'] ?>">
                                         <button type="submit" class="update-btn">Update</button>
                                     </form>
                                 </td>

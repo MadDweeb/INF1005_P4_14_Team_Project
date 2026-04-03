@@ -34,7 +34,7 @@ ob_start();
     </div>
 
     <!-- Filter Dropdown Panel -->
-    <div class="filter-dropdown" id="filter-dropdown" aria-hidden="true">
+    <div class="filter-dropdown" id="filter-dropdown" aria-hidden="true" inert>
         <form method="GET" action="/products" id="filter-form">
             <div class="filter-dropdown-grid">
 
@@ -132,7 +132,7 @@ ob_start();
                     <a href="/products/<?= $product['product_id'] ?>" class="product-card">
                         <img
                             src="/assets/images/<?= htmlspecialchars($product['product_image'] ?? 'placeholder.webp') ?>"
-                            alt="<?= htmlspecialchars($product['name']) ?>"
+                            alt=""
                             class="product-image"
                             loading="lazy"
                         >

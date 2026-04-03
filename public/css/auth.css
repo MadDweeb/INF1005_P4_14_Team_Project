@@ -57,7 +57,7 @@ html {
 .form-group input {
     width: 100%;
     padding: 14px 18px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.05);
     color: inherit;
     border-radius: 8px;
@@ -123,7 +123,7 @@ html {
 }
 
 .auth-form-section > p a {
-    color: var(--accent);
+    color: #f87171;
     text-decoration: none;
     font-weight: 700;
     transition: opacity 0.3s;

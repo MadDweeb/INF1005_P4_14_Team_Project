@@ -38,9 +38,10 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                                 First Name <span class="required">*</span>
                             </label>
                             <input type="text" id="first_name" name="first_name"
-                                value="<?= htmlspecialchars($_POST['first_name'] ?? '') ?>" required aria-required="true">
+                                value="<?= htmlspecialchars($_POST['first_name'] ?? '') ?>" required aria-required="true"
+                                <?= isset($errors['first_name']) ? 'aria-describedby="first_name-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['first_name'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['first_name']) ?></span>
+                                <span id="first_name-error" class="form-error" role="alert"><?= htmlspecialchars($errors['first_name']) ?></span>
                             <?php endif; ?>
                         </div>
 
@@ -49,9 +50,10 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                                 Last Name <span class="required">*</span>
                             </label>
                             <input type="text" id="last_name" name="last_name"
-                                value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" required aria-required="true">
+                                value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" required aria-required="true"
+                                <?= isset($errors['last_name']) ? 'aria-describedby="last_name-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['last_name'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['last_name']) ?></span>
+                                <span id="last_name-error" class="form-error" role="alert"><?= htmlspecialchars($errors['last_name']) ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -62,9 +64,9 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                         </label>
                         <input type="email" id="email" name="email"
                             value="<?= htmlspecialchars($_POST['email'] ?? $user['email'] ?? '') ?>" required
-                            aria-required="true">
+                            aria-required="true" <?= isset($errors['email']) ? 'aria-describedby="email-error" aria-invalid="true"' : '' ?>>
                         <?php if (isset($errors['email'])): ?>
-                            <span class="form-error"><?= htmlspecialchars($errors['email']) ?></span>
+                            <span id="email-error" class="form-error" role="alert"><?= htmlspecialchars($errors['email']) ?></span>
                         <?php endif; ?>
                     </div>
 
@@ -73,9 +75,9 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                             Phone Number <span class="required">*</span>
                         </label>
                         <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
-                            required aria-required="true">
+                            required aria-required="true" <?= isset($errors['phone']) ? 'aria-describedby="phone-error" aria-invalid="true"' : '' ?>>
                         <?php if (isset($errors['phone'])): ?>
-                            <span class="form-error"><?= htmlspecialchars($errors['phone']) ?></span>
+                            <span id="phone-error" class="form-error" role="alert"><?= htmlspecialchars($errors['phone']) ?></span>
                         <?php endif; ?>
                     </div>
 
@@ -84,9 +86,10 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                             Street Address <span class="required">*</span>
                         </label>
                         <input type="text" id="address" name="address"
-                            value="<?= htmlspecialchars($_POST['address'] ?? '') ?>" required aria-required="true">
+                            value="<?= htmlspecialchars($_POST['address'] ?? '') ?>" required aria-required="true"
+                            <?= isset($errors['address']) ? 'aria-describedby="address-error" aria-invalid="true"' : '' ?>>
                         <?php if (isset($errors['address'])): ?>
-                            <span class="form-error"><?= htmlspecialchars($errors['address']) ?></span>
+                            <span id="address-error" class="form-error" role="alert"><?= htmlspecialchars($errors['address']) ?></span>
                         <?php endif; ?>
                     </div>
 
@@ -96,9 +99,9 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                                 City <span class="required">*</span>
                             </label>
                             <input type="text" id="city" name="city" value="<?= htmlspecialchars($_POST['city'] ?? '') ?>"
-                                required aria-required="true">
+                                required aria-required="true" <?= isset($errors['city']) ? 'aria-describedby="city-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['city'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['city']) ?></span>
+                                <span id="city-error" class="form-error" role="alert"><?= htmlspecialchars($errors['city']) ?></span>
                             <?php endif; ?>
                         </div>
 
@@ -107,9 +110,10 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                                 State/Province <span class="required">*</span>
                             </label>
                             <input type="text" id="state" name="state"
-                                value="<?= htmlspecialchars($_POST['state'] ?? '') ?>" required aria-required="true">
+                                value="<?= htmlspecialchars($_POST['state'] ?? '') ?>" required aria-required="true"
+                                <?= isset($errors['state']) ? 'aria-describedby="state-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['state'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['state']) ?></span>
+                                <span id="state-error" class="form-error" role="alert"><?= htmlspecialchars($errors['state']) ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -120,9 +124,9 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                                 ZIP/Postal Code <span class="required">*</span>
                             </label>
                             <input type="text" id="zip" name="zip" value="<?= htmlspecialchars($_POST['zip'] ?? '') ?>"
-                                required aria-required="true">
+                                required aria-required="true" <?= isset($errors['zip']) ? 'aria-describedby="zip-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['zip'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['zip']) ?></span>
+                                <span id="zip-error" class="form-error" role="alert"><?= htmlspecialchars($errors['zip']) ?></span>
                             <?php endif; ?>
                         </div>
 
@@ -132,9 +136,9 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                             </label>
                             <input type="text" id="country" name="country"
                                 value="<?= htmlspecialchars($_POST['country'] ?? 'United States') ?>" required
-                                aria-required="true">
+                                aria-required="true" <?= isset($errors['country']) ? 'aria-describedby="country-error" aria-invalid="true"' : '' ?>>
                             <?php if (isset($errors['country'])): ?>
-                                <span class="form-error"><?= htmlspecialchars($errors['country']) ?></span>
+                                <span id="country-error" class="form-error" role="alert"><?= htmlspecialchars($errors['country']) ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -161,7 +165,7 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                     <?php foreach ($cartItems as $item): ?>
                         <div class="order-item">
                             <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>"
-                                alt="<?= htmlspecialchars($item['name']) ?>" class="order-item-image">
+                                alt="" class="order-item-image">
                             <div class="order-item-info">
                                 <div class="order-item-name"><?= htmlspecialchars($item['name']) ?></div>
                                 <div class="order-item-details">
@@ -177,7 +181,7 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                     <?php foreach ($customBuilds as $build): ?>
                         <div class="order-item custom-build-item">
                             <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
-                                alt="<?= htmlspecialchars($build['name']) ?>" class="order-item-image">
+                                alt="" class="order-item-image">
                             <div class="order-item-info">
                                 <div class="order-item-name">
                                     <?= htmlspecialchars($build['name']) ?> 

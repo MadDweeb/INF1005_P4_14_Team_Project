@@ -62,7 +62,7 @@
 .user-email {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #E5E7EB;
 }
 
 .sidebar-menu {
@@ -79,7 +79,7 @@
     background: rgba(255, 255, 255, 0.03);
     border: 2px solid transparent;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.7);
+    color: #F8FAFC;
     text-decoration: none;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
@@ -129,7 +129,7 @@
 .page-header p {
     font-family: 'Inter', sans-serif;
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #E5E7EB;
 }
 
 /* ===== CARDS ===== */
@@ -202,7 +202,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #E5E7EB;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -223,8 +223,8 @@
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08); /* improved dark contrast base */
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
     padding: 2rem;
     text-align: center;
@@ -242,14 +242,14 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
     font-size: 3rem;
-    color: #D73A3A;
+    color: #FFFFFF; /* WCAG AA/pass for dark bg */
     margin-bottom: 0.5rem;
 }
 
 .stat-label {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #E5E7EB;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
