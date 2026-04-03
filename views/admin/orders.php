@@ -8,165 +8,10 @@ require_once __DIR__ . '/../../src/helpers/auth.php';
 requireAdmin();
 
 $currentAdminPage = 'orders';
+$adminOrdersCssVersion = @filemtime(__DIR__ . '/../../public/css/admin-orders.css') ?: time();
+$extraCss = ['/css/admin-orders.css?v=' . $adminOrdersCssVersion];
 ob_start();
 ?>
-
-<style>
-    .admin-header {
-        margin-bottom: 40px;
-    }
-
-    .admin-header h1 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    .orders-table-wrapper {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        overflow-x: auto;
-    }
-
-    .orders-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 800px;
-    }
-
-    .orders-table th {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 20px;
-        text-align: left;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 900;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 1px;
-    }
-
-    .orders-table td {
-        padding: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .status-badge {
-        display: inline-block;
-        padding: 6px 14px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 900;
-        text-transform: uppercase;
-    }
-
-    .status-pending {
-        background: #fbbf24;
-        color: #1a1a1a;
-    }
-
-    .status-processing {
-        background: #60a5fa;
-        color: white;
-    }
-
-    .status-shipped {
-        background: #a78bfa;
-        color: white;
-    }
-
-    .status-delivered {
-        background: #4ade80;
-        color: #1a1a1a;
-    }
-
-    .status-cancelled {
-        background: #f87171;
-        color: #1a1a1a;
-    }
-
-    .status-completed {
-        background: #34d399;
-        color: #1a1a1a;
-    }
-
-    .view-details-btn {
-        padding: 8px 16px;
-        background: rgba(255, 255, 255, 0.1);
-        color: inherit;
-        border: none;
-        border-radius: 6px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .view-details-btn:hover {
-        background: var(--accent);
-        color: white;
-    }
-
-    .delete-order-btn {
-        padding: 8px 14px;
-        background: rgba(248, 113, 113, 0.12);
-        color: #ffd3d3;
-        border: 1px solid rgba(248, 113, 113, 0.55);
-        border-radius: 6px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        margin-left: 8px;
-    }
-
-    .delete-order-btn:hover {
-        background: #f87171;
-        color: #1a1a1a;
-    }
-
-
-    .empty-state {
-        text-align: center;
-        padding: 80px 20px;
-    }
-
-    .empty-state h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 2rem;
-        margin-bottom: 15px;
-    }
-
-    @media (max-width: 768px) {
-        .orders-table-wrapper {
-            border-radius: 8px;
-        }
-
-        .orders-table th,
-        .orders-table td {
-            padding: 14px 12px;
-            font-size: 0.85rem;
-        }
-
-        .view-details-btn,
-        .delete-order-btn {
-            padding: 6px 10px;
-            font-size: 0.78rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .orders-table th,
-        .orders-table td {
-            padding: 10px 8px;
-            font-size: 0.8rem;
-        }
-    }
-
-</style>
 
 <div class="admin-page">
     <div class="admin-header">
@@ -220,7 +65,7 @@ ob_start();
                                     View Details
                                 </a>
                                 <?php if ($order['status'] === 'cancelled'): ?>
-                                    <form method="POST" action="/admin/orders/delete" style="display:inline;"
+                                    <form method="POST" action="/admin/orders/delete" class="inline-delete-order-form"
                                           onsubmit="return confirm('Permanently delete order #<?= str_pad($order['order_id'], 5, '0', STR_PAD_LEFT) ?>?');">
                                         <?= csrfInput() ?>
                                         <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">

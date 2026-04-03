@@ -26,8 +26,7 @@ $extraJs = ['/js/faq.js'];
                         switches</strong>
                     are smooth, <strong>Tactile</strong> have a "bump", and <strong>Clicky</strong> make an audible
                     sound.
-                    You can also use our interactive <a href="/customizer"
-                        style="color: var(--accent); text-decoration: underline; font-weight: 700;">Customizer</a> to
+                    You can also use our interactive <a href="/customizer" class="faq-inline-link">Customizer</a> to
                     get your own customized switch!</p>
             </div>
         </div>

@@ -5,7 +5,8 @@
  */
 
 ob_start();
-$extraCss = ['/css/about.css'];
+$aboutCssVersion = @filemtime(__DIR__ . '/../../public/css/about.css') ?: time();
+$extraCss = ['/css/about.css?v=' . $aboutCssVersion];
 $extraJs = ['/js/about.js'];
 ?>
 

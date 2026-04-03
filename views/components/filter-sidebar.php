@@ -36,7 +36,7 @@ $activeSearch = htmlspecialchars($_GET['q'] ?? '', ENT_QUOTES, 'UTF-8');
 
         <!-- ── Switch Type ────────────────────────────────── -->
         <fieldset class="mb-4">
-            <legend class="fw-semibold mb-2" style="font-size: 0.9rem;">
+            <legend class="fw-semibold mb-2 filter-legend-sm">
                 Switch Type
             </legend>
             <?php
@@ -60,7 +60,7 @@ $activeSearch = htmlspecialchars($_GET['q'] ?? '', ENT_QUOTES, 'UTF-8');
 
         <!-- ── Price Range ────────────────────────────────── -->
         <fieldset class="mb-4">
-            <legend class="fw-semibold mb-2" style="font-size: 0.9rem;">
+            <legend class="fw-semibold mb-2 filter-legend-sm">
                 Price (SGD)
             </legend>
             <div class="row g-2">

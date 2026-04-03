@@ -5,7 +5,8 @@
  */
 
 $pageTitle = 'My Orders';
-$extraCss = ['/css/orders.css'];
+$ordersCssVersion = @filemtime(__DIR__ . '/../../public/css/orders.css') ?: time();
+$extraCss = ['/css/orders.css?v=' . $ordersCssVersion];
 $extraJs = ['/js/orders.js'];
 
 ob_start();
@@ -78,7 +79,7 @@ ob_start();
                             This order was cancelled and stock has been restored.
                         </div>
                     <?php elseif ($isCompleted): ?>
-                        <div class="cancelled-notice" style="background: rgba(74,222,128,0.12); border-color: #4ade80; color: #4ade80;">
+                        <div class="cancelled-notice order-received-notice">
                             You have confirmed this order as received.
                         </div>
                     <?php else: ?>
@@ -134,14 +135,14 @@ ob_start();
                                       onsubmit="return confirm('Permanently remove order #<?= $paddedId ?> from your history?');">
                                     <?= csrfInput() ?>
                                     <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
-                                    <button type="submit" class="order-cancel-btn" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);">Remove</button>
+                                    <button type="submit" class="order-cancel-btn order-cancel-btn-remove">Remove</button>
                                 </form>
                             <?php elseif ($isDelivered): ?>
                                 <form method="POST" action="/orders/received" class="inline-cancel-form"
                                       onsubmit="return confirm('Confirm you have received order #<?= $paddedId ?>?');">
                                     <?= csrfInput() ?>
                                     <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
-                                    <button type="submit" class="order-cancel-btn" style="background: #4ade80; color: #1a1a1a; border-color: #4ade80;">Order Received</button>
+                                    <button type="submit" class="order-cancel-btn order-cancel-btn-received">Order Received</button>
                                 </form>
                             <?php endif; ?>
                             <a href="/orders/<?= (int) $order['order_id'] ?>" class="view-order-btn">

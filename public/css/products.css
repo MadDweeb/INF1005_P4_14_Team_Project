@@ -127,6 +127,10 @@
     opacity: 0.6;
 }
 
+.filter-legend-sm {
+    font-size: 0.9rem;
+}
+
 /* ── Search box ─────────────────────────────────────────────────────────── */
 
 .search-box {

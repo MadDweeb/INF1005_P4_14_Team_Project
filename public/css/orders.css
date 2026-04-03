@@ -123,7 +123,7 @@
 }
 
 .order-total .value {
-    color: var(--accent);
+    color: #ffd6d6 !important;
 }
 
 /* Shipment Tracker */
@@ -226,7 +226,7 @@
 }
 
 .delivery-estimate strong {
-    color: var(--accent);
+    color: #ffd6d6;
 }
 
 /* Order Items */
@@ -375,6 +375,12 @@
     margin-bottom: 20px;
 }
 
+.order-received-notice {
+    background: rgba(74, 222, 128, 0.12);
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
 /* Order card footer */
 .order-footer {
     display: flex;
@@ -440,6 +446,23 @@
     background: #f87171;
     border-color: #f87171;
     color: #fff;
+}
+
+.order-cancel-btn-remove {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.order-cancel-btn-received {
+    background: #4ade80;
+    color: #1a1a1a;
+    border-color: #4ade80;
+}
+
+.order-cancel-btn-received:hover {
+    background: #34d399;
+    border-color: #34d399;
+    color: #1a1a1a;
 }
 
 /* Responsive */

@@ -41,9 +41,9 @@ $adminNavLinks = [
         </ul>
 
         <div class="admin-header-actions">
-            <form method="POST" action="/logout" style="display:inline">
+            <form method="POST" action="/logout" class="admin-inline-form">
                 <?= csrfInput() ?>
-                <button type="submit" class="admin-logout-btn" style="background:#242424;color:#ffffff;border:1px solid #ffffff;">Logout</button>
+                <button type="submit" class="admin-logout-btn">Logout</button>
             </form>
         </div>
     </nav>

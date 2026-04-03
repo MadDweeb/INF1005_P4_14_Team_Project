@@ -112,6 +112,12 @@
     color: #ff4d4d;
 }
 
+.faq-inline-link {
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: 700;
+}
+
 @media (max-width: 768px) {
     .faq-header {
         padding: 80px 5vw 60px;

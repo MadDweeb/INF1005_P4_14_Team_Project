@@ -100,8 +100,7 @@ ob_start();
                            aria-label="View <?= htmlspecialchars((string) $p['name'], ENT_QUOTES, 'UTF-8') ?> details">
                             <?php if (!empty($p['product_image'])): ?>
                                 <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
-                                    alt="" class="product-image-placeholder"
-                                    style="object-fit: cover; padding: 0;">
+                                    alt="" class="product-image-placeholder carousel-product-image">
                             <?php else: ?>
                                 <div class="product-image-placeholder">
                                     <span class="placeholder-text"><?= htmlspecialchars($p['name']) ?></span>
@@ -110,7 +109,7 @@ ob_start();
                         </a>
                         <div class="carousel-item-content">
                             <h3><?= strtoupper((string) $p['name']) ?></h3>
-                            <p style="font-weight: bold; color: var(--accent); margin-bottom: 10px;">
+                            <p class="carousel-price">
                                 $<?= number_format((float) $p['price'], 2) ?>
                             </p>
                             <p><?= htmlspecialchars($p['description']) ?></p>
@@ -131,8 +130,8 @@ ob_start();
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
         <noscript>
-            <div style="margin-top: 40px; text-align: center;">
-                <p style="margin-bottom: 20px; font-weight: 600;">Interactive carousel is disabled. Explore our full
+            <div class="home-noscript-block">
+                <p class="home-noscript-text">Interactive carousel is disabled. Explore our full
                     range of
                     switches below.</p>
                 <a href="/products" class="btn-shop">VIEW ALL PRODUCTS <i class="fas fa-arrow-right"
@@ -196,7 +195,7 @@ ob_start();
             <h2 id="homeCustomHeading">Custom Switches?</h2>
             <h3 class="home-custom-subheading">Find your preferred Switch</h3>
             <noscript>
-                <div style="color: var(--accent); margin-bottom: 20px; font-weight: 600;">
+                <div class="home-custom-noscript-note">
                     Note: Interactive 3D assembly animation is disabled. You can still customize your switches below.
                 </div>
             </noscript>

@@ -5,7 +5,8 @@
  */
 
 ob_start();
-$extraCss = ['/css/product-detail.css'];
+$productDetailCssVersion = @filemtime(__DIR__ . '/../../public/css/product-detail.css') ?: time();
+$extraCss = ['/css/product-detail.css?v=' . $productDetailCssVersion];
 ?>
 
 <div class="product-detail-page">

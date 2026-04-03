@@ -536,6 +536,10 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.price-display-hidden {
+    display: none;
+}
+
 .price-total-value {
     font-size: 2rem;
 }

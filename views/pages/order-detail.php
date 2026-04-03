@@ -5,7 +5,8 @@
  */
 
 $pageTitle = 'Order #' . str_pad((string) ($order['order_id'] ?? '0'), 5, '0', STR_PAD_LEFT);
-$extraCss = ['/css/order-detail.css'];
+$orderDetailCssVersion = @filemtime(__DIR__ . '/../../public/css/order-detail.css') ?: time();
+$extraCss = ['/css/order-detail.css?v=' . $orderDetailCssVersion];
 ob_start();
 
 $status      = strtolower((string) ($order['status'] ?? 'pending'));
@@ -32,7 +33,7 @@ $isCompleted = ($status === 'completed');
             <span class="status-badge status-<?= htmlspecialchars($status, ENT_QUOTES, 'UTF-8') ?>">
                 <?= htmlspecialchars(ucfirst($status), ENT_QUOTES, 'UTF-8') ?>
             </span>
-            <strong class="order-total">$<?= number_format((float) $order['total_amount'], 2) ?></strong>
+            <strong class="order-total"><span class="value">$<?= number_format((float) $order['total_amount'], 2) ?></span></strong>
         </div>
     </header>
 
@@ -49,20 +50,20 @@ $isCompleted = ($status === 'completed');
             </form>
         </section>
     <?php elseif ($isDelivered): ?>
-        <section class="cancel-box" aria-label="Order received action" style="border-color: #4ade80;">
+        <section class="cancel-box cancel-box-received" aria-label="Order received action">
             <h2>Order received?</h2>
             <p>Confirm you have received your order to close it.</p>
             <form method="POST" action="/orders/received" class="cancel-form">
                 <?= csrfInput() ?>
                 <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
-                <button type="submit" class="cancel-btn" style="background: #4ade80; color: #1a1a1a;" onclick="return confirm('Confirm you have received this order?');">
+                <button type="submit" class="cancel-btn cancel-btn-received" onclick="return confirm('Confirm you have received this order?');">
                     Order Received
                 </button>
             </form>
         </section>
     <?php elseif ($isCompleted): ?>
-        <section class="cancel-box" aria-label="Order completed" style="border-color: #4ade80;">
-            <p style="color: #4ade80; font-weight: 700;">You have confirmed receipt of this order.</p>
+        <section class="cancel-box cancel-box-completed" aria-label="Order completed">
+            <p class="cancel-completed-note">You have confirmed receipt of this order.</p>
         </section>
     <?php endif; ?>
 

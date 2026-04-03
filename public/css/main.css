@@ -673,6 +673,11 @@ div.accessibility-card {
     margin: 0 0 10px;
 }
 
+.accessibility-group-icon {
+    margin-right: 6px;
+    color: var(--accent);
+}
+
 /* Color filter rows */
 .accessibility-filter-row {
     display: flex;
@@ -898,6 +903,14 @@ html.accessibility-font-3 {
 
 .accessibility-font-slider__icon {
     font-size: 16px;
+}
+
+.accessibility-font-slider__icon--lg {
+    font-size: 20px;
+}
+
+.accessibility-font-slider__icon--xl {
+    font-size: 24px;
 }
 
 .accessibility-font-slider__label {

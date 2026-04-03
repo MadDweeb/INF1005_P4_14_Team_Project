@@ -143,7 +143,7 @@ ob_start();
                     <span class="price-label">Per Switch:</span>
                     <span class="price-value" id="total-price">$0.00</span>
                 </div>
-                <div class="price-display price-display-total" id="total-price-row" style="display:none">
+                <div class="price-display price-display-total price-display-hidden" id="total-price-row">
                     <span class="price-label">Total (<span id="qty-display">10</span>×):</span>
                     <span class="price-value price-total-value" id="total-price-all">$0.00</span>
                 </div>

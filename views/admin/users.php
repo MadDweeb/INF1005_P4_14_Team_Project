@@ -8,165 +8,10 @@ require_once __DIR__ . '/../../src/helpers/auth.php';
 requireAdmin();
 
 $currentAdminPage = 'users';
+$adminUsersCssVersion = @filemtime(__DIR__ . '/../../public/css/admin-users.css') ?: time();
+$extraCss = ['/css/admin-users.css?v=' . $adminUsersCssVersion];
 ob_start();
 ?>
-
-<style>
-    .admin-header {
-        margin-bottom: 40px;
-    }
-
-    .admin-header h1 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    .admin-header p {
-        font-size: 1rem;
-        opacity: 0.88;
-        margin-top: 8px;
-    }
-
-    .lockout-section {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        padding: 30px;
-    }
-
-    .lockout-section h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.4rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 10px;
-    }
-
-    .lockout-section > p {
-        margin-bottom: 24px;
-        opacity: 0.9;
-        font-size: 0.95rem;
-    }
-
-    .lockout-table-wrapper {
-        overflow-x: auto;
-    }
-
-    .lockout-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 760px;
-    }
-
-    .lockout-table th,
-    .lockout-table td {
-        padding: 14px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        text-align: left;
-    }
-
-    .lockout-table thead th {
-        background: rgba(255, 255, 255, 0.05);
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        font-size: 0.8rem;
-        opacity: 0.95;
-    }
-
-    .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-    }
-
-    .lockout-status {
-        display: inline-block;
-        border-radius: 999px;
-        padding: 4px 12px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-    }
-
-    .lockout-status.locked {
-        background: rgba(248, 113, 113, 0.2);
-        color: #ffd2d2;
-        border: 1px solid rgba(248, 113, 113, 0.7);
-    }
-
-    .lockout-status.unlocked {
-        background: rgba(74, 222, 128, 0.15);
-        color: #baf7cc;
-        border: 1px solid rgba(74, 222, 128, 0.55);
-    }
-
-    .lockout-reset-form {
-        margin: 0;
-    }
-
-    .lockout-reset-btn {
-        padding: 8px 16px;
-        border-radius: 6px;
-        border: 1px solid var(--accent);
-        background: transparent;
-        color: var(--accent);
-        font-family: inherit;
-        font-weight: 700;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .lockout-reset-btn:hover {
-        background: var(--accent);
-        color: #ffffff;
-    }
-
-    .lockout-reset-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-        border-color: rgba(255,255,255,0.2);
-        color: rgba(255,255,255,0.3);
-    }
-
-    .lockout-reset-btn:focus-visible {
-        outline: 3px solid #ffffff;
-        outline-offset: 2px;
-    }
-
-    @media (max-width: 768px) {
-        .lockout-section { padding: 20px; }
-
-        .lockout-table th,
-        .lockout-table td {
-            padding: 10px 10px;
-            font-size: 0.82rem;
-        }
-
-        .lockout-reset-btn {
-            padding: 6px 10px;
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .lockout-table th,
-        .lockout-table td {
-            padding: 8px;
-            font-size: 0.78rem;
-        }
-    }
-</style>
 
 <div class="admin-page">
     <div class="admin-header">
@@ -195,7 +40,7 @@ ob_start();
                 <tbody>
                     <?php if (empty($usersWithLockoutStatus)): ?>
                         <tr>
-                            <td colspan="7" style="text-align:center; padding:40px; opacity:0.85;">No user data available.</td>
+                            <td colspan="7" class="lockout-empty-cell">No user data available.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($usersWithLockoutStatus as $account):
@@ -216,7 +61,7 @@ ob_start();
                                     <?php if (!empty($account['locked_until'])): ?>
                                         <?= htmlspecialchars((string) $account['locked_until'], ENT_QUOTES, 'UTF-8') ?>
                                     <?php else: ?>
-                                        <span style="opacity:0.75;">-</span>
+                                        <span class="lockout-empty-dash">-</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>

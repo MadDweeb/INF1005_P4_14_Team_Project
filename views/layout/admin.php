@@ -72,8 +72,8 @@ $adminCssVersion = @filemtime(__DIR__ . '/../../public/css/admin.css') ?: time()
         <?= $pageContent ?>
     </main>
 
-    <footer id="main-footer" tabindex="-1" class="admin-footer" style="background:#111111;">
-        <small style="color:#ffffff;font-weight:700;">&copy; <?= date('Y') ?> KeyForge &#45; Admin Panel</small>
+    <footer id="main-footer" tabindex="-1" class="admin-footer">
+        <small>&copy; <?= date('Y') ?> KeyForge &#45; Admin Panel</small>
     </footer>
 
     <script>
