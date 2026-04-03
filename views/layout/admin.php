@@ -4,6 +4,9 @@ $flashSuccess = $_SESSION['flash_success'] ?? null;
 $flashError   = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_success'], $_SESSION['flash_error']);
 
+$mainCssVersion = @filemtime(__DIR__ . '/../../public/css/main.css') ?: time();
+$adminCssVersion = @filemtime(__DIR__ . '/../../public/css/admin.css') ?: time();
+
 /*
  * views/layout/admin.php
  *
@@ -31,8 +34,8 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Open+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/main.css?v=<?= $mainCssVersion ?>">
+    <link rel="stylesheet" href="/css/admin.css?v=<?= $adminCssVersion ?>">
     <?php if (!empty($extraCss)): ?>
         <?php foreach ((array) $extraCss as $cssFile): ?>
             <link rel="stylesheet" href="<?= htmlspecialchars($cssFile) ?>">
@@ -69,8 +72,8 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
         <?= $pageContent ?>
     </main>
 
-    <footer class="admin-footer">
-        <small>&copy; <?= date('Y') ?> KeyForge &mdash; Admin Panel</small>
+    <footer id="main-footer" tabindex="-1" class="admin-footer" style="background:#111111;">
+        <small style="color:#ffffff;font-weight:700;">&copy; <?= date('Y') ?> KeyForge &#45; Admin Panel</small>
     </footer>
 
     <script>

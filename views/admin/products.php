@@ -317,7 +317,7 @@ ob_start();
                             </td>
                             <td class="product-name-cell">
                                 <strong><?= htmlspecialchars($product['name']) ?></strong><br>
-                                <small style="opacity: 0.7;"><?= htmlspecialchars($product['manufacturer']) ?></small>
+                                <small style="opacity: 0.9;"><?= htmlspecialchars($product['manufacturer']) ?></small>
                             </td>
                             <td>
                                 <span class="type-badge"><?= htmlspecialchars($product['switch_type']) ?></span>

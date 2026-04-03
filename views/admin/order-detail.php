@@ -27,7 +27,7 @@ ob_start();
         gap: 10px;
         margin-bottom: 40px;
         font-size: 0.9rem;
-        opacity: 0.7;
+        opacity: 0.88;
     }
 
     .admin-breadcrumb a {
@@ -41,7 +41,7 @@ ob_start();
         opacity: 1;
     }
 
-    .admin-breadcrumb .sep { opacity: 0.4; }
+    .admin-breadcrumb .sep { opacity: 0.7; }
 
     /* Page header */
     .aod-header {
@@ -66,7 +66,7 @@ ob_start();
 
     .aod-header-meta {
         font-size: 0.9rem;
-        opacity: 0.65;
+        opacity: 0.88;
     }
 
     .aod-header-right {
@@ -125,7 +125,7 @@ ob_start();
         text-transform: uppercase;
         letter-spacing: 1.5px;
         margin-bottom: 20px;
-        opacity: 0.7;
+        opacity: 0.9;
     }
 
     /* Items table */
@@ -156,7 +156,7 @@ ob_start();
     .aod-items-table .line-total {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
-        color: var(--accent);
+        color: #ffb0b0;
     }
 
     /* Order total row */
@@ -177,7 +177,7 @@ ob_start();
         font-family: 'Montserrat', sans-serif;
         font-size: 1.2rem;
         font-weight: 900;
-        color: var(--accent);
+        color: #ffb0b0;
         padding-top: 12px;
     }
 
@@ -196,7 +196,7 @@ ob_start();
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 700;
-        opacity: 0.5;
+        opacity: 0.82;
     }
 
     .info-value {
@@ -258,7 +258,7 @@ ob_start();
         text-decoration: none;
         font-weight: 700;
         font-size: 0.9rem;
-        opacity: 0.7;
+        opacity: 0.9;
         margin-top: 30px;
         transition: opacity 0.2s;
     }

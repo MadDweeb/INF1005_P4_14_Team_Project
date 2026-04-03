@@ -40,7 +40,7 @@ ob_start();
 }
 
 .account-header p {
-    opacity: 0.7;
+    opacity: 0.92;
     font-size: 1.1rem;
 }
 
@@ -82,7 +82,7 @@ ob_start();
 
 .info-label {
     font-weight: 700;
-    opacity: 0.7;
+    opacity: 0.88;
     font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -131,13 +131,13 @@ ob_start();
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--accent);
+    color: #ff9f9f;
     margin-bottom: 8px;
 }
 
 .stat-label {
     font-weight: 600;
-    opacity: 0.7;
+    opacity: 0.88;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;

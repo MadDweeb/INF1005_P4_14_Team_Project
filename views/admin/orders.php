@@ -83,7 +83,7 @@ ob_start();
 
     .status-cancelled {
         background: #f87171;
-        color: white;
+        color: #1a1a1a;
     }
 
     .status-completed {
@@ -113,8 +113,8 @@ ob_start();
     .delete-order-btn {
         padding: 8px 14px;
         background: rgba(248, 113, 113, 0.12);
-        color: #f87171;
-        border: 1px solid rgba(248, 113, 113, 0.35);
+        color: #ffd3d3;
+        border: 1px solid rgba(248, 113, 113, 0.55);
         border-radius: 6px;
         font-weight: 700;
         font-size: 0.85rem;

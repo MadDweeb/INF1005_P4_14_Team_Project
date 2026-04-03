@@ -118,13 +118,14 @@ ob_start();
                 foreach ($displayProducts as $index => $p):
                     ?>
                     <div class="carousel-item" data-index="<?= $index ?>">
-                        <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link">
+                        <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link"
+                           aria-label="View <?= htmlspecialchars((string) $p['name'], ENT_QUOTES, 'UTF-8') ?> details">
                             <?php if (!empty($p['product_image'])): ?>
                                 <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
                                     alt="" class="product-image-placeholder"
                                     style="object-fit: cover; padding: 0;">
                             <?php else: ?>
-                                <div class="product-image-placeholder" aria-label="<?= htmlspecialchars($p['name']) ?>">
+                                <div class="product-image-placeholder">
                                     <span class="placeholder-text"><?= htmlspecialchars($p['name']) ?></span>
                                 </div>
                             <?php endif; ?>

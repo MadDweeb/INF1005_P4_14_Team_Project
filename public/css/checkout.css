@@ -150,7 +150,7 @@
 
 .order-item-price {
     font-weight: 900;
-    color: var(--accent);
+    color: #ffb0b0;
 }
 
 .order-totals {
@@ -176,7 +176,7 @@
 }
 
 .order-total-row.final .amount {
-    color: var(--accent);
+    color: #ffb0b0;
 }
 
 .submit-order-btn {

@@ -83,7 +83,7 @@ ob_start();
                         </div>
                     <?php else: ?>
                         <div class="shipment-tracker">
-                            <h3>Shipment Status</h3>
+                            <h2 class="shipment-title">Shipment Status</h2>
                             <div class="tracker">
                                 <div class="tracker-step <?= $circleClass(0) ?>">
                                     <div class="step-circle"><?= $circleClass(0) === 'completed' ? '✓' : '' ?></div>

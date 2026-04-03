@@ -28,7 +28,7 @@ ob_start();
 
     .admin-header p {
         font-size: 1.1rem;
-        opacity: 0.7;
+        opacity: 0.88;
     }
 
     .dashboard-grid {
@@ -54,7 +54,7 @@ ob_start();
         font-size: 0.9rem;
         text-transform: uppercase;
         font-weight: 700;
-        opacity: 0.7;
+        opacity: 0.88;
         letter-spacing: 1px;
         margin-bottom: 12px;
     }
@@ -63,7 +63,7 @@ ob_start();
         font-family: 'Montserrat', sans-serif;
         font-size: 3rem;
         font-weight: 900;
-        color: var(--accent);
+        color: #ffb0b0;
         line-height: 1;
     }
 
@@ -135,7 +135,7 @@ ob_start();
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1px;
-        opacity: 0.7;
+        opacity: 0.9;
         margin-bottom: 20px;
     }
 
@@ -249,7 +249,7 @@ ob_start();
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 (function () {
-    Chart.defaults.color = 'rgba(255,255,255,0.7)';
+    Chart.defaults.color = 'rgba(255,255,255,0.9)';
     Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
 
     new Chart(document.getElementById('statusChart'), {

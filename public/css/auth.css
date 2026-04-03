@@ -38,9 +38,9 @@ html {
 }
 
 .alert-danger {
-    background: rgba(248, 113, 113, 0.2);
-    color: #f87171;
-    border: 2px solid #f87171;
+    background: rgba(248, 113, 113, 0.25);
+    color: #ffe3e3;
+    border: 2px solid #ff9d9d;
 }
 
 .form-group {
@@ -79,7 +79,7 @@ html {
 
 .error-text {
     display: block;
-    color: #f87171;
+    color: #ffd1d1;
     font-size: 0.85rem;
     margin-top: 6px;
     font-weight: 600;
@@ -119,11 +119,11 @@ html {
 .auth-form-section > p {
     text-align: center;
     margin-top: 25px;
-    opacity: 0.8;
+    opacity: 0.92;
 }
 
 .auth-form-section > p a {
-    color: #f87171;
+    color: #ffc2c2;
     text-decoration: none;
     font-weight: 700;
     transition: opacity 0.3s;

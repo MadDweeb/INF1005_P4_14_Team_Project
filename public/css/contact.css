@@ -16,7 +16,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 700;
-    opacity: 0.75;
+    opacity: 0.9;
 }
 
 .contact-hero h1 {
@@ -32,7 +32,7 @@
     font-size: 1.05rem;
     max-width: 720px;
     margin: 0 auto;
-    opacity: 0.88;
+    opacity: 0.95;
 }
 
 .contact-grid {
@@ -59,7 +59,7 @@
 .contact-info p {
     margin-top: 0;
     margin-bottom: 18px;
-    opacity: 0.88;
+    opacity: 0.95;
 }
 
 .contact-info address {
@@ -73,8 +73,22 @@
 }
 
 .contact-note a {
+    color: #fff0f0 !important;
+    font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
+}
+
+.contact-note a:visited {
+    color: #ffe5e5 !important;
+}
+
+.contact-note a:hover {
+    color: #ffffff !important;
+}
+
+.contact-note a:focus-visible {
+    color: #ffffff !important;
 }
 
 .form-alert {
@@ -87,6 +101,7 @@
 .form-alert-error {
     background: rgba(215, 58, 58, 0.12);
     border: 1px solid rgba(215, 58, 58, 0.35);
+    color: #ffd7d7;
 }
 
 .contact-form .form-group {
@@ -126,7 +141,7 @@
 
 .field-error {
     margin: 8px 0 0;
-    color: #ff8a8a;
+    color: #ffd0d0;
     font-size: 0.95rem;
 }
 

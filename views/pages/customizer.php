@@ -103,7 +103,7 @@ ob_start();
             <!-- Right: options panel (slides in on mobile, drops below on desktop) -->
             <div class="options-panel" id="optionsPanel">
                 <div class="options-header">
-                    <h3 id="optionsPanelTitle">Select Component</h3>
+                    <h2 id="optionsPanelTitle">Select Component</h2>
                     <button class="close-options-btn" id="closeOptionsBtn">✕ Close</button>
                 </div>
                 <div class="options-grid" id="optionsGrid">

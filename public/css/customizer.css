@@ -198,7 +198,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1.1rem;
     font-weight: 900;
-    color: var(--accent);
+    color: #ffbcbc;
 }
 
 .indicator-item.selected .indicator-value {
@@ -230,7 +230,7 @@
     margin-bottom: 30px;
 }
 
-.options-header h3 {
+.options-header h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
     font-weight: 900;
@@ -410,7 +410,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--accent);
+    color: #ffd6d6;
 }
 
 .price-note {
@@ -525,7 +525,7 @@
 
 .qty-note {
     font-size: 0.8rem;
-    opacity: 0.5;
+    opacity: 0.8;
     margin-top: 8px;
     font-style: italic;
 }
@@ -576,7 +576,7 @@
 
 .add-to-cart-btn {
     background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
     border: 2px solid rgba(255, 255, 255, 0.1);
     cursor: not-allowed;
 }
@@ -685,7 +685,7 @@
         transition: width 0.35s ease, opacity 0.25s ease, height 0s 0s;
     }
 
-    .options-header h3 { font-size: 1.2rem; }
+    .options-header h2 { font-size: 1.2rem; }
     .options-grid { grid-template-columns: 1fr; }
 
     /* ── Mobile part tiles ── */
@@ -747,7 +747,7 @@
 
     .mobile-part-status {
         font-size: 0.75rem;
-        opacity: 0.6;
+        opacity: 0.85;
         margin-top: 3px;
         white-space: nowrap;
         overflow: hidden;
@@ -761,7 +761,7 @@
 
     .mobile-part > .fa-chevron-right {
         font-size: 0.7rem;
-        opacity: 0.35;
+        opacity: 0.7;
         flex-shrink: 0;
         transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
     }

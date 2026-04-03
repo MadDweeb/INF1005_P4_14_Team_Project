@@ -17,6 +17,8 @@ ob_start();
         <p>Explore our collection of premium mechanical keyboard switches</p>
     </div>
 
+    <h2 class="sr-only">Filter and sort controls</h2>
+
     <!-- Filter Bar -->
     <div class="filter-bar">
         <button
@@ -120,7 +122,8 @@ ob_start();
     </div>
 
     <!-- Products Grid -->
-    <main class="products-main" role="main">
+    <div class="products-main">
+        <h2 class="sr-only">Product results</h2>
         <?php if (empty($products)): ?>
             <div class="no-products">
                 <h2>No products found</h2>
@@ -184,7 +187,7 @@ ob_start();
                 </nav>
             <?php endif; ?>
         <?php endif; ?>
-    </main>
+    </div>
 </div>
 
 <?php

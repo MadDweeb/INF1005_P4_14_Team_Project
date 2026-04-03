@@ -68,15 +68,15 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
-.cart-item-info h3 {
+.cart-item-info .cart-item-name {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
     font-weight: 900;
     margin-bottom: 5px;
 }
 
-.cart-item-info p {
-    opacity: 0.7;
+.cart-item-info p:not(.cart-item-name) {
+    opacity: 0.9;
     font-size: 0.9rem;
 }
 
@@ -84,7 +84,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
     font-weight: 900;
-    color: var(--accent);
+    color: #ffb0b0;
 }
 
 .cart-item-quantity {
@@ -125,8 +125,8 @@
 .remove-btn {
     padding: 8px 16px;
     background: transparent;
-    color: var(--accent);
-    border: 2px solid var(--accent);
+    color: #ffcaca;
+    border: 2px solid #ff9f9f;
     border-radius: 6px;
     font-weight: 700;
     font-size: 0.85rem;
@@ -135,8 +135,8 @@
 }
 
 .remove-btn:hover {
-    background: var(--accent);
-    color: white;
+    background: #ff9f9f;
+    color: #1a1a1a;
 }
 
 .cart-item-subtotal {
@@ -176,7 +176,7 @@
 }
 
 .summary-row.total .amount {
-    color: var(--accent);
+    color: #ffb0b0;
 }
 
 .checkout-btn {
@@ -219,7 +219,7 @@
 
 .empty-cart p {
     font-size: 1.2rem;
-    opacity: 0.7;
+    opacity: 0.9;
     margin-bottom: 30px;
 }
 
@@ -284,7 +284,7 @@
         font-size: 0.8rem;
         display: block;
         margin-bottom: 8px;
-        opacity: 0.7;
+        opacity: 0.85;
     }
 }
 

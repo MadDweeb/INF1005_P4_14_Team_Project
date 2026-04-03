@@ -26,7 +26,7 @@ ob_start();
 
     .admin-header p {
         font-size: 1rem;
-        opacity: 0.7;
+        opacity: 0.88;
         margin-top: 8px;
     }
 
@@ -47,7 +47,7 @@ ob_start();
 
     .lockout-section > p {
         margin-bottom: 24px;
-        opacity: 0.7;
+        opacity: 0.9;
         font-size: 0.95rem;
     }
 
@@ -73,7 +73,7 @@ ob_start();
         text-transform: uppercase;
         letter-spacing: 0.8px;
         font-size: 0.8rem;
-        opacity: 0.75;
+        opacity: 0.95;
     }
 
     .visually-hidden {
@@ -100,13 +100,13 @@ ob_start();
 
     .lockout-status.locked {
         background: rgba(248, 113, 113, 0.2);
-        color: #fca5a5;
+        color: #ffd2d2;
         border: 1px solid rgba(248, 113, 113, 0.7);
     }
 
     .lockout-status.unlocked {
         background: rgba(74, 222, 128, 0.15);
-        color: #86efac;
+        color: #baf7cc;
         border: 1px solid rgba(74, 222, 128, 0.55);
     }
 
@@ -195,7 +195,7 @@ ob_start();
                 <tbody>
                     <?php if (empty($usersWithLockoutStatus)): ?>
                         <tr>
-                            <td colspan="7" style="text-align:center; padding:40px; opacity:0.5;">No user data available.</td>
+                            <td colspan="7" style="text-align:center; padding:40px; opacity:0.85;">No user data available.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($usersWithLockoutStatus as $account):
@@ -216,7 +216,7 @@ ob_start();
                                     <?php if (!empty($account['locked_until'])): ?>
                                         <?= htmlspecialchars((string) $account['locked_until'], ENT_QUOTES, 'UTF-8') ?>
                                     <?php else: ?>
-                                        <span style="opacity:0.4;">-</span>
+                                        <span style="opacity:0.75;">-</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>

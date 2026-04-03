@@ -43,7 +43,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                         <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>"
                                             alt="" class="cart-item-image">
                                         <div class="cart-item-info">
-                                            <h3><?= htmlspecialchars($item['name']) ?></h3>
+                                            <p class="cart-item-name"><?= htmlspecialchars($item['name']) ?></p>
                                             <p><?= htmlspecialchars($item['manufacturer']) ?> •
                                                 <?= ucfirst($item['switch_type']) ?></p>
                                         </div>
@@ -86,7 +86,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                         <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
                                             alt="" class="cart-item-image">
                                         <div class="cart-item-info">
-                                            <h3><?= htmlspecialchars($build['name']) ?> <span class="custom-badge">CUSTOM</span></h3>
+                                            <p class="cart-item-name"><?= htmlspecialchars($build['name']) ?> <span class="custom-badge">CUSTOM</span></p>
                                             <p><?= htmlspecialchars($build['description']) ?></p>
                                         </div>
                                     </div>

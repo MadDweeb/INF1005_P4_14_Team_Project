@@ -9,7 +9,8 @@
  */
 
 $pageTitle = 'Contact';
-$extraCss  = ['/css/contact.css'];
+$contactCssVersion = @filemtime(__DIR__ . '/../../public/css/contact.css') ?: time();
+$extraCss  = ['/css/contact.css?v=' . $contactCssVersion];
 
 $errors = $errors ?? [];
 $oldInput = $oldInput ?? [];
