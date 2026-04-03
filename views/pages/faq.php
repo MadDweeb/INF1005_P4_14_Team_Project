@@ -28,7 +28,7 @@ $extraJs = ['/js/faq.js'];
                     sound.
                     You can also use our interactive <a href="/customizer"
                         style="color: var(--accent); text-decoration: underline; font-weight: 700;">Customizer</a> to
-                    hear and feel the difference virtually!</p>
+                    get your own customized switch!</p>
             </article>
         </section>
 
