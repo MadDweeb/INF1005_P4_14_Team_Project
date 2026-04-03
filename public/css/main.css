@@ -103,10 +103,17 @@ body.theme-blue {
     letter-spacing: 2px;
 }
 
+.main-header .logo {
+    margin: 0;
+    line-height: 1;
+}
+
 /* -- Navigation --------------------------------------------------------------- */
 .main-nav ul {
     display: flex;
     list-style: none;
+    margin: 0;
+    padding: 0;
     gap: 30px;
     align-items: center;
 }
@@ -119,6 +126,12 @@ body.theme-blue {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     transition: color 0.2s ease;
+}
+
+.main-header .site-title,
+.main-nav a,
+.nav-logout-btn {
+    line-height: 1;
 }
 
 .main-nav a:hover,

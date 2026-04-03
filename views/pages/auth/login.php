@@ -12,7 +12,13 @@
 
 $pageTitle = 'Log In';
 ob_start();
-$extraCss = ['/css/auth.css'];
+// Bootstrap loads before main.css so site theme remains the visual baseline.
+$preCss = [
+    'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css',
+];
+$extraCss = [
+    '/css/auth.css',
+];
 $generalError = $errors['general'] ?? '';
 ?>
 

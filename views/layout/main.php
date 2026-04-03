@@ -35,6 +35,11 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@900&family=Open+Sans:wght@400;600;700&display=swap"
         rel="stylesheet">
+    <?php if (!empty($preCss)): ?>
+        <?php foreach ((array) $preCss as $cssFile): ?>
+            <link rel="stylesheet" href="<?= htmlspecialchars($cssFile) ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
     <link rel="stylesheet" href="/css/main.css">
     <?php if (!empty($extraCss)): ?>
         <?php foreach ((array) $extraCss as $cssFile): ?>
