@@ -1,29 +1,7 @@
 <?php
-/*
- * views/pages/home.php
- *
- * Scaffold homepage for the KeyForge keyboard switch store.
- *
- * TODO: Replace inline styles with public/css/main.css once the layout is designed.
- * TODO: Load $featuredProducts from the Product model and render them dynamically.
- * TODO: Connect the navigation links once those pages are implemented.
- */
-
 $pageTitle = 'KeyForge';
 $extraCss = ['/css/home.css'];
 $extraJs = ['/js/home.js'];
-
-// FOR LOCAL TESTING: Provide mock products if the database is empty
-if (empty($featuredProducts)) {
-    $featuredProducts = [
-        ['product_id' => 1, 'name' => 'Linear Teal', 'price' => 12.50, 'description' => 'Smooth and silent linear switches for office work.', 'product_image' => 'gateron_yellow.jpg'],
-        ['product_id' => 2, 'name' => 'Tactile Blue', 'price' => 14.00, 'description' => 'Satisfying bump with every keystroke.', 'product_image' => 'mx_blue.jpg'],
-        ['product_id' => 3, 'name' => 'Clicky White', 'price' => 13.50, 'description' => 'Classic loud clicky switches for typing enthusiasts.', 'product_image' => 'mx_brown.jpg'],
-        ['product_id' => 4, 'name' => 'Speed Silver', 'price' => 15.00, 'description' => 'Ultra-fast actuation for competitive gaming.', 'product_image' => 'mx_red.jpg'],
-        ['product_id' => 5, 'name' => 'Silent Black', 'price' => 16.50, 'description' => 'Heavy linear switch with internal dampening.', 'product_image' => 'topre_45g.jpg'],
-    ];
-}
-
 ob_start();
 ?>
 <!-- Hero section -->

@@ -1,23 +1,7 @@
 <?php
-// Pull one-time flash messages from session and clear them after reading.
 $flashSuccess = $_SESSION['flash_success'] ?? null;
-$flashError   = $_SESSION['flash_error'] ?? null;
+$flashError = $_SESSION['flash_error'] ?? null;
 unset($_SESSION['flash_success'], $_SESSION['flash_error']);
-
-/*
- * views/layout/main.php
- *
- * Shared HTML layout (master template).
- * Page-specific content is passed via $pageTitle and $pageContent variables
- * (using the output buffer pattern).
- *
- * Usage pattern in a view:
- *   $pageTitle = 'My Page';
- *   ob_start();
- *   // ... render page HTML ...
- *   $pageContent = ob_get_clean();
- *   require_once __DIR__ . '/../layout/main.php';
- */
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -63,7 +47,7 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error']);
     <main id="main-content" tabindex="-1">
         <?php if (!empty($flashSuccess) || !empty($flashError)): ?>
             <div class="flash-stack" aria-live="polite">
-                
+
                 <?php if (!empty($flashSuccess)): ?>
                     <div class="flash-banner flash-banner-success" role="status">
                         <?= htmlspecialchars((string) $flashSuccess, ENT_QUOTES, 'UTF-8') ?>
