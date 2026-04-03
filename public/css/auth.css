@@ -1,4 +1,9 @@
 /* auth.css */
+
+html {
+    scroll-behavior: auto !important;
+}
+
 .auth-page {
     padding: 140px 5vw 80px;
     min-height: 100vh;
