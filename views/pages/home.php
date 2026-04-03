@@ -121,7 +121,7 @@ ob_start();
                         <a href="/products/<?= $p['product_id'] ?>" class="carousel-img-link">
                             <?php if (!empty($p['product_image'])): ?>
                                 <img src="/assets/images/<?= htmlspecialchars($p['product_image']) ?>"
-                                    alt="<?= htmlspecialchars($p['name']) ?>" class="product-image-placeholder"
+                                    alt="" class="product-image-placeholder"
                                     style="object-fit: cover; padding: 0;">
                             <?php else: ?>
                                 <div class="product-image-placeholder" aria-label="<?= htmlspecialchars($p['name']) ?>">
@@ -170,7 +170,7 @@ ob_start();
     <div class="catalog-grid">
         <a href="/products?q=&type%5B%5D=linear&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog1.webp" alt="Linear Switches" width="100%" height="100%" loading="lazy">
+                <img src="/assets/images/catalog1.webp" alt="" width="100%" height="100%" loading="lazy">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">
@@ -180,7 +180,7 @@ ob_start();
         </a>
         <a href="/products?q=&type%5B%5D=tactile&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog2.webp" alt="Tactile Switches" width="100%" height="100%"
+                <img src="/assets/images/catalog2.webp" alt="" width="100%" height="100%"
                     loading="lazy">
             </div>
             <div class="catalog-overlay"></div>
@@ -191,7 +191,7 @@ ob_start();
         </a>
         <a href="/products?q=&type%5B%5D=clicky&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
-                <img src="/assets/images/catalog3.webp" alt="Clicky Switches" width="100%" height="100%" loading="lazy">
+                <img src="/assets/images/catalog3.webp" alt="" width="100%" height="100%" loading="lazy">
             </div>
             <div class="catalog-overlay"></div>
             <div class="catalog-content">

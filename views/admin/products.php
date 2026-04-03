@@ -313,7 +313,7 @@ ob_start();
                         <tr>
                             <td>
                                 <img src="/assets/images/<?= htmlspecialchars($product['product_image'] ?? 'placeholder.webp') ?>"
-                                    alt="<?= htmlspecialchars($product['name']) ?>" class="product-thumb">
+                                    alt="" class="product-thumb">
                             </td>
                             <td class="product-name-cell">
                                 <strong><?= htmlspecialchars($product['name']) ?></strong><br>

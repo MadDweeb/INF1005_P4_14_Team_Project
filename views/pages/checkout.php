@@ -165,7 +165,7 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                     <?php foreach ($cartItems as $item): ?>
                         <div class="order-item">
                             <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>"
-                                alt="<?= htmlspecialchars($item['name']) ?>" class="order-item-image">
+                                alt="" class="order-item-image">
                             <div class="order-item-info">
                                 <div class="order-item-name"><?= htmlspecialchars($item['name']) ?></div>
                                 <div class="order-item-details">
@@ -181,7 +181,7 @@ $customBuilds = $_SESSION['custom_builds'] ?? [];
                     <?php foreach ($customBuilds as $build): ?>
                         <div class="order-item custom-build-item">
                             <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
-                                alt="<?= htmlspecialchars($build['name']) ?>" class="order-item-image">
+                                alt="" class="order-item-image">
                             <div class="order-item-info">
                                 <div class="order-item-name">
                                     <?= htmlspecialchars($build['name']) ?> 

@@ -41,7 +41,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                 <td data-label="Product">
                                     <div class="cart-item-product">
                                         <img src="/assets/images/<?= htmlspecialchars($item['product_image'] ?? 'placeholder.webp') ?>"
-                                            alt="<?= htmlspecialchars($item['name']) ?>" class="cart-item-image">
+                                            alt="" class="cart-item-image">
                                         <div class="cart-item-info">
                                             <h3><?= htmlspecialchars($item['name']) ?></h3>
                                             <p><?= htmlspecialchars($item['manufacturer']) ?> •
@@ -84,7 +84,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                 <td data-label="Product">
                                     <div class="cart-item-product">
                                         <img src="/assets/images/<?= htmlspecialchars($build['product_image'] ?? 'custom_switch.webp') ?>"
-                                            alt="<?= htmlspecialchars($build['name']) ?>" class="cart-item-image">
+                                            alt="" class="cart-item-image">
                                         <div class="cart-item-info">
                                             <h3><?= htmlspecialchars($build['name']) ?> <span class="custom-badge">CUSTOM</span></h3>
                                             <p><?= htmlspecialchars($build['description']) ?></p>

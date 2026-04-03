@@ -1,4 +1,5 @@
 <!-- Accessibility Widget -->
+<aside aria-label="Accessibility tools">
 <div id="accessibilityWidget"
      class="accessibility-widget"
      role="dialog"
@@ -28,7 +29,7 @@
     </div>
 
     <!-- Scrollable body -->
-    <div class="accessibility-widget__body" data-lenis-prevent="true">
+    <div class="accessibility-widget__body" data-lenis-prevent="true" tabindex="0">
 
         <!-- Content -->
         <section class="accessibility-section" aria-labelledby="accessibilitySecContent">
@@ -170,3 +171,4 @@
     aria-controls="accessibilityWidget" id="accessibilityFab">
     <i class="fas fa-universal-access" aria-hidden="true"></i>
 </button>
+</aside>

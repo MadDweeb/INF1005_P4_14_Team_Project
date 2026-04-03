@@ -22,7 +22,7 @@ $extraCss = ['/css/product-detail.css'];
         <!-- Product Image -->
         <div class="product-image-section">
             <img src="/assets/images/<?= htmlspecialchars($product['product_image'] ?? 'placeholder.webp') ?>"
-                alt="<?= htmlspecialchars($product['name']) ?>" class="product-main-image">
+                alt="" class="product-main-image">
         </div>
 
         <!-- Product Details -->

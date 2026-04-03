@@ -11,7 +11,7 @@
  */
 ?>
 
-<footer id="main-footer" class="main-footer">
+<footer id="main-footer" class="main-footer" tabindex="-1">
     <div class="footer-top">
         <section class="newsletter" aria-labelledby="newsletter-heading">
             <h2 id="newsletter-heading">STAY IN THE LOOP</h2>

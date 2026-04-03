@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const isOpen = dropdown.classList.toggle('open');
             toggleBtn.setAttribute('aria-expanded', isOpen);
             dropdown.setAttribute('aria-hidden', !isOpen);
+            dropdown.inert = !isOpen;
         });
 
         // Close when clicking outside
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.classList.remove('open');
                 toggleBtn.setAttribute('aria-expanded', 'false');
                 dropdown.setAttribute('aria-hidden', 'true');
+                dropdown.inert = true;
             }
         });
     }
