@@ -1,7 +1,7 @@
 <?php
 /*
  * views/admin/users.php
- * Admin users management — login lockout status and reset controls
+ * Admin users management - login lockout status and reset controls
  */
 
 require_once __DIR__ . '/../../src/helpers/auth.php';
@@ -216,7 +216,7 @@ ob_start();
                                     <?php if (!empty($account['locked_until'])): ?>
                                         <?= htmlspecialchars((string) $account['locked_until'], ENT_QUOTES, 'UTF-8') ?>
                                     <?php else: ?>
-                                        <span style="opacity:0.4;">—</span>
+                                        <span style="opacity:0.4;">-</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -243,6 +243,6 @@ ob_start();
 
 <?php
 $pageContent = ob_get_clean();
-$pageTitle    = 'Admin — Users';
+$pageTitle    = 'Admin - Users';
 require_once __DIR__ . '/../layout/admin.php';
 ?>

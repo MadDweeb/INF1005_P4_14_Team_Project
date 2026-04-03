@@ -229,7 +229,7 @@ ob_start();
                 <canvas id="statusChart"></canvas>
             </div>
             <div class="chart-card">
-                <h3>Revenue — Last 30 Days</h3>
+                <h3>Revenue - Last 30 Days</h3>
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>

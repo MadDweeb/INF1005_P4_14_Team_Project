@@ -51,7 +51,7 @@ ob_start();
                     >
                 </div>
 
-                <!-- Switch Type Filter — horizontal pills -->
+                <!-- Switch Type Filter - horizontal pills -->
                 <div class="filter-section">
                     <h3>Switch Type</h3>
                     <div class="type-pills">

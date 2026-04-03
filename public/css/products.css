@@ -147,7 +147,7 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* ── Type pills — horizontal ─────────────────────────────────────────────── */
+/* ── Type pills - horizontal ─────────────────────────────────────────────── */
 
 .type-pills {
     display: flex;
@@ -278,7 +278,7 @@
     transform: scale(0.97);
 }
 
-/* ── Products grid — always 2 columns ───────────────────────────────────── */
+/* ── Products grid - always 2 columns ───────────────────────────────────── */
 
 .products-main {
     width: 100%;

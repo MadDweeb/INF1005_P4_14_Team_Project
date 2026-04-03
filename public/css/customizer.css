@@ -604,7 +604,7 @@
     box-shadow: 0 8px 20px rgba(215, 58, 58, 0.4);
 }
 
-/* Mobile parts list — hidden on desktop */
+/* Mobile parts list - hidden on desktop */
 .mobile-parts-list { display: none; }
 
 /* ── Large desktop: shrink the exploded view ─────────────────────────────── */
@@ -620,7 +620,7 @@
         padding: 120px 5vw 60px;
     }
 
-    /* Flexbox row — widths animate cleanly without min-content bleed */
+    /* Flexbox row - widths animate cleanly without min-content bleed */
     .builder-layout {
         display: flex;
         align-items: flex-start;
