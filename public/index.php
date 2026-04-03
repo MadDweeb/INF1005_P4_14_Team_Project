@@ -80,6 +80,10 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->remove();
 
+} elseif ($uri === '/cart/update-custom' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/CartController.php';
+    (new CartController($pdo))->updateCustom();
+
 } elseif ($uri === '/cart/remove-custom' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->removeCustom();
@@ -100,24 +104,41 @@ if ($uri === '/' && $method === 'GET') {
     requireAdmin();
     require_once __DIR__ . '/../src/models/Product.php';
     require_once __DIR__ . '/../src/models/Order.php';
-    require_once __DIR__ . '/../src/models/User.php';
-    $productCount = 0;
-    $orderCount = 0;
-    $totalRevenue = 0;
+    $productCount  = 0;
+    $orderCount    = 0;
+    $totalRevenue  = 0;
     $pendingOrders = 0;
-    $usersWithLockoutStatus = [];
+    $ordersByStatus = [];
+    $revenueLabels  = [];
+    $revenueData    = [];
     if ($pdo !== null) {
-        $productModel = new Product($pdo);
-        $userModel = new User($pdo);
+        $productModel  = new Product($pdo);
         $productResult = $productModel->getAll([], 1, 1);
-        $usersWithLockoutStatus = $userModel->getUsersWithLockoutStatus();
-        $productCount = $productResult['total'] ?? 0;
-        $stmt = $pdo->query("SELECT COUNT(*) AS cnt, COALESCE(SUM(total_amount), 0) AS revenue FROM orders");
-        $row = $stmt->fetch();
-        $orderCount = (int) ($row['cnt'] ?? 0);
-        $totalRevenue = (float) ($row['revenue'] ?? 0);
+        $productCount  = $productResult['total'] ?? 0;
+        $stmt = $pdo->query("SELECT COUNT(*) AS cnt, COALESCE(SUM(CASE WHEN status != 'cancelled' THEN total_amount ELSE 0 END), 0) AS revenue FROM orders");
+        $row  = $stmt->fetch();
+        $orderCount   = (int)($row['cnt'] ?? 0);
+        $totalRevenue = (float)($row['revenue'] ?? 0);
         $stmt2 = $pdo->query("SELECT COUNT(*) AS cnt FROM orders WHERE status = 'pending'");
-        $pendingOrders = (int) ($stmt2->fetchColumn() ?: 0);
+        $pendingOrders = (int)($stmt2->fetchColumn() ?: 0);
+        $statusRows = $pdo->query("SELECT status, COUNT(*) AS cnt FROM orders GROUP BY status")->fetchAll(PDO::FETCH_KEY_PAIR);
+        $ordersByStatus = [
+            'pending'    => (int)($statusRows['pending']    ?? 0),
+            'processing' => (int)($statusRows['processing'] ?? 0),
+            'shipped'    => (int)($statusRows['shipped']    ?? 0),
+            'delivered'  => (int)($statusRows['delivered']  ?? 0),
+            'cancelled'  => (int)($statusRows['cancelled']  ?? 0),
+            'completed'  => (int)($statusRows['completed']  ?? 0),
+        ];
+        $revenueRows = $pdo->query(
+            "SELECT DATE(created_at) AS day, COALESCE(SUM(total_amount),0) AS rev
+             FROM orders WHERE status != 'cancelled' AND created_at >= DATE_SUB(CURDATE(), INTERVAL 29 DAY)
+             GROUP BY DATE(created_at) ORDER BY day ASC"
+        )->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($revenueRows as $r) {
+            $revenueLabels[] = $r['day'];
+            $revenueData[]   = (float)$r['rev'];
+        }
     }
     require __DIR__ . '/../views/admin/dashboard.php';
 
@@ -149,9 +170,17 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/ProductController.php';
     (new ProductController($pdo))->adminDelete();
 
+} elseif ($uri === '/admin/users' && $method === 'GET') {
+    require_once __DIR__ . '/../src/controllers/UserController.php';
+    (new UserController($pdo))->adminUsers();
+
 } elseif ($uri === '/admin/users/reset-lockout' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/UserController.php';
     (new UserController($pdo))->adminResetLockout();
+
+} elseif ($uri === '/admin/orders/delete' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->adminDeleteOrder();
 
     // ── Static pages ──────────────────────────────────────────────────────────────
 
@@ -222,6 +251,10 @@ if ($uri === '/' && $method === 'GET') {
 } elseif ($uri === '/orders/received' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/OrderController.php';
     (new OrderController($pdo))->markReceived();
+
+} elseif ($uri === '/orders/delete' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/OrderController.php';
+    (new OrderController($pdo))->userDeleteOrder();
 
     // ── API routes ────────────────────────────────────────────────────────────────
 

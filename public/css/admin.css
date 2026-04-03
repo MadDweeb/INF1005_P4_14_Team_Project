@@ -249,3 +249,61 @@
         padding: 30px 5vw 60px;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+/* Tablet only (769px–1024px): avoid overriding mobile styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .admin-header-bar {
+        padding: 0 24px;
+    }
+
+    .admin-page {
+        padding: 40px 4vw 60px;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .admin-header-bar {
+        padding: 10px 16px;
+    }
+
+    .admin-logo {
+        font-size: 1.1rem;
+    }
+
+    .admin-page {
+        padding: 24px 4vw 50px;
+    }
+
+    .admin-nav-link {
+        padding: 10px 14px;
+        font-size: 0.82rem;
+    }
+}
+
+/* Scrollable tables on mobile */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Interactive: row hover */
+tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+    background: rgba(255,255,255,0.04);
+}
+
+/* Flash banner transitions */
+.flash-banner {
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

@@ -128,6 +128,21 @@ class UserController
     }
 
     /**
+     * Admin: show all users with lockout status (GET /admin/users).
+     */
+    public function adminUsers(): void
+    {
+        requireAdmin();
+
+        $usersWithLockoutStatus = $this->userModel
+            ? $this->userModel->getUsersWithLockoutStatus()
+            : [];
+
+        $currentAdminPage = 'users';
+        require_once __DIR__ . '/../../views/admin/users.php';
+    }
+
+    /**
      * Admin: clear lockout state for a user account.
      */
     public function adminResetLockout(): void
@@ -155,7 +170,7 @@ class UserController
             $_SESSION['flash_error'] = 'Could not reset lockout for that user.';
         }
 
-        header('Location: /admin/dashboard#login-lockout-management');
+        header('Location: /admin/users');
         exit;
     }
 

@@ -10,6 +10,7 @@ $adminNavLinks = [
     '/admin/dashboard' => ['label' => 'Dashboard', 'key' => 'dashboard'],
     '/admin/products'  => ['label' => 'Products',  'key' => 'products'],
     '/admin/orders'    => ['label' => 'Orders',    'key' => 'orders'],
+    '/admin/users'     => ['label' => 'Users',     'key' => 'users'],
 ];
 ?>
 
@@ -40,9 +41,6 @@ $adminNavLinks = [
         </ul>
 
         <div class="admin-header-actions">
-            <a href="/" class="admin-nav-link admin-back-link">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i> Store
-            </a>
             <form method="POST" action="/logout" style="display:inline">
                 <?= csrfInput() ?>
                 <button type="submit" class="admin-logout-btn">Logout</button>

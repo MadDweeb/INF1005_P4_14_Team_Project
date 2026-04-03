@@ -4,7 +4,36 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll reveal for product cards
+
+    // ── Filter dropdown toggle ─────────────────────────────────────────────
+    const toggleBtn = document.getElementById('filter-toggle');
+    const dropdown  = document.getElementById('filter-dropdown');
+
+    if (toggleBtn && dropdown) {
+        toggleBtn.addEventListener('click', function () {
+            const isOpen = dropdown.classList.toggle('open');
+            toggleBtn.setAttribute('aria-expanded', isOpen);
+            dropdown.setAttribute('aria-hidden', !isOpen);
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                dropdown.setAttribute('aria-hidden', 'true');
+            }
+        });
+    }
+
+    // ── Type pill checked state ────────────────────────────────────────────
+    document.querySelectorAll('.type-pill input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function () {
+            this.closest('.type-pill').classList.toggle('checked', this.checked);
+        });
+    });
+
+    // ── Smooth scroll reveal for product cards ────────────────────────────
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -22,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Animate product cards on scroll
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
         card.style.opacity = '0';
@@ -31,83 +59,34 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
 
-    // Animate filter sections
-    const filterSections = document.querySelectorAll('.filter-section');
-    filterSections.forEach((section, index) => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateX(-20px)';
-        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        
-        setTimeout(() => {
-            section.style.opacity = '1';
-            section.style.transform = 'translateX(0)';
-        }, index * 150);
-    });
-
-    // Smooth price range slider feedback
-    const priceInputs = document.querySelectorAll('.price-inputs input');
-    priceInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            this.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-            }, 200);
-        });
-    });
-
-    // Add ripple effect to filter buttons
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(button => {
+    // ── Ripple effect on filter buttons ───────────────────────────────────
+    document.querySelectorAll('.filter-btn').forEach(button => {
         button.addEventListener('click', function(e) {
             const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
+            const rect   = this.getBoundingClientRect();
+            const size   = Math.max(rect.width, rect.height);
+            ripple.style.width  = ripple.style.height = size + 'px';
+            ripple.style.left   = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top    = (e.clientY - rect.top  - size / 2) + 'px';
             ripple.classList.add('ripple');
-            
             this.appendChild(ripple);
-            
             setTimeout(() => ripple.remove(), 600);
         });
     });
 
-    // Animate page header
+    // ── Animate page header ────────────────────────────────────────────────
     const header = document.querySelector('.products-header');
     if (header) {
         header.style.opacity = '0';
         header.style.transform = 'translateY(-20px)';
         header.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        
         setTimeout(() => {
             header.style.opacity = '1';
             header.style.transform = 'translateY(0)';
         }, 100);
     }
 
-    // Auto-submit form when a checkbox changes; also animate the label
-    const checkboxes = document.querySelectorAll('.filter-option input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const label = this.closest('label');
-            if (this.checked) {
-                label.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    label.style.transform = 'scale(1)';
-                }, 150);
-            }
-            // Submit the whole form so all currently-checked boxes are sent together
-            setTimeout(() => {
-                this.closest('form').submit();
-            }, 180);
-        });
-    });
-
-    // Auto-submit when sort changes
+    // ── Auto-submit when sort changes ─────────────────────────────────────
     const sortSelect = document.querySelector('.sort-select');
     if (sortSelect) {
         sortSelect.addEventListener('change', function() {

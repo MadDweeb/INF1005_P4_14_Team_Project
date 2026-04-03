@@ -1,0 +1,125 @@
+/*
+ * public/css/404.css
+ * 404 – Page Not Found styles
+ * Uses CSS variables from main.css (--bg-main, --text-main, --accent, etc.)
+ */
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+.not-found-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: clamp(5.75rem, 9vw, 7rem);
+    min-height: calc(100vh - 360px);
+    padding: clamp(3rem, 6vh, 4.5rem) 1.5rem 4rem;
+    background-color: var(--bg-main, #F4F0EA);
+    text-align: center;
+}
+
+/* ── Inner card ───────────────────────────────────────────────────────────── */
+.not-found-inner {
+    max-width: 480px;
+    width: 100%;
+    background: rgba(244, 240, 234, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    border-radius: 12px;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Big "404" decorative number ─────────────────────────────────────────── */
+.not-found-code {
+    display: block;
+    font-size: clamp(6rem, 20vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent, #c01818);
+    letter-spacing: -0.04em;
+    user-select: none;
+    margin-bottom: 0.25rem;
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────────── */
+.not-found-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--text-main, #1A1A1A);
+    margin: 0 0 1rem;
+}
+
+/* ── Supporting copy ──────────────────────────────────────────────────────── */
+.not-found-message {
+    font-size: 1rem;
+    color: var(--text-muted, #555);
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+}
+
+/* ── CTA buttons ──────────────────────────────────────────────────────────── */
+.not-found-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary-link,
+.btn-secondary-link {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary-link {
+    background-color: var(--accent, #c01818);
+    color: #fff;
+    border: 2px solid var(--accent, #c01818);
+}
+
+.btn-primary-link:hover,
+.btn-primary-link:focus-visible {
+    opacity: 0.85;
+}
+
+.btn-secondary-link {
+    background-color: transparent;
+    color: var(--accent, #c01818);
+    border: 2px solid var(--accent, #c01818);
+}
+
+.btn-secondary-link:hover,
+.btn-secondary-link:focus-visible {
+    background-color: var(--accent, #c01818);
+    color: #fff;
+}
+
+.btn-primary-link:focus-visible,
+.btn-secondary-link:focus-visible {
+    outline: 3px solid var(--focus-ring, #000);
+    outline-offset: 3px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .not-found-page {
+        margin-top: 5.25rem;
+        min-height: calc(100vh - 320px);
+        padding-top: 2.5rem;
+    }
+
+    .not-found-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary-link,
+    .btn-secondary-link {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+    }
+}

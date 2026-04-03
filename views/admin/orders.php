@@ -110,6 +110,25 @@ ob_start();
         color: white;
     }
 
+    .delete-order-btn {
+        padding: 8px 14px;
+        background: rgba(248, 113, 113, 0.12);
+        color: #f87171;
+        border: 1px solid rgba(248, 113, 113, 0.35);
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-left: 8px;
+    }
+
+    .delete-order-btn:hover {
+        background: #f87171;
+        color: #1a1a1a;
+    }
+
+
     .empty-state {
         text-align: center;
         padding: 80px 20px;
@@ -119,6 +138,32 @@ ob_start();
         font-family: 'Montserrat', sans-serif;
         font-size: 2rem;
         margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .orders-table-wrapper {
+            border-radius: 8px;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 14px 12px;
+            font-size: 0.85rem;
+        }
+
+        .view-details-btn,
+        .delete-order-btn {
+            padding: 6px 10px;
+            font-size: 0.78rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .orders-table th,
+        .orders-table td {
+            padding: 10px 8px;
+            font-size: 0.8rem;
+        }
     }
 
 </style>
@@ -174,6 +219,14 @@ ob_start();
                                 <a href="/admin/orders/<?= $order['order_id'] ?>" class="view-details-btn">
                                     View Details
                                 </a>
+                                <?php if ($order['status'] === 'cancelled'): ?>
+                                    <form method="POST" action="/admin/orders/delete" style="display:inline;"
+                                          onsubmit="return confirm('Permanently delete order #<?= str_pad($order['order_id'], 5, '0', STR_PAD_LEFT) ?>?');">
+                                        <?= csrfInput() ?>
+                                        <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
+                                        <button type="submit" class="delete-order-btn">Delete</button>
+                                    </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -393,6 +393,39 @@ class Order
     }
 
     /**
+     * Permanently delete a cancelled or completed order (and its line items via CASCADE).
+     *
+     * @param  int      $orderId  The order to delete.
+     * @param  int|null $userId   When supplied, also enforces that the order belongs to this user.
+     * @return array              Result payload with ok + reason keys.
+     */
+    public function deleteFinished(int $orderId, ?int $userId = null): array
+    {
+        try {
+            $conditions = "order_id = :order_id AND status = 'cancelled'";
+            $params     = [':order_id' => $orderId];
+
+            if ($userId !== null) {
+                $conditions .= ' AND user_id = :user_id';
+                $params[':user_id'] = $userId;
+            }
+
+            $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE {$conditions}");
+            $stmt->execute($params);
+
+            if ($stmt->rowCount() === 0) {
+                return ['ok' => false, 'reason' => 'not_eligible'];
+            }
+
+            return ['ok' => true];
+
+        } catch (\PDOException $e) {
+            error_log('Order deleteFinished failed: ' . $e->getMessage());
+            return ['ok' => false, 'reason' => 'db_error'];
+        }
+    }
+
+    /**
      * Update the status of an order (admin action).
      *
      * @param  int    $orderId  The order to update.
