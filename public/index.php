@@ -80,6 +80,10 @@ if ($uri === '/' && $method === 'GET') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->remove();
 
+} elseif ($uri === '/cart/update-custom' && $method === 'POST') {
+    require_once __DIR__ . '/../src/controllers/CartController.php';
+    (new CartController($pdo))->updateCustom();
+
 } elseif ($uri === '/cart/remove-custom' && $method === 'POST') {
     require_once __DIR__ . '/../src/controllers/CartController.php';
     (new CartController($pdo))->removeCustom();

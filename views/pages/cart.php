@@ -96,9 +96,16 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                     <div class="cart-item-price">$<?= number_format($build['price'], 2) ?></div>
                                 </td>
                                 <td data-label="Quantity">
-                                    <div class="cart-item-quantity">
-                                        <?= $build['quantity'] ?>
-                                    </div>
+                                    <form method="POST" action="/cart/update-custom" class="cart-item-quantity">
+                                        <?= csrfInput() ?>
+                                        <input type="hidden" name="custom_index" value="<?= $index ?>">
+                                        <label for="custom-qty-<?= $index ?>" class="sr-only">
+                                            Quantity for <?= htmlspecialchars($build['name']) ?>
+                                        </label>
+                                        <input type="number" id="custom-qty-<?= $index ?>" name="quantity"
+                                            min="10" value="<?= $build['quantity'] ?>" aria-label="Quantity">
+                                        <button type="submit" class="update-btn">Update</button>
+                                    </form>
                                 </td>
                                 <td data-label="Subtotal">
                                     <div class="cart-item-subtotal">

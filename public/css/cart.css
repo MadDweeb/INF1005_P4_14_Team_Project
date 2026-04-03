@@ -149,8 +149,6 @@
     background: rgba(255, 255, 255, 0.05);
     padding: 40px;
     border-radius: 12px;
-    max-width: 500px;
-    margin-left: auto;
 }
 
 .cart-summary h2 {
@@ -316,7 +314,6 @@
     .cart-summary {
         position: static;
         width: 100%;
-        max-width: 480px;
     }
 }
 

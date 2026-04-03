@@ -276,6 +276,30 @@ class CartController
     }
 
     /**
+     * Update the quantity of a custom build in the session cart.
+     */
+    public function updateCustom(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $customIndex = sanitizeInt($_POST['custom_index'] ?? -1);
+        $quantity    = max(10, sanitizeInt($_POST['quantity'] ?? 10));
+
+        if (!isset($_SESSION['custom_builds'][$customIndex])) {
+            $_SESSION['flash_error'] = 'Custom build not found.';
+            header('Location: /cart');
+            exit;
+        }
+
+        $_SESSION['custom_builds'][$customIndex]['quantity'] = $quantity;
+
+        $_SESSION['flash_success'] = 'Custom build quantity updated.';
+        header('Location: /cart');
+        exit;
+    }
+
+    /**
      * Remove a custom build from the session cart.
      */
     public function removeCustom(): void
