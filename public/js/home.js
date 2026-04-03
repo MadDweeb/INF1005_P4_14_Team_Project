@@ -10,10 +10,9 @@ if (carouselTrack) {
 
         function updateCarousel() {
             items.forEach((item, index) => {
-                item.className = 'carousel-item'; // reset classes
+                item.className = 'carousel-item';
                 let diff = index - activeIndex;
 
-                // Support wrap-around offset calculation
                 if (diff > Math.floor(items.length / 2)) {
                     diff -= items.length;
                 } else if (diff < -Math.floor(items.length / 2)) {
@@ -23,11 +22,9 @@ if (carouselTrack) {
                 if (diff === 0) {
                     item.classList.add('active');
                     item.setAttribute('aria-hidden', 'false');
-                    // Enable links for the active item
                     item.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '0'));
                 } else {
                     item.setAttribute('aria-hidden', 'true');
-                    // Disable links for non-active items to prevent 'ghost focus'
                     item.querySelectorAll('a').forEach(a => a.setAttribute('tabindex', '-1'));
 
                     if (diff === -1) {
@@ -53,7 +50,6 @@ if (carouselTrack) {
             updateCarousel();
         });
 
-        // Clicking side items makes them active without immediately navigating away
         items.forEach((item, index) => {
             item.addEventListener('click', (e) => {
                 if (!item.classList.contains('active')) {
@@ -64,7 +60,6 @@ if (carouselTrack) {
             });
         });
 
-        // Init
         updateCarousel();
     }
 }
@@ -75,7 +70,6 @@ const imageRing = document.querySelector('.vp-spin-ring.vp-outer-icons');
 
 if (textRing && imageRing) {
     function updateRotation() {
-        // If reduce motion is on, skip animation
         if (document.body.classList.contains('accessibility-reduce-motion')) return;
 
         const scrollY = window.scrollY;
@@ -95,7 +89,7 @@ const themeSections = document.querySelectorAll('[data-theme]');
 if (themeSections.length > 0) {
     const observerOptions = {
         root: null,
-        rootMargin: "-50% 0px -50% 0px", // Triggers precisely at the vertical center of the viewport
+        rootMargin: "-50% 0px -50% 0px",
         threshold: 0
     };
 
@@ -103,11 +97,7 @@ if (themeSections.length > 0) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const theme = entry.target.getAttribute('data-theme');
-
-                // Natively strip all existing theme- classes via Regex safely
                 document.body.className = document.body.className.replace(/\btheme-\S+/g, '').trim();
-
-                // Append the incoming theme
                 if (theme) {
                     document.body.classList.add(`theme-${theme}`);
                 }
@@ -147,9 +137,6 @@ if (homeCustomWrapper) {
         const rect = homeCustomWrapper.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
-        // For a 100vh section, we want to animate as it moves into full view.
-        // Start: bottom 20% of viewport
-        // End: Top of viewport
         const startPoint = windowHeight * 0.8;
         const endPoint = 0;
         const scrollRange = startPoint - endPoint;
@@ -162,18 +149,12 @@ if (homeCustomWrapper) {
 
         parts.forEach((p, index) => {
             if (!p.el) return;
-
-            // Keep the translation consistent
             const currentOffset = p.startX * (1 - ease);
-
-            // Fade in
             const opacity = Math.min(1, progress * 4);
-
             p.el.style.transform = `translateX(${currentOffset}vw)`;
             p.el.style.opacity = opacity;
         });
 
-        // Show content
         if (homeCustomContent) {
             if (progress > 0.9) {
                 homeCustomContent.classList.add('h-show-content');

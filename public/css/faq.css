@@ -126,7 +126,6 @@
         padding: 25px 0;
     }
 }
-/* -- Enhanced responsive & interactivity -------------------------------------- */
 
 @media (max-width: 480px) {
     .faq-header {
@@ -147,7 +146,6 @@
     }
 }
 
-/* Interactive: smooth answer reveal */
 .faq-answer {
     transition: max-height 0.35s ease, opacity 0.3s ease;
 }

@@ -52,7 +52,7 @@
     z-index: 1;
 }
 
-/* -- Value Propositions (Spinning Animation & Color Transition) --------- */
+/* -- Value Propositions  --------- */
 .value-propositions {
     position: relative;
     width: 100vw;
@@ -210,7 +210,6 @@
         margin-left: -35px;
     }
 
-    /* Re-map orbital radius for mobile */
     .vp-outer-icons img:nth-child(1) {
         transform: rotate(0deg) translateY(-325px);
     }
@@ -337,7 +336,6 @@
     z-index: 1;
 }
 
-/* Base image/placeholder styling */
 .carousel-img-link {
     display: block;
     width: 100%;
@@ -366,7 +364,6 @@
     opacity: 0.6;
 }
 
-/* Metadata content container */
 .carousel-item-content {
     margin-top: 25px;
     opacity: 0;
@@ -425,7 +422,6 @@
     transform: translateY(-2px);
 }
 
-/* Position States computed by JS */
 .carousel-item.active {
     z-index: 10;
     opacity: 1;
@@ -553,7 +549,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     max-width: 1860px;
-    /* 3 cards of ~600px width + 30px gaps */
     justify-content: center;
     gap: 30px;
     width: 100%;
@@ -564,7 +559,6 @@
     position: relative;
     display: block;
     height: 600px;
-    /* More square looking boxes on desktop */
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
@@ -626,7 +620,6 @@
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Interactivity (Hover Overrides) */
 .catalog-card:hover .catalog-image-wrapper img {
     transform: scale(1.08);
 }
@@ -653,7 +646,6 @@
 
     .catalog-card {
         height: 600px;
-        /* Balanced height for 1-column layout */
     }
 
     .catalog-header h2 {
@@ -664,7 +656,6 @@
 @media (max-width: 768px) {
     .catalog-card {
         height: 480px;
-        /* More compact for mobile devices */
     }
 
     .catalog-header h2 {
@@ -729,7 +720,7 @@
     }
 }
 
-/* -- Home Customizing (Scroll Assembly) ------------------------------------- */
+/* -- Customizer ------------------------------------- */
 .home-custom-wrapper {
     position: relative;
     width: 100vw;
@@ -762,12 +753,10 @@
     padding: 2vh 5vw;
 }
 
-/* Highly responsive container using viewport units */
 .home-assembly-container {
     position: relative;
     width: min(320px, 80vw);
     height: 65vh;
-    /* Expanded to contain the new spaced layout */
     margin-bottom: 2vh;
 }
 
@@ -775,7 +764,6 @@
     position: absolute;
     width: 100%;
     height: 15vh;
-    /* Base height for each image */
     object-fit: contain;
     will-change: transform, opacity;
     left: 0;
@@ -786,7 +774,6 @@
     opacity: 0;
 }
 
-/* Precise VH-based offsets. Since image height is 15vh, spacing by 17vh guarantees 2vh padding between them. */
 .js-enabled .h-part-top-housing {
     z-index: 4;
     transform: translateX(-100vw);
@@ -831,7 +818,6 @@
     z-index: 1;
 }
 
-/* Responsive Text Area */
 .home-custom-content {
     text-align: center;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -852,7 +838,6 @@
 .home-custom-content h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.8rem, 4.5vh, 3.5rem);
-    /* Scaled by viewport height primarily */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;

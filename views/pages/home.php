@@ -153,7 +153,8 @@ ob_start();
         </button>
         <noscript>
             <div style="margin-top: 40px; text-align: center;">
-                <p style="margin-bottom: 20px; font-weight: 600;">Interactive carousel is disabled. Explore our full range of
+                <p style="margin-bottom: 20px; font-weight: 600;">Interactive carousel is disabled. Explore our full
+                    range of
                     switches below.</p>
                 <a href="/products" class="btn-shop">VIEW ALL PRODUCTS <i class="fas fa-arrow-right"
                         aria-hidden="true"></i></a>
@@ -167,7 +168,7 @@ ob_start();
         <h2 id="catalogHeading">Typing, Reimagined</h2>
     </div>
     <div class="catalog-grid">
-        <a href="/products" class="catalog-card">
+        <a href="/products?q=&type%5B%5D=linear&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
                 <img src="/assets/images/catalog1.webp" alt="Linear Switches" width="100%" height="100%" loading="lazy">
             </div>
@@ -177,7 +178,7 @@ ob_start();
                 <i class="fas fa-arrow-right catalog-arrow" aria-hidden="true"></i>
             </div>
         </a>
-        <a href="/products" class="catalog-card">
+        <a href="/products?q=&type%5B%5D=tactile&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
                 <img src="/assets/images/catalog2.webp" alt="Tactile Switches" width="100%" height="100%"
                     loading="lazy">
@@ -188,7 +189,7 @@ ob_start();
                 <i class="fas fa-arrow-right catalog-arrow" aria-hidden="true"></i>
             </div>
         </a>
-        <a href="/products" class="catalog-card">
+        <a href="/products?q=&type%5B%5D=clicky&price_min=&price_max=&sort=" class="catalog-card">
             <div class="catalog-image-wrapper">
                 <img src="/assets/images/catalog3.webp" alt="Clicky Switches" width="100%" height="100%" loading="lazy">
             </div>

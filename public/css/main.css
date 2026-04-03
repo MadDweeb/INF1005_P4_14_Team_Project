@@ -18,7 +18,6 @@
     --focus-ring: var(--accent);
 }
 
-/* -- Reset -------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -33,7 +32,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Ensure native scrolling works when JavaScript is disabled */
 html.no-js,
 .no-js body {
     overflow-y: auto !important;
@@ -356,7 +354,6 @@ main {
     margin: 0;
 }
 
-/* Global Focus Ring (WCAG 2.4.7 / 1.4.11 / 2.4.11) */
 *:focus-visible {
     outline: 3px solid var(--focus-ring) !important;
     outline-offset: 4px !important;
@@ -531,43 +528,6 @@ main:focus {
     flex-shrink: 0;
 }
 
-/* Language selector */
-.accessibility-lang {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(255, 255, 255, 0.18);
-    border-radius: 6px;
-    padding: 4px 8px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.accessibility-lang i {
-    font-size: 13px;
-}
-
-.accessibility-lang select {
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 12px;
-    font-family: inherit;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    padding-right: 2px;
-}
-
-.accessibility-lang select option {
-    background: var(--accent);
-    color: #ffffff;
-}
-
 .accessibility-widget__close {
     background: rgba(255, 255, 255, 0.15);
     border: none;
@@ -645,7 +605,6 @@ main:focus {
     min-height: 76px;
 }
 
-/* Non-button cards (role=group wrappers) */
 div.accessibility-card {
     cursor: default;
     align-items: flex-start;
