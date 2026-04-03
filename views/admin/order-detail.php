@@ -306,10 +306,10 @@ ob_start();
                 <table class="aod-items-table">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Unit Price</th>
-                            <th>Qty</th>
-                            <th>Line Total</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Line Total</th>
                         </tr>
                     </thead>
                     <tbody>

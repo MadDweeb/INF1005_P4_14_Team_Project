@@ -120,7 +120,7 @@ ob_start();
     </div>
 
     <!-- Products Grid -->
-    <main class="products-main" role="main">
+    <div class="products-main">
         <?php if (empty($products)): ?>
             <div class="no-products">
                 <h2>No products found</h2>
@@ -184,7 +184,7 @@ ob_start();
                 </nav>
             <?php endif; ?>
         <?php endif; ?>
-    </main>
+    </div>
 </div>
 
 <?php

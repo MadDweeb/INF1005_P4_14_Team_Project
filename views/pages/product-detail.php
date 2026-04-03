@@ -115,7 +115,7 @@ $extraCss = ['/css/product-detail.css'];
                     <div class="quantity-selector">
                         <label for="quantity">Quantity:</label>
                         <input type="number" id="quantity" name="quantity" min="1" max="<?= $product['stock_quantity'] ?>"
-                            value="1" required aria-label="Quantity">
+                            value="1" required>
                     </div>
 
                     <button type="submit" class="add-to-cart-btn">

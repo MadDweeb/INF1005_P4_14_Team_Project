@@ -60,8 +60,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                             Quantity for <?= htmlspecialchars($item['name']) ?>
                                         </label>
                                         <input type="number" id="qty-<?= $item['cart_item_id'] ?>" name="quantity" min="1"
-                                            max="<?= $item['stock_quantity'] ?>" value="<?= $item['quantity'] ?>"
-                                            aria-label="Quantity">
+                                            max="<?= $item['stock_quantity'] ?>" value="<?= $item['quantity'] ?>">
                                         <button type="submit" class="update-btn">Update</button>
                                     </form>
                                 </td>
@@ -103,7 +102,7 @@ $extraJs = ['/js/cart.js?v=' . $cartJsVersion];
                                             Quantity for <?= htmlspecialchars($build['name']) ?>
                                         </label>
                                         <input type="number" id="custom-qty-<?= $index ?>" name="quantity"
-                                            min="10" value="<?= $build['quantity'] ?>" aria-label="Quantity">
+                                            min="10" value="<?= $build['quantity'] ?>">
                                         <button type="submit" class="update-btn">Update</button>
                                     </form>
                                 </td>
