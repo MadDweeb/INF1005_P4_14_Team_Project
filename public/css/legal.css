@@ -130,3 +130,41 @@
         padding: 1rem;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 1024px) {
+    .legal-layout {
+        flex-direction: column;
+    }
+
+    .legal-toc {
+        position: static;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .legal-page {
+        padding-top: 110px;
+    }
+
+    .legal-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .legal-content section,
+    .legal-toc {
+        padding: 0.8rem;
+    }
+}
+
+/* Interactive: TOC link hover */
+.legal-toc a {
+    transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.legal-toc a:hover {
+    color: var(--accent);
+    padding-left: 4px;
+}

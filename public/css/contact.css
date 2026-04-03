@@ -166,3 +166,50 @@
         padding: 24px 18px;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 480px) {
+    .contact-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .contact-card {
+        padding: 20px 16px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 12px 14px;
+    }
+
+    .contact-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+}
+
+/* Interactive */
+.contact-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    box-shadow: 0 0 0 3px rgba(192, 24, 24, 0.2);
+    transition: box-shadow 0.2s ease;
+}
+
+.contact-submit-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192,24,24,0.35);
+}

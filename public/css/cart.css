@@ -306,3 +306,67 @@
 .custom-build-item {
     background: rgba(215, 58, 58, 0.05);
 }
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 1024px) {
+    .cart-layout {
+        flex-direction: column;
+    }
+
+    .cart-summary {
+        position: static;
+        width: 100%;
+        max-width: 480px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .cart-table tr {
+        padding: 14px;
+    }
+
+    .cart-table td {
+        font-size: 0.9rem;
+    }
+
+    .checkout-btn,
+    .continue-btn {
+        width: 100%;
+        padding: 14px;
+        text-align: center;
+    }
+
+    .quantity-controls input {
+        width: 48px;
+    }
+}
+
+/* Interactive: quantity buttons */
+.quantity-btn {
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.quantity-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.quantity-btn:active {
+    transform: scale(0.93);
+}
+
+.checkout-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192,24,24,0.35);
+}
+
+.checkout-btn:active {
+    transform: scale(0.98);
+}

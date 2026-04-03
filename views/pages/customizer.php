@@ -18,47 +18,102 @@ ob_start();
     </div>
 
     <div class="builder-main">
-        <!-- Switch Assembly that explodes on load -->
-        <div class="switch-assembly-container">
-            <div class="assembly-viewer">
-                <!-- Components start stacked, then explode to 45-degree positions -->
-                <div class="exploded-switch">
-                    <div class="switch-part-exploded top-housing-exploded" data-part="top_housing">
-                        <img src="/assets/images/top_housing.webp" alt="Top Housing" class="exploded-image">
-                        <button class="edit-exploded-btn" data-part="top_housing">
-                            <span class="edit-icon">✏️</span>
-                            <span class="edit-text">Edit</span>
-                        </button>
-                    </div>
 
-                    <div class="switch-part-exploded stem-exploded" data-part="stem">
-                        <img src="/assets/images/stem.webp" alt="Stem" class="exploded-image">
-                        <button class="edit-exploded-btn" data-part="stem">
-                            <span class="edit-icon">✏️</span>
-                            <span class="edit-text">Edit</span>
-                        </button>
-                    </div>
+        <!-- ── Responsive split layout wrapper ─────────────────────────────── -->
+        <div class="builder-layout" id="builderLayout">
 
-                    <div class="switch-part-exploded spring-exploded" data-part="spring">
-                        <img src="/assets/images/spring.webp" alt="Spring" class="exploded-image">
-                        <button class="edit-exploded-btn" data-part="spring">
-                            <span class="edit-icon">✏️</span>
-                            <span class="edit-text">Edit</span>
-                        </button>
-                    </div>
+            <!-- Left: assembly (desktop = explosion, mobile = vertical list) -->
+            <div class="switch-assembly-container">
 
-                    <div class="switch-part-exploded bottom-housing-exploded" data-part="bottom_housing">
-                        <img src="/assets/images/bottom_housing.webp" alt="Bottom Housing" class="exploded-image">
-                        <button class="edit-exploded-btn" data-part="bottom_housing">
-                            <span class="edit-icon">✏️</span>
-                            <span class="edit-text">Edit</span>
-                        </button>
+                <!-- Desktop exploded view -->
+                <div class="assembly-viewer">
+                    <div class="exploded-switch">
+                        <div class="switch-part-exploded top-housing-exploded" data-part="top_housing">
+                            <img src="/assets/images/top_housing.webp" alt="Top Housing" class="exploded-image">
+                            <button class="edit-exploded-btn" data-part="top_housing">
+                                <span class="edit-icon">✏️</span>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="switch-part-exploded stem-exploded" data-part="stem">
+                            <img src="/assets/images/stem.webp" alt="Stem" class="exploded-image">
+                            <button class="edit-exploded-btn" data-part="stem">
+                                <span class="edit-icon">✏️</span>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="switch-part-exploded spring-exploded" data-part="spring">
+                            <img src="/assets/images/spring.webp" alt="Spring" class="exploded-image">
+                            <button class="edit-exploded-btn" data-part="spring">
+                                <span class="edit-icon">✏️</span>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
+
+                        <div class="switch-part-exploded bottom-housing-exploded" data-part="bottom_housing">
+                            <img src="/assets/images/bottom_housing.webp" alt="Bottom Housing" class="exploded-image">
+                            <button class="edit-exploded-btn" data-part="bottom_housing">
+                                <span class="edit-icon">✏️</span>
+                                <span class="edit-text">Edit</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Component Progress Indicators -->
+                <!-- Mobile vertical parts list -->
+                <div class="mobile-parts-list" role="list" aria-label="Switch components">
+                    <div class="mobile-part" data-part="top_housing" role="listitem" tabindex="0" aria-label="Edit Top Housing">
+                        <img src="/assets/images/top_housing.webp" alt="" class="mobile-part-img">
+                        <div class="mobile-part-text">
+                            <div class="mobile-part-name">Top Housing</div>
+                            <div class="mobile-part-status" id="mob-top_housing">Not selected</div>
+                        </div>
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="mobile-part" data-part="stem" role="listitem" tabindex="0" aria-label="Edit Stem">
+                        <img src="/assets/images/stem.webp" alt="" class="mobile-part-img">
+                        <div class="mobile-part-text">
+                            <div class="mobile-part-name">Stem</div>
+                            <div class="mobile-part-status" id="mob-stem">Not selected</div>
+                        </div>
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="mobile-part" data-part="spring" role="listitem" tabindex="0" aria-label="Edit Spring">
+                        <img src="/assets/images/spring.webp" alt="" class="mobile-part-img">
+                        <div class="mobile-part-text">
+                            <div class="mobile-part-name">Spring</div>
+                            <div class="mobile-part-status" id="mob-spring">Not selected</div>
+                        </div>
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="mobile-part" data-part="bottom_housing" role="listitem" tabindex="0" aria-label="Edit Bottom Housing">
+                        <img src="/assets/images/bottom_housing.webp" alt="" class="mobile-part-img">
+                        <div class="mobile-part-text">
+                            <div class="mobile-part-name">Bottom Housing</div>
+                            <div class="mobile-part-status" id="mob-bottom_housing">Not selected</div>
+                        </div>
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+            </div><!-- /.switch-assembly-container -->
+
+            <!-- Right: options panel (slides in on mobile, drops below on desktop) -->
+            <div class="options-panel" id="optionsPanel">
+                <div class="options-header">
+                    <h3 id="optionsPanelTitle">Select Component</h3>
+                    <button class="close-options-btn" id="closeOptionsBtn">✕ Close</button>
+                </div>
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options populated by JavaScript -->
+                </div>
+            </div>
+
+        </div><!-- /.builder-layout -->
+
+        <!-- Component Progress Indicators (desktop only) -->
         <div class="component-indicators" id="componentIndicators">
             <div class="indicator-item" id="ind-top_housing">
                 <div class="indicator-label">Top Housing</div>
@@ -78,21 +133,10 @@ ob_start();
             </div>
         </div>
 
-        <!-- Options Panel -->
-        <div class="options-panel" id="optionsPanel">
-            <div class="options-header">
-                <h3 id="optionsPanelTitle">Select Component</h3>
-                <button class="close-options-btn" id="closeOptionsBtn">✕ Close</button>
-            </div>
-            <div class="options-grid" id="optionsGrid">
-                <!-- Options populated by JavaScript -->
-            </div>
-        </div>
-
         <!-- Build Summary -->
         <div class="build-summary">
             <h2>Your Custom Switch</h2>
-            
+
             <div class="build-price">
                 <h3>Total Price</h3>
                 <div class="price-display">
@@ -105,7 +149,7 @@ ob_start();
                 </div>
                 <p class="price-note">Minimum order: 10 switches</p>
             </div>
-            
+
             <div class="build-characteristics">
                 <h3>Predicted Characteristics</h3>
                 <div class="characteristics-grid">
@@ -187,32 +231,33 @@ ob_start();
         bottom_housing: null
     };
 
+    function isMobileLayout() {
+        return window.innerWidth <= 900;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         setupComponentButtons();
+        setupMobilePartButtons();
         setupCloseButton();
         setupResetButton();
         setupAddToCartButton();
         setupQuantityControls();
-        playExplodeAnimation();
+        if (!isMobileLayout()) {
+            playExplodeAnimation();
+        }
     });
 
     function playExplodeAnimation() {
-        // Parts start stacked, then explode to 45-degree positions
+        if (isMobileLayout()) return;
         const parts = document.querySelectorAll('.switch-part-exploded');
-        
-        // Start all parts at center (stacked)
         parts.forEach(part => {
             part.style.transform = 'translate(0, 0) rotate(0deg)';
             part.style.opacity = '1';
         });
-
-        // Wait a moment, then explode
         setTimeout(() => {
             parts.forEach(part => {
                 part.style.transition = 'transform 1s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease';
             });
-
-            // Explode to final positions with rotation
             setTimeout(() => {
                 document.querySelector('.top-housing-exploded').style.transform = 'translate(-180px, -180px) rotate(45deg)';
                 document.querySelector('.stem-exploded').style.transform = 'translate(180px, -180px) rotate(45deg)';
@@ -226,16 +271,21 @@ ob_start();
         document.querySelectorAll('.edit-exploded-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const part = this.dataset.part;
-                openOptions(part);
+                openOptions(this.dataset.part);
             });
         });
-
         document.querySelectorAll('.switch-part-exploded').forEach(part => {
             part.addEventListener('click', function() {
-                const partName = this.dataset.part;
-                openOptions(partName);
+                openOptions(this.dataset.part);
             });
+        });
+    }
+
+    function setupMobilePartButtons() {
+        document.querySelectorAll('.mobile-part').forEach(tile => {
+            const activate = () => openOptions(tile.dataset.part);
+            tile.addEventListener('click', activate);
+            tile.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
         });
     }
 
@@ -244,15 +294,19 @@ ob_start();
     }
 
     function openOptions(part) {
-        const panel = document.getElementById('optionsPanel');
-        const title = document.getElementById('optionsPanelTitle');
-        const grid = document.getElementById('optionsGrid');
-        
-        document.querySelectorAll('.switch-part-exploded').forEach(p => {
-            p.classList.remove('active-part');
-        });
-        document.querySelector(`.switch-part-exploded[data-part="${part}"]`).classList.add('active-part');
-        
+        const panel  = document.getElementById('optionsPanel');
+        const title  = document.getElementById('optionsPanelTitle');
+        const grid   = document.getElementById('optionsGrid');
+        const layout = document.getElementById('builderLayout');
+
+        // Highlight active desktop part
+        document.querySelectorAll('.switch-part-exploded').forEach(p => p.classList.remove('active-part'));
+        document.querySelector(`.switch-part-exploded[data-part="${part}"]`)?.classList.add('active-part');
+
+        // Highlight active mobile tile
+        document.querySelectorAll('.mobile-part').forEach(p => p.classList.remove('active-part'));
+        document.querySelector(`.mobile-part[data-part="${part}"]`)?.classList.add('active-part');
+
         const partNames = {
             top_housing: 'Top Housing Material',
             stem: 'Stem Type',
@@ -260,7 +314,7 @@ ob_start();
             bottom_housing: 'Bottom Housing Material'
         };
         title.textContent = partNames[part];
-        
+
         const components = componentData[part];
         grid.innerHTML = components.map((comp, index) => {
             const isSelected = selections[part]?.name === comp.name;
@@ -288,68 +342,69 @@ ob_start();
                             <div class="option-detail">${comp.description}</div>
                         ` : ''}
                     </div>
-                    <button class="select-option-btn">
-                        ${isSelected ? 'Selected' : 'Select'}
-                    </button>
+                    <button class="select-option-btn">${isSelected ? 'Selected' : 'Select'}</button>
                 </div>
             `;
         }).join('');
-        
+
         grid.querySelectorAll('.option-card').forEach(card => {
-            // Make entire card clickable
             card.style.cursor = 'pointer';
             card.addEventListener('click', function() {
-                const index = parseInt(card.dataset.index);
-                selectComponent(part, components[index]);
+                selectComponent(part, components[parseInt(card.dataset.index)]);
             });
         });
-        
+
         panel.classList.add('active');
-        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        layout.classList.add('panel-open');
+
+        // On desktop: scroll to panel; on mobile: it's side-by-side so no scroll needed
+        if (!isMobileLayout()) {
+            setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
     }
 
     function closeOptions() {
         document.getElementById('optionsPanel').classList.remove('active');
-        document.querySelectorAll('.switch-part-exploded').forEach(p => {
-            p.classList.remove('active-part');
-        });
+        document.getElementById('builderLayout').classList.remove('panel-open');
+        document.querySelectorAll('.switch-part-exploded').forEach(p => p.classList.remove('active-part'));
+        document.querySelectorAll('.mobile-part').forEach(p => p.classList.remove('active-part'));
     }
 
     function selectComponent(part, component) {
         selections[part] = component;
-        
-        // Update the color/appearance of the selected part
+
         const partElement = document.querySelector(`.switch-part-exploded[data-part="${part}"]`);
-        const imgElement = partElement.querySelector('.exploded-image');
-        
-        // If component has an image file, swap the image
-        if (component.image) {
-            imgElement.src = `/assets/images/${component.image}`;
-            
-            // Only apply color filters for missing images (Nylon Black)
-            if (component.image.includes('nylon_black')) {
-                // These images don't exist, so use the default image with dark filter
-                imgElement.src = part.includes('top') ? '/assets/images/pc_clear_top.webp' : '/assets/images/pc_clear_bottom.webp';
-                imgElement.style.filter = 'brightness(0.3) saturate(0)';
-                imgElement.style.transition = 'filter 0.5s ease';
-            } else {
-                // Image exists, remove any filters
-                imgElement.style.filter = '';
-                imgElement.style.opacity = '1';
+        if (partElement) {
+            const imgElement = partElement.querySelector('.exploded-image');
+            if (component.image) {
+                if (component.image.includes('nylon_black')) {
+                    imgElement.src = part.includes('top') ? '/assets/images/pc_clear_top.webp' : '/assets/images/pc_clear_bottom.webp';
+                    imgElement.style.filter = 'brightness(0.3) saturate(0)';
+                    imgElement.style.transition = 'filter 0.5s ease';
+                } else {
+                    imgElement.src = `/assets/images/${component.image}`;
+                    imgElement.style.filter = '';
+                    imgElement.style.opacity = '1';
+                }
+            }
+
+            // Pulse the selected part (desktop only)
+            if (!isMobileLayout()) {
+                const currentTransform = partElement.style.transform;
+                partElement.style.transform = currentTransform + ' scale(1.2)';
+                setTimeout(() => { partElement.style.transform = currentTransform; }, 300);
             }
         }
-        
+
+        // Also update mobile part image
+        const mobImg = document.querySelector(`.mobile-part[data-part="${part}"] .mobile-part-img`);
+        if (mobImg && component.image && !component.image.includes('nylon_black')) {
+            mobImg.src = `/assets/images/${component.image}`;
+        }
+
         updateCharacteristics();
         updateTotalPrice();
         updateIndicators();
-
-        // Pulse the selected part
-        const currentTransform = partElement.style.transform;
-        partElement.style.transform = currentTransform + ' scale(1.2)';
-        setTimeout(() => {
-            partElement.style.transform = currentTransform;
-        }, 300);
-
         openOptions(part);
     }
 
@@ -358,11 +413,9 @@ ob_start();
             document.getElementById('char-type').textContent = selections.stem.type.charAt(0).toUpperCase() + selections.stem.type.slice(1);
             document.getElementById('char-feel').textContent = selections.stem.feel;
         }
-        
         if (selections.spring) {
             document.getElementById('char-force').textContent = selections.spring.force + 'gf (' + selections.spring.feel + ')';
         }
-        
         if (selections.top_housing && selections.bottom_housing) {
             document.getElementById('char-sound').textContent = selections.top_housing.sound + ' + ' + selections.bottom_housing.sound;
         }
@@ -371,75 +424,82 @@ ob_start();
     function updateTotalPrice() {
         let total = 0;
         if (selections.top_housing) total += selections.top_housing.price;
-        if (selections.stem) total += selections.stem.price;
-        if (selections.spring) total += selections.spring.price;
+        if (selections.stem)        total += selections.stem.price;
+        if (selections.spring)      total += selections.spring.price;
         if (selections.bottom_housing) total += selections.bottom_housing.price;
-        
-        const priceElement = document.getElementById('total-price');
-        if (priceElement) {
-            priceElement.textContent = `$${total.toFixed(2)}`;
-        }
 
-        const qty = Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10));
+        document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
+
+        const qty       = Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10));
         const totalAllEl = document.getElementById('total-price-all');
-        const qtyDisplay  = document.getElementById('qty-display');
-        const totalRow    = document.getElementById('total-price-row');
+        const qtyDisplay = document.getElementById('qty-display');
+        const totalRow   = document.getElementById('total-price-row');
         if (totalAllEl) totalAllEl.textContent = `$${(total * qty).toFixed(2)}`;
         if (qtyDisplay)  qtyDisplay.textContent = qty;
         if (totalRow)    totalRow.style.display = total > 0 ? 'flex' : 'none';
 
-        // Enable Add to Cart if all parts selected
         const addToCartBtn = document.getElementById('addToCartBtn');
         if (addToCartBtn) {
-            if (selections.top_housing && selections.stem && selections.spring && selections.bottom_housing) {
-                addToCartBtn.disabled = false;
-                addToCartBtn.classList.add('enabled');
-            } else {
-                addToCartBtn.disabled = true;
-                addToCartBtn.classList.remove('enabled');
-            }
+            const allDone = selections.top_housing && selections.stem && selections.spring && selections.bottom_housing;
+            addToCartBtn.disabled = !allDone;
+            addToCartBtn.classList.toggle('enabled', !!allDone);
         }
+    }
+
+    function updateIndicators() {
+        const parts = ['top_housing', 'stem', 'spring', 'bottom_housing'];
+        parts.forEach(part => {
+            // Desktop indicators
+            const item = document.getElementById(`ind-${part}`);
+            const val  = document.getElementById(`ind-val-${part}`);
+            if (item && val) {
+                if (selections[part]) {
+                    item.classList.add('selected');
+                    val.textContent = selections[part].name;
+                } else {
+                    item.classList.remove('selected');
+                    val.textContent = 'Not Selected';
+                }
+            }
+            // Mobile tile status
+            const mobTile   = document.querySelector(`.mobile-part[data-part="${part}"]`);
+            const mobStatus = document.getElementById(`mob-${part}`);
+            if (mobTile && mobStatus) {
+                if (selections[part]) {
+                    mobTile.classList.add('part-done');
+                    mobStatus.textContent = selections[part].name;
+                } else {
+                    mobTile.classList.remove('part-done');
+                    mobStatus.textContent = 'Not selected';
+                }
+            }
+        });
     }
 
     function setupResetButton() {
         document.getElementById('resetBuildBtn').addEventListener('click', function() {
             if (confirm('Reset your entire build?')) {
                 selections = { top_housing: null, stem: null, spring: null, bottom_housing: null };
-                
-                // Reset all component images and filters to default
+
                 document.querySelector('.top-housing-exploded .exploded-image').src = '/assets/images/top_housing.webp';
                 document.querySelector('.stem-exploded .exploded-image').src = '/assets/images/stem.webp';
                 document.querySelector('.spring-exploded .exploded-image').src = '/assets/images/spring.webp';
                 document.querySelector('.bottom-housing-exploded .exploded-image').src = '/assets/images/bottom_housing.webp';
-                
-                document.querySelectorAll('.exploded-image').forEach(img => {
-                    img.style.filter = '';
-                    img.style.opacity = '1';
-                });
-                
+                document.querySelectorAll('.exploded-image').forEach(img => { img.style.filter = ''; img.style.opacity = '1'; });
+
+                // Reset mobile tile images
+                document.querySelector('.mobile-part[data-part="top_housing"] .mobile-part-img').src = '/assets/images/top_housing.webp';
+                document.querySelector('.mobile-part[data-part="stem"] .mobile-part-img').src = '/assets/images/stem.webp';
+                document.querySelector('.mobile-part[data-part="spring"] .mobile-part-img').src = '/assets/images/spring.webp';
+                document.querySelector('.mobile-part[data-part="bottom_housing"] .mobile-part-img').src = '/assets/images/bottom_housing.webp';
+
                 document.querySelectorAll('.char-value').forEach(el => el.textContent = '-');
                 document.getElementById('total-price').textContent = '$0.00';
-                
+
                 closeOptions();
                 updateIndicators();
                 updateTotalPrice();
-                playExplodeAnimation();
-            }
-        });
-    }
-
-    function updateIndicators() {
-        const parts = ['top_housing', 'stem', 'spring', 'bottom_housing'];
-        parts.forEach(part => {
-            const item = document.getElementById(`ind-${part}`);
-            const val  = document.getElementById(`ind-val-${part}`);
-            if (!item || !val) return;
-            if (selections[part]) {
-                item.classList.add('selected');
-                val.textContent = selections[part].name;
-            } else {
-                item.classList.remove('selected');
-                val.textContent = 'Not Selected';
+                if (!isMobileLayout()) playExplodeAnimation();
             }
         });
     }
@@ -464,80 +524,36 @@ ob_start();
     function setupAddToCartButton() {
         document.getElementById('addToCartBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const allSelected = Object.values(selections).every(s => s !== null);
-            
-            if (!allSelected) {
+            if (!Object.values(selections).every(s => s !== null)) {
                 alert('Please complete all component selections first!');
                 return;
             }
-            
-            // Calculate total price
             const totalPrice = (
-                selections.top_housing.price +
-                selections.stem.price +
-                selections.spring.price +
-                selections.bottom_housing.price
+                selections.top_housing.price + selections.stem.price +
+                selections.spring.price + selections.bottom_housing.price
             ).toFixed(2);
-            
-            // Create custom switch description for the cart
             const customBuildData = JSON.stringify({
-                top_housing: selections.top_housing.name,
-                stem: selections.stem.name,
-                spring: selections.spring.name,
-                bottom_housing: selections.bottom_housing.name,
+                top_housing: selections.top_housing.name, stem: selections.stem.name,
+                spring: selections.spring.name, bottom_housing: selections.bottom_housing.name,
                 total_price: totalPrice
             });
-            
-            // Create a hidden form to submit to cart
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = '<?= htmlspecialchars(appUrl('/cart/add'), ENT_QUOTES, 'UTF-8') ?>';
             form.style.display = 'none';
-            
-            // Add CSRF token
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = 'csrf_token';
-            csrfInput.value = '<?= generateCsrfToken() ?>';
-            form.appendChild(csrfInput);
-            
-            // Add product ID (use a special ID for custom switches, e.g., 999 or 0)
-            const productIdInput = document.createElement('input');
-            productIdInput.type = 'hidden';
-            productIdInput.name = 'product_id';
-            productIdInput.value = '0'; // 0 indicates custom build
-            form.appendChild(productIdInput);
-            
-            // Add quantity (minimum 10 switches)
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'hidden';
-            quantityInput.name = 'quantity';
-            quantityInput.value = String(Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10)));
-            form.appendChild(quantityInput);
-            
-            // Add custom build data
-            const customDataInput = document.createElement('input');
-            customDataInput.type = 'hidden';
-            customDataInput.name = 'custom_build';
-            customDataInput.value = customBuildData;
-            form.appendChild(customDataInput);
-            
-            // Add custom price
-            const priceInput = document.createElement('input');
-            priceInput.type = 'hidden';
-            priceInput.name = 'custom_price';
-            priceInput.value = totalPrice;
-            form.appendChild(priceInput);
-            
-            // Add redirect URL
-            const redirectInput = document.createElement('input');
-            redirectInput.type = 'hidden';
-            redirectInput.name = 'redirect';
-            redirectInput.value = '/cart';
-            form.appendChild(redirectInput);
-            
-            // Append form to body and submit
+            const fields = [
+                ['csrf_token', '<?= generateCsrfToken() ?>'],
+                ['product_id', '0'],
+                ['quantity', String(Math.max(10, parseInt(document.getElementById('build-quantity')?.value || 10)))],
+                ['custom_build', customBuildData],
+                ['custom_price', totalPrice],
+                ['redirect', '/cart']
+            ];
+            fields.forEach(([name, value]) => {
+                const input = document.createElement('input');
+                input.type = 'hidden'; input.name = name; input.value = value;
+                form.appendChild(input);
+            });
             document.body.appendChild(form);
             form.submit();
         });

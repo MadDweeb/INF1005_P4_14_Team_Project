@@ -226,3 +226,47 @@
         padding: 30px 20px;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 480px) {
+    .checkout-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .checkout-form-section,
+    .order-summary {
+        padding: 24px 16px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+
+    .place-order-btn {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Interactive: input focus */
+.form-group input:focus,
+.form-group select:focus {
+    box-shadow: 0 0 0 3px rgba(192, 24, 24, 0.2);
+    transition: box-shadow 0.2s ease;
+}
+
+.place-order-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.place-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192,24,24,0.35);
+}
+
+.place-order-btn:active {
+    transform: scale(0.98);
+}

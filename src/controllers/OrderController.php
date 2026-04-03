@@ -305,6 +305,75 @@ class OrderController
     }
 
     /**
+     * User: remove a cancelled or completed order from their history (POST /orders/delete).
+     */
+    public function userDeleteOrder(): void
+    {
+        requireLogin();
+        verifyCsrf();
+
+        $orderId = sanitizeInt($_POST['order_id'] ?? 0);
+        if (!isPositiveInt($orderId)) {
+            $_SESSION['flash_error'] = 'Invalid order ID.';
+            header('Location: /orders');
+            exit;
+        }
+
+        $user   = currentUser();
+        $result = $this->orderModel
+            ? $this->orderModel->deleteFinished($orderId, $user['id'])
+            : ['ok' => false, 'reason' => 'no_model'];
+
+        if ($result['ok']) {
+            $_SESSION['flash_success'] = 'Order #' . str_pad((string) $orderId, 5, '0', STR_PAD_LEFT) . ' has been removed from your history.';
+        } else {
+            $_SESSION['flash_error'] = $result['reason'] === 'not_eligible'
+                ? 'Only cancelled or completed orders can be removed.'
+                : 'Could not remove the order. Please try again.';
+        }
+
+        header('Location: /orders');
+        exit;
+    }
+
+    /**
+     * Admin: delete a cancelled or completed order (POST /admin/orders/delete).
+     */
+    public function adminDeleteOrder(): void
+    {
+        requireAdmin();
+        verifyCsrf();
+
+        $orderId  = sanitizeInt($_POST['order_id'] ?? 0);
+        $redirect = sanitizeString($_POST['redirect'] ?? '/admin/orders');
+
+        if (!str_starts_with($redirect, '/admin/')) {
+            $redirect = '/admin/orders';
+        }
+
+        if (!isPositiveInt($orderId)) {
+            $_SESSION['flash_error'] = 'Invalid order ID.';
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        $result = $this->orderModel
+            ? $this->orderModel->deleteFinished($orderId)
+            : ['ok' => false, 'reason' => 'no_model'];
+
+        if ($result['ok']) {
+            $_SESSION['flash_success'] = 'Order #' . str_pad((string) $orderId, 5, '0', STR_PAD_LEFT) . ' has been deleted.';
+            header('Location: /admin/orders');
+        } else {
+            $_SESSION['flash_error'] = $result['reason'] === 'not_eligible'
+                ? 'Only cancelled or completed orders can be deleted.'
+                : 'Could not delete the order. Please try again.';
+            header('Location: ' . $redirect);
+        }
+        exit;
+    }
+
+    /**
      * Admin: show all orders (GET /admin/orders).
      */
     public function adminIndex(): void

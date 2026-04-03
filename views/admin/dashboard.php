@@ -106,119 +106,80 @@ ob_start();
         transform: translateY(-2px);
     }
 
-    .action-btn:focus-visible,
-    .lockout-reset-btn:focus-visible {
-        outline: 3px solid #ffffff;
-        outline-offset: 2px;
+    .charts-section {
+        margin-top: 50px;
     }
 
-    .lockout-section {
-        margin-top: 40px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        padding: 30px;
-    }
-
-    .lockout-section h2 {
+    .charts-section h2 {
         font-family: 'Montserrat', sans-serif;
-        font-size: 1.6rem;
-        margin-bottom: 12px;
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin-bottom: 25px;
     }
 
-    .lockout-section > p {
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+    }
+
+    .chart-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .chart-card h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.7;
         margin-bottom: 20px;
-        opacity: 0.9;
     }
 
-    .lockout-table-wrapper {
-        overflow-x: auto;
+    .chart-card canvas {
+        max-height: 280px;
     }
 
-    .lockout-table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 760px;
-    }
-
-    .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-    }
-
-    .lockout-table th,
-    .lockout-table td {
-        padding: 12px 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: left;
-    }
-
-    .lockout-table th {
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        font-size: 0.78rem;
-        opacity: 0.75;
-    }
-
-    .lockout-status {
-        display: inline-block;
-        border-radius: 999px;
-        padding: 4px 10px;
-        font-size: 0.78rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-    }
-
-    .lockout-status.locked {
-        background: rgba(248, 113, 113, 0.2);
-        color: #fca5a5;
-        border: 1px solid rgba(248, 113, 113, 0.7);
-    }
-
-    .lockout-status.unlocked {
-        background: rgba(74, 222, 128, 0.15);
-        color: #86efac;
-        border: 1px solid rgba(74, 222, 128, 0.55);
-    }
-
-    .lockout-reset-form {
-        margin: 0;
-    }
-
-    .lockout-reset-btn {
-        padding: 9px 14px;
-        border-radius: 6px;
-        border: 1px solid var(--accent);
-        background: transparent;
-        color: var(--bg-main);
-        font-family: inherit;
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .lockout-reset-btn:hover {
-        background: var(--accent);
-        color: #ffffff;
-    }
-
-    .lockout-reset-btn:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+    @media (max-width: 900px) {
+        .charts-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
         .dashboard-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .action-buttons {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .stat-card {
+            padding: 24px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+        }
+
+        .action-buttons {
             grid-template-columns: 1fr;
         }
 
-        .lockout-section {
+        .action-btn {
+            padding: 14px 20px;
+        }
+
+        .chart-card {
             padding: 20px;
         }
     }
@@ -260,85 +221,90 @@ ob_start();
         </div>
     </div>
 
-    <div class="quick-actions">
+    <div class="charts-section">
+        <h2>Analytics</h2>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Orders by Status</h3>
+                <canvas id="statusChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Revenue — Last 30 Days</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions" style="margin-top:50px;">
         <h2>Quick Actions</h2>
         <div class="action-buttons">
             <a href="/admin/products" class="action-btn">Manage Products</a>
             <a href="/admin/orders" class="action-btn">View Orders</a>
+            <a href="/admin/users" class="action-btn">Manage Users</a>
             <a href="/products" class="action-btn">View Store</a>
         </div>
     </div>
-
-    <section class="lockout-section" id="login-lockout-management" aria-labelledby="lockout-heading">
-        <h2 id="lockout-heading">Login Lockout Management</h2>
-        <p>
-            Accounts are locked for 1 hour after 5 failed login attempts.
-            Use Reset to clear both the lock timer and failed attempt counter.
-        </p>
-
-        <div class="lockout-table-wrapper">
-            <table class="lockout-table">
-                <caption class="visually-hidden">User login lockout status and reset controls</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Username</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Failed Attempts</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Locked Until</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($usersWithLockoutStatus)): ?>
-                        <tr>
-                            <td colspan="7">No user data available.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($usersWithLockoutStatus as $account): ?>
-                            <?php
-                            $isLocked = (int) ($account['is_locked'] ?? 0) === 1;
-                            $canReset = $isLocked || (int) ($account['failed_login_attempts'] ?? 0) > 0;
-                            ?>
-                            <tr>
-                                <th scope="row"><?= htmlspecialchars((string) ($account['username'] ?? ''), ENT_QUOTES, 'UTF-8') ?></th>
-                                <td><?= htmlspecialchars((string) ($account['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars((string) ($account['role'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= (int) ($account['failed_login_attempts'] ?? 0) ?></td>
-                                <td>
-                                    <span class="lockout-status <?= $isLocked ? 'locked' : 'unlocked' ?>">
-                                        <?= $isLocked ? 'Locked' : 'Not locked' ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php if (!empty($account['locked_until'])): ?>
-                                        <span><?= htmlspecialchars((string) $account['locked_until'], ENT_QUOTES, 'UTF-8') ?></span>
-                                    <?php else: ?>
-                                        <span>Not set</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <form class="lockout-reset-form" method="POST" action="/admin/users/reset-lockout">
-                                        <?= csrfInput() ?>
-                                        <input type="hidden" name="user_id" value="<?= (int) ($account['user_id'] ?? 0) ?>">
-                                        <button
-                                            type="submit"
-                                            class="lockout-reset-btn"
-                                            aria-label="Reset login lockout for <?= htmlspecialchars((string) ($account['username'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
-                                            <?= $canReset ? '' : 'disabled' ?>>
-                                            Reset
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </section>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+    Chart.defaults.color = 'rgba(255,255,255,0.7)';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
+
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Completed'],
+            datasets: [{
+                data: [
+                    <?= (int)($ordersByStatus['pending']    ?? 0) ?>,
+                    <?= (int)($ordersByStatus['processing'] ?? 0) ?>,
+                    <?= (int)($ordersByStatus['shipped']    ?? 0) ?>,
+                    <?= (int)($ordersByStatus['delivered']  ?? 0) ?>,
+                    <?= (int)($ordersByStatus['cancelled']  ?? 0) ?>,
+                    <?= (int)($ordersByStatus['completed']  ?? 0) ?>
+                ],
+                backgroundColor: ['#fbbf24','#60a5fa','#a78bfa','#4ade80','#f87171','#34d399'],
+                borderWidth: 0,
+                hoverOffset: 6
+            }]
+        },
+        options: {
+            plugins: { legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12 } } },
+            cutout: '65%'
+        }
+    });
+
+    const revenueLabels = <?= json_encode($revenueLabels ?? []) ?>;
+    const revenueData   = <?= json_encode($revenueData   ?? []) ?>;
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'line',
+        data: {
+            labels: revenueLabels,
+            datasets: [{
+                label: 'Revenue ($)',
+                data: revenueData,
+                borderColor: '#e63535',
+                backgroundColor: 'rgba(230,53,53,0.15)',
+                borderWidth: 2,
+                pointRadius: revenueLabels.length > 14 ? 2 : 4,
+                pointHoverRadius: 6,
+                fill: true,
+                tension: 0.35
+            }]
+        },
+        options: {
+            scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { maxTicksLimit: 8 } },
+                y: { grid: { color: 'rgba(255,255,255,0.06)' }, beginAtZero: true,
+                     ticks: { callback: v => '$' + v.toLocaleString() } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+})();
+</script>
 
 <?php
 $pageContent = ob_get_clean();

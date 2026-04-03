@@ -127,13 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const resetBtn = document.getElementById('resetBuildBtn');
-    if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-            this.style.transform = 'rotate(360deg) scale(0.9)';
-            setTimeout(() => this.style.transform = '', 600);
-        });
-    }
+
+
 
     const saveBtn = document.getElementById('saveBuildBtn');
     if (saveBtn) {

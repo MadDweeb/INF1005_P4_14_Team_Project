@@ -129,6 +129,13 @@ ob_start();
                                     <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
                                     <button type="submit" class="order-cancel-btn">Cancel Order</button>
                                 </form>
+                            <?php elseif ($isCancelled): ?>
+                                <form method="POST" action="/orders/delete" class="inline-cancel-form"
+                                      onsubmit="return confirm('Permanently remove order #<?= $paddedId ?> from your history?');">
+                                    <?= csrfInput() ?>
+                                    <input type="hidden" name="order_id" value="<?= (int) $order['order_id'] ?>">
+                                    <button type="submit" class="order-cancel-btn" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);">Remove</button>
+                                </form>
                             <?php elseif ($isDelivered): ?>
                                 <form method="POST" action="/orders/received" class="inline-cancel-form"
                                       onsubmit="return confirm('Confirm you have received order #<?= $paddedId ?>?');">

@@ -481,3 +481,77 @@
         padding: 10px;
     }
 }
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 1024px) {
+    .order-header {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orders-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .order-card {
+        padding: 18px;
+        border-radius: 8px;
+    }
+
+    .order-header {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .status-badge {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+
+    .order-footer {
+        gap: 12px;
+    }
+
+    .order-footer-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .order-cancel-btn,
+    .view-order-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .tracker {
+        gap: 10px;
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+
+    .step-label {
+        font-size: 0.72rem;
+    }
+}
+
+/* Interactive: button hover lift */
+.view-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.order-card {
+    transition: box-shadow 0.25s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}

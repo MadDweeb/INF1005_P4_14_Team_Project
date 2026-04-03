@@ -250,3 +250,55 @@
         margin-bottom: 2px;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+/* Tablet only: 781px–1024px range avoids conflicting with the 780px mobile block */
+@media (min-width: 781px) and (max-width: 1024px) {
+    .order-detail-page {
+        padding: 120px 5vw 60px;
+    }
+
+    .order-header {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-detail-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .order-header-side {
+        width: 100%;
+    }
+
+    .order-items-table td {
+        padding: 8px 0;
+        font-size: 0.9rem;
+    }
+
+    .order-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .order-actions a,
+    .order-actions button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Interactive */
+.order-actions a,
+.order-actions button {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-actions a:hover,
+.order-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}

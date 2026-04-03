@@ -142,3 +142,49 @@
         font-size: 2rem;
     }
 }
+
+/* -- Enhanced responsive & interactivity -------------------------------------- */
+
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 110px 4vw 50px;
+    }
+
+    .auth-form-section {
+        padding: 30px 20px;
+        border-radius: 8px;
+    }
+
+    .auth-form-section h1 {
+        font-size: 1.7rem;
+    }
+
+    .auth-form input {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+
+    .auth-submit-btn {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Interactive: input focus glow */
+.auth-form input:focus {
+    box-shadow: 0 0 0 3px rgba(192, 24, 24, 0.2);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.auth-submit-btn {
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192,24,24,0.35);
+}
+
+.auth-submit-btn:active {
+    transform: scale(0.98);
+}

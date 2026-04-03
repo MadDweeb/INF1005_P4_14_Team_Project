@@ -10,6 +10,7 @@ $adminNavLinks = [
     '/admin/dashboard' => ['label' => 'Dashboard', 'key' => 'dashboard'],
     '/admin/products'  => ['label' => 'Products',  'key' => 'products'],
     '/admin/orders'    => ['label' => 'Orders',    'key' => 'orders'],
+    '/admin/users'     => ['label' => 'Users',     'key' => 'users'],
 ];
 ?>
 
