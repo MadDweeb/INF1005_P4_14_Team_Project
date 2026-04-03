@@ -9,8 +9,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 260px);
-    padding: clamp(8rem, 12vh, 10rem) 1.5rem 4rem;
+    margin-top: clamp(5.75rem, 9vw, 7rem);
+    min-height: calc(100vh - 360px);
+    padding: clamp(3rem, 6vh, 4.5rem) 1.5rem 4rem;
     background-color: var(--bg-main, #F4F0EA);
     text-align: center;
 }
@@ -104,6 +105,12 @@
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
+    .not-found-page {
+        margin-top: 5.25rem;
+        min-height: calc(100vh - 320px);
+        padding-top: 2.5rem;
+    }
+
     .not-found-actions {
         flex-direction: column;
         align-items: center;
