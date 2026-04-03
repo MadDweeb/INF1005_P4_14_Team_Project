@@ -224,6 +224,11 @@
     cursor: pointer;
 }
 
+.sort-select option {
+    color: #000000;
+    background: #ffffff;
+}
+
 .sort-select:focus {
     outline: none;
     border-color: var(--accent);
